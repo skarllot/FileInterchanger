@@ -105,12 +105,13 @@
     </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="IniFile.cs" />
-    <Compile Include="FtpSync.cs">
+    <Compile Include="Service.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Main.cs" />
-    <EmbeddedResource Include="FtpSync.resx">
-      <DependentUpon>FtpSync.cs</DependentUpon>
+    <Compile Include="Synchronizer.cs" />
+    <EmbeddedResource Include="Service.resx">
+      <DependentUpon>Service.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

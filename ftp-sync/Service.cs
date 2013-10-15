@@ -1,26 +1,24 @@
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.ServiceProcess;
 using System.Threading;
 
 namespace ftp_sync
 {
-    public class FtpSync : System.ServiceProcess.ServiceBase
+    public class Service : System.ServiceProcess.ServiceBase
     {
         const string DEFAULT_CFG_FILE_NAME = "ftpsync.ini";
         const string EVT_SOURCE = "FtpSync";
         const string EVT_LOG = "FtpSync";
+        const int DEFAULT_REFRESH = 60000;
+
         private System.Diagnostics.EventLog eventLog;
         private System.ComponentModel.Container components = null;
         Thread svcThread;
         bool started = false;
         bool stopping = false;
 
-        public FtpSync()
+        public Service()
         {
             // PS> Remove-EventLog <logname>
             /*if (System.Diagnostics.EventLog.SourceExists(EVT_SOURCE))
@@ -94,7 +92,7 @@ namespace ftp_sync
                 throw new FileNotFoundException(msg, cfgFile);
             }
 
-            Thread svcThread = new Thread(new ParameterizedThreadStart(StartThread));
+            svcThread = new Thread(new ParameterizedThreadStart(StartThread));
             svcThread.Start(cfgFile);
             eventLog.WriteEntry("FtpSync service started");
         }
@@ -126,8 +124,12 @@ namespace ftp_sync
             string cfgpath = (string)obj;
 
             Config cfg = new Config(cfgpath);
-            string id = cfg.Id;
-            int refresh = cfg.Refresh;
+            Synchronizer syncer = new Synchronizer();
+            if (!string.IsNullOrEmpty(cfg.Id))
+                syncer.Id = cfg.Id;
+            int refresh = DEFAULT_REFRESH;
+            if (cfg.Refresh < 0)
+                refresh = cfg.Refresh;
 
             string[] sections = cfg.GetSections();
 
@@ -135,7 +137,7 @@ namespace ftp_sync
             {
                 foreach (string item in sections)
                 {
-                    string server = cfg.GetServer(item);
+                    string storedsession = cfg.GetStoredSession(item);
                     bool keepfiles = cfg.GetKeepFiles(item);
                     string local = cfg.GetLocal(item);
                     string remote = cfg.GetRemote(item);

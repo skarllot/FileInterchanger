@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ftp_sync
 {
@@ -18,10 +15,7 @@ namespace ftp_sync
         {
             get
             {
-                string val = ini.ReadValue("MAIN", "ID");
-                if (string.IsNullOrEmpty(val))
-                    val = Environment.MachineName;
-                return val;
+                return ini.ReadValue("MAIN", "ID");
             }
         }
 
@@ -32,7 +26,7 @@ namespace ftp_sync
                 string val = ini.ReadValue("MAIN", "RefreshTime");
                 int result;
                 if (!int.TryParse(val, out result))
-                    result = 60000;
+                    result = -1;
                 return result;
             }
         }
@@ -45,14 +39,13 @@ namespace ftp_sync
             return ret;
         }
 
-        public string GetServer(string section)
+        public string GetStoredSession(string section)
         {
-            return ini.ReadValue(section, "Server");
+            return ini.ReadValue(section, "StoredSession");
         }
 
         public bool GetKeepFiles(string section)
         {
-            Dictionary<string, string> asdf;
             string val = ini.ReadValue(section, "KeepFiles");
             bool result;
             if (!bool.TryParse(val, out result))

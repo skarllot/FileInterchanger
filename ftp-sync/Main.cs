@@ -9,7 +9,7 @@ namespace ftp_sync
     {
         public static void Main(string[] args)
         {
-            FtpSync ftp = new FtpSync();
+            Service ftp = new Service();
 
             if (!System.Diagnostics.Debugger.IsAttached)
             {
