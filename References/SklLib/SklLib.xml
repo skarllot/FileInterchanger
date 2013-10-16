@@ -1,0 +1,2997 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SklLib</name>
+    </assembly>
+    <members>
+        <member name="T:SklLib.resExceptions">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.ArgumentEmptyString">
+            <summary>
+              Looks up a localized string similar to The %var value specified for a set operation is equal to System.String.Empty (&quot;&quot;)..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.ArgumentNull">
+            <summary>
+              Looks up a localized string similar to %var is a null reference..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.DirectoryNotFound">
+            <summary>
+              Looks up a localized string similar to Directory not found exception occurred on %var method..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.FileExists">
+            <summary>
+              Looks up a localized string similar to Was specifield FileMode.CreateNew flag and the file &quot;%var&quot; already exists..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.FileNotFound">
+            <summary>
+              Looks up a localized string similar to The file &quot;%var&quot; was not found..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.FileNotFoundOn">
+            <summary>
+              Looks up a localized string similar to File not found exception occurred on %var method..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.Format_InvalidString">
+            <summary>
+              Looks up a localized string similar to The format parameter does not contain a valid custom format pattern..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.Invalid_PropNoSet">
+            <summary>
+              Looks up a localized string similar to Invalid Operation, %var property was not set..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.InvalidArg_CompactMatch">
+            <summary>
+              Looks up a localized string similar to Invalid argument, don&apos;t match with compact format..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.InvalidArg_StandardMatch">
+            <summary>
+              Looks up a localized string similar to Invalid argument, don&apos;t match with standard format..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.InvalidChar_Key">
+            <summary>
+              Looks up a localized string similar to The key &quot;%var&quot; has invalid charaters..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.InvalidChar_Section">
+            <summary>
+              Looks up a localized string similar to The section &quot;%var&quot; has invalid characters..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.InvalidChar_Value">
+            <summary>
+              Looks up a localized string similar to The value &quot;%var&quot; has invalid characters..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.InvalidFile">
+            <summary>
+              Looks up a localized string similar to The file &quot;%var&quot; not is a valid file..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.InvalidHeader">
+            <summary>
+              Looks up a localized string similar to The file &quot;%var&quot; has a invalid header..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.InvalidMask">
+            <summary>
+              Looks up a localized string similar to Mask property is being set to a invalid value..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.InvalidWrite">
+            <summary>
+              Looks up a localized string similar to Invalid Operation, this instance is read-only..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.KeyNotFound">
+            <summary>
+              Looks up a localized string similar to The key &quot;%var&quot; was not found..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.LessThanZero">
+            <summary>
+              Looks up a localized string similar to %var cannot be less than zero..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.NeedWin2000OrBetter">
+            <summary>
+              Looks up a localized string similar to The method {0} only works on Microsoft Windows 2000 or better..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.Obj_MustBeType">
+            <summary>
+              Looks up a localized string similar to Object must be of the type %var..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.PropertyNull">
+            <summary>
+              Looks up a localized string similar to %var property is being set to a null reference..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.SectionNotFound">
+            <summary>
+              Looks up a localized string similar to The section &quot;%var&quot; was not found..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.StringMustMajorString">
+            <summary>
+              Looks up a localized string similar to %var1 length must be major than %var2 length..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.TooBig_Number">
+            <summary>
+              Looks up a localized string similar to The number %var is too big, the maximum supported value is %value..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.TooBig_StringOrNumber">
+            <summary>
+              Looks up a localized string similar to %var1 length and/or %var2 value is too big..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.TooSmall_Number">
+            <summary>
+              Looks up a localized string similar to The number %var is too small, the minimum supported value is %value..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.Unsupported_GroupSize">
+            <summary>
+              Looks up a localized string similar to This NumberFormatInfo has a unsupported group size..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.UnsupportedCulture">
+            <summary>
+              Looks up a localized string similar to The name parameter specifies a culture that is not supported..
+            </summary>
+        </member>
+        <member name="P:SklLib.resExceptions.UnsupportedNumber_byNumberWriteInfo">
+            <summary>
+              Looks up a localized string similar to This number isn&apos;t supported with this NumberWriteInfo..
+            </summary>
+        </member>
+        <member name="T:SklLib.GetType`1">
+            <summary>
+            Represents a generic function that returns a type-specific.
+            </summary>
+            <typeparam name="T">Any type-specific.</typeparam>
+            <returns>Specified type-specific.</returns>
+        </member>
+        <member name="T:SklLib.ByteMeasure">
+            <summary>
+            Byte multiples.
+            </summary>
+        </member>
+        <member name="F:SklLib.ByteMeasure.Bytes">
+            <summary>
+            Represents a byte.
+            </summary>
+        </member>
+        <member name="F:SklLib.ByteMeasure.Kilobytes">
+            <summary>
+            Represents a kilobyte (1024 B).
+            </summary>
+        </member>
+        <member name="F:SklLib.ByteMeasure.Megabytes">
+            <summary>
+            Represents a megabyte (1024 KB).
+            </summary>
+        </member>
+        <member name="F:SklLib.ByteMeasure.Gigabytes">
+            <summary>
+            Represents a gigabyte (1024 MB).
+            </summary>
+        </member>
+        <member name="F:SklLib.ByteMeasure.Terabytes">
+            <summary>
+            Represents a terabyte (1024 GB).
+            </summary>
+        </member>
+        <member name="F:SklLib.ByteMeasure.Petabytes">
+            <summary>
+            Represents a petabyte (1024 TB).
+            </summary>
+        </member>
+        <member name="F:SklLib.ByteMeasure.Exabytes">
+            <summary>
+            Represents a exabyte (1024 PB).
+            </summary>
+        </member>
+        <member name="T:SklLib.SILengthUnit">
+            <summary>
+            Linear units from International System of Units.
+            </summary>
+        </member>
+        <member name="F:SklLib.SILengthUnit.Millimeter">
+            <summary>
+            Millimeter length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.SILengthUnit.Centimeter">
+            <summary>
+            Centimeter length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.SILengthUnit.Decimeter">
+            <summary>
+            Decimeter length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.SILengthUnit.Meter">
+            <summary>
+            Meter length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.SILengthUnit.Decameter">
+            <summary>
+            Decameter length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.SILengthUnit.Hectometer">
+            <summary>
+            Hectometer length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.SILengthUnit.Kilometer">
+            <summary>
+            Kilometer length unit.
+            </summary>
+        </member>
+        <member name="T:SklLib.OSVersion">
+            <summary>
+            Identifies a operating System version.
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.Unidentifield">
+            <summary>
+            Unidentifield Windows Version
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsCEOld">
+            <summary>
+            Windows Compact Edition oldest than 3.x
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsCE3">
+            <summary>
+            Windows Compact Edition 3.x
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsCE4">
+            <summary>
+            Windows Compact Edition 4.x
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsCE5">
+            <summary>
+            Windows Compact Edition 5.x
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsCE6">
+            <summary>
+            Windows Compact Edition 6.x
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsCENew">
+            <summary>
+            Windows Compact Edition newest than 6.x
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.Windows95">
+            <summary>
+            Windows 95
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.Windows98">
+            <summary>
+            Windows 98
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.Windows98SE">
+            <summary>
+            Windows 98 Second Edition
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsME">
+            <summary>
+            Windows Millenium Edition
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsNT4">
+            <summary>
+            Windows NT 4.x
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.Windows2000">
+            <summary>
+            Windows 2000
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsXP">
+            <summary>
+            Windows XP
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsServer2003">
+            <summary>
+            Windows Server 2003
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsVista">
+            <summary>
+            Windows Vista
+            </summary>
+        </member>
+        <member name="F:SklLib.OSVersion.WindowsNew">
+            <summary>
+            Windows newest than Vista
+            </summary>
+        </member>
+        <member name="T:SklLib.ImperialLengthUnit">
+            <summary>
+            Imperial linear units.
+            </summary>
+        </member>
+        <member name="F:SklLib.ImperialLengthUnit.Inch">
+            <summary>
+            Inch length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.ImperialLengthUnit.Foot">
+            <summary>
+            Foot length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.ImperialLengthUnit.Yard">
+            <summary>
+            Yard length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.ImperialLengthUnit.Furlong">
+            <summary>
+            Furlon length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.ImperialLengthUnit.Mile">
+            <summary>
+            Mile length unit.
+            </summary>
+        </member>
+        <member name="F:SklLib.ImperialLengthUnit.League">
+            <summary>
+            League length unit.
+            </summary>
+        </member>
+        <member name="T:SklLib.Strings">
+            <summary>
+            Provides methods for manipulating, searching and validating <see cref="T:System.String"/>.
+            </summary>
+            <remarks>
+            <para>The Strings class is the additional class to assist in the following operations with <see cref="T:System.String"/>:</para>
+            <para>- Manipulating, <see cref="M:SklLib.Strings.EliminateAccents(System.String)"/> and <see cref="M:SklLib.Strings.RepeatString(System.String,System.Int32)"/> methods;</para>
+            <para>- Searching, <see cref="M:SklLib.Strings.AdditionalChars(System.String,System.String)"/> method;</para>
+            <para>- Validating, <see cref="M:SklLib.Strings.IsAlphabetic(System.String)"/>, <see cref="M:SklLib.Strings.IsLetterOnly(System.String)"/> and <see cref="M:SklLib.Strings.IsNumeric(System.String)"/> methods.</para>
+            <para>Also provides the <see cref="T:SklLib.Strings.IndexedChar"/> struct, that represents <see cref="T:System.Char"/> of a
+            <see cref="T:System.String"/> and a index (<see cref="T:System.Char"/> position in a <see cref="T:System.String"/>).</para>
+            </remarks>
+        </member>
+        <member name="M:SklLib.Strings.AllIndexOf(System.String,System.Char)">
+            <summary>
+            Reports a Array with indexes of the all occurrences of the specified Unicode character
+            in indicated string.
+            </summary>
+            <param name="str">String where will be made the search.</param>
+            <param name="value">A Unicode character to seek.</param>
+            <returns>A Array with indexes positions of value if that character is found, or zeroed array
+            length if it is not.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>str</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.AllIndexOf(System.String,System.String)">
+            <summary>
+            Reports a Array with indexes of the all occurrences of the specified string in
+            indicated string.
+            </summary>
+            <param name="str">String where will be made the search.</param>
+            <param name="value">The string to seek.</param>
+            <returns>A Array with indexes positions of value if that string is found, or zeroed array length
+            if it is not.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>str</c> or <c>value</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.AdditionalChars(System.String,System.String)">
+            <summary>
+            Seeks and stores all of additional characters found in the first <see cref="T:System.String"/>,
+            that were not found in the second <see cref="T:System.String"/>.
+            </summary>
+            <param name="strA">The first <see cref="T:System.String"/>.</param>
+            <param name="strB">The second <see cref="T:System.String"/>.</param>
+            <returns>A <see cref="T:System.Array"/> of <see cref="T:SklLib.Strings.IndexedChar"/></returns>
+            <remarks>
+            This method seeks which characters that first <see cref="T:System.String"/> has, and second
+            <see cref="T:System.String"/> doesn't have.
+            </remarks>
+            <example>
+            The following console application example show how to use AdditionalChars method.
+            <code>
+            using System;
+            using SklLib;
+            
+            class Program
+            {
+                static void Main()
+                {
+                    Strings.IndexedChar[] indexChr = Strings.AdditionalChars("123#example*", "123example");
+                    for (int i = 0; i &lt; indexChr.Length; i++)
+                        Console.WriteLine("{0}) Char = '{1}' at Index = {2}",
+                            i + 1, indexChr[i].character, indexChr[i].index);
+                    Console.ReadKey();
+                }
+            }
+            </code>
+            
+            <br></br>This example returns the following output.
+            <code>
+            1) Char = '#' at Index = 3
+            2) Char = '*' at Index = 11
+            </code>
+            <para>Look as knowing index of each character:</para>
+            <pre>
+            00|01|02|03|04|05|06|07|08|09|10|11<br/>
+            1 |2 |3 |# |e |x |a |m |p |l |e |* <br/>
+            1 |2 |3 |e |x |a |m |p |l |e |* <br/>
+            1 |2 |3 |e |x |a |m |p |l |e </pre>
+            <br></br>
+            <para>The first character is '#', because in the second <see cref="T:System.String"/>
+            doesn't have '#' at index 3.</para>
+            <para>After, the character at index 3 of first String will removed (123#example* =&gt; 123example*).</para>
+            <para>Next character not found, in the second <see cref="T:System.String"/>, is
+            '*' at index 11.</para>
+            </example>
+            <exception cref="T:System.ArgumentException"><c>strB</c> length is major that <c>strA</c> length.</exception>
+            <exception cref="T:System.ArgumentNullException"><c>strA</c> or <c>strB</c> is null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.CountNumericChars(System.String)">
+            <summary>
+            Counts how many occurrences of number character in indicated string.
+            </summary>
+            <param name="str">String where will be made the search.</param>
+            <returns>Result of number of found occurrences.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>str</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.CountOf(System.String,System.Char)">
+            <summary>
+            Counts how many occurrences of the specified Unicode character in indicated string.
+            </summary>
+            <param name="str">String where will be made the search.</param>
+            <param name="value">A Unicode character to count.</param>
+            <returns>Result of number of found occurrences.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>str</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.CountOf(System.String,System.String)">
+            <summary>
+            Counts how many occurrence of the specified string in indicated string.
+            </summary>
+            <param name="str">String where will be made the search.</param>
+            <param name="value">The string to count.</param>
+            <returns>Result of number of found occurrences.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>str</c> or <c>value</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.CountOfAll(System.String,System.Char[])">
+            <summary>
+            Counts how many occurrences in indicated string of each character in a specified array of Unicode characters.
+            </summary>
+            <param name="str">String where will be made the search.</param>
+            <param name="allOf">A Unicode character array containing one or more characters to count.</param>
+            <returns>Result of number of all occurrences in indicated string where any character in anyOf was found.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>str</c> or <c>allOf</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.CountOfAll(System.String,System.String[])">
+            <summary>
+            Counts how many occurrences in indicated string of each string in a specified array of string.
+            </summary>
+            <param name="str">String where will be made the search.</param>
+            <param name="allOf">The string array containing one or more strings to count.</param>
+            <returns>Result of number of all occurrences in indicated string where any character in anyOf was found.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>str</c> or <c>allOf</c> is a null reference.</exception>
+            <exception cref="T:System.ArgumentException"><c>str</c> length is major that any <c>allOf element</c> length.</exception>
+        </member>
+        <member name="M:SklLib.Strings.EliminateAccents(System.String)">
+             <summary>
+             Eliminates accents of a <see cref="T:System.String"/>.
+             </summary>
+             <param name="s">A <see cref="T:System.String"/>.</param>
+             <returns>The <c>s</c> <see cref="T:System.String"/> without accents.</returns>
+             <remarks>
+             This method eliminates accents of accented <see cref="T:System.String"/>, but this
+             method is valid only to Latin-1 (ISO-8859-1) characters.
+             </remarks>
+             <example>
+             The following console application example show how to use EliminateAccents method.
+             <code>
+             using System;
+             using SklLib;
+            
+             class Program
+             {
+                    static void Main()
+                    {
+                        string text1 = "Você, faça estes testes.";
+                        string text2 = "¿Hará usted estas pruebas?";
+                        Console.WriteLine("First example: {0}", Strings.EliminateAccents(text1));
+                        Console.WriteLine("Second example: {0}", Strings.EliminateAccents(text2));
+                        Console.ReadKey();
+                    }
+             }
+             </code>
+             <br></br>This example returns the following output.
+             <code>
+             First example: Voce, faca estes testes.
+             Second example: ¿Hara usted estas pruebas?
+             </code>
+             </example>
+        </member>
+        <member name="M:SklLib.Strings.HasControlChar(System.String)">
+            <summary>
+            Check a string, looking for control character (code less than 32).
+            </summary>
+            <param name="str">A string.</param>
+            <returns>true if <c>str</c> has any control character; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.Strings.IsAlphabetic(System.String)">
+             <summary>
+             Indicates whether the <see cref="T:System.String"/> contains only letters and spaces.
+             </summary>
+             <param name="s">A <see cref="T:System.String"/>.</param>
+             <returns>true if <c>s</c> is an letter- and space-only String; otherwise, false.</returns>
+             <remarks>
+             This method verify whether a <see cref="T:System.String"/> contains only letters and spaces.
+             </remarks>
+             <example>
+             The following console application example show how to use IsAlphabetic method.
+             <code>
+             using System;
+             using SklLib;
+            
+             class Program
+             {
+                    static void Main()
+                    {
+                        string text1 = "Make these tests";
+                        string text2 = "testing?";
+                        string text3 = "text3";
+                        string text4 = "example";
+                        Console.WriteLine("First example: {0}", Strings.IsAlphabetic(text1));
+                        Console.WriteLine("Second example: {0}", Strings.IsAlphabetic(text2));
+                        Console.WriteLine("Third example: {0}", Strings.IsAlphabetic(text3));
+                        Console.WriteLine("Fourth example: {0}", Strings.IsAlphabetic(text4));
+                        Console.ReadKey();
+                    }
+             }
+             </code>
+             <br></br>This example returns the following output.
+             <code>
+             First example: True
+             Second example: False
+             Third example: False
+             Fourth example: True
+             </code>
+             </example>
+             <exception cref="T:System.ArgumentNullException"><c>s</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.IsAlphabeticAndNumeric(System.String)">
+            <summary>
+            Indicates whether the <see cref="T:System.String"/> contains only letters, spaces and numeric chars.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/>.</param>
+            <returns>true if <c>s</c> is an letter- and space-only and/or numeric String; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.Strings.IsAlphabeticAndNumeric(System.String,System.Globalization.NumberFormatInfo)">
+            <summary>
+            Indicates whether the <see cref="T:System.String"/> contains only letters, spaces and numeric chars.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/>.</param>
+            <param name="numInfo">Culture specific <see cref="T:System.Globalization.NumberFormatInfo"/>.</param>
+            <returns>true if <c>s</c> is an letter- and space-only and/or numeric String; otherwise, false.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:SklLib.Strings.IsAlphabeticAndNumeric(System.String,System.Boolean)" -->
+        <member name="M:SklLib.Strings.IsAlphabeticAndNumeric(System.String,System.Globalization.NumberFormatInfo,System.Boolean)">
+            <summary>
+            Indicates whether the <see cref="T:System.String"/> contains only letters, spaces and numeric chars.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/>.</param>
+            <param name="numInfo">Culture specific <see cref="T:System.Globalization.NumberFormatInfo"/>.</param>
+            <param name="decimalNumber">Indicates whether the can be a decimal number.</param>
+            <returns>true if <c>s</c> is an letter- and space-only and/or numeric String; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.Strings.IsLetterOnly(System.String)">
+             <summary>
+             Indicates whether the <see cref="T:System.String"/> contains only letters.
+             </summary>
+             <param name="s">A <see cref="T:System.String"/>.</param>
+             <returns>true if <c>s</c> is an letter-only String; otherwise, false.</returns>
+             <remarks>
+             This method verify whether a <see cref="T:System.String"/> contains only letters.
+             </remarks>
+             <example>
+             The following console application example show how to use IsLetterOnly method.
+             <code>
+             using System;
+             using SklLib;
+            
+             class Program
+             {
+                    static void Main()
+                    {
+                        string text1 = "Make these tests";
+                        string text2 = "testing?";
+                        string text3 = "text3";
+                        string text4 = "example";
+                        Console.WriteLine("First example: {0}", Strings.IsLetterOnly(text1));
+                        Console.WriteLine("Second example: {0}", Strings.IsLetterOnly(text2));
+                        Console.WriteLine("Third example: {0}", Strings.IsLetterOnly(text3));
+                        Console.WriteLine("Fourth example: {0}", Strings.IsLetterOnly(text4));
+                        Console.ReadKey();
+                    }
+             }
+             </code>
+             <br></br>This example returns the following output.
+             <code>
+             First example: False
+             Second example: False
+             Third example: False
+             Fourth example: True
+             </code>
+             </example>
+             <exception cref="T:System.ArgumentNullException"><c>s</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.IsNumeric(System.String)">
+             <summary>
+             Indicates whether the <see cref="T:System.String"/> is categorized as a integer number.
+             </summary>
+             <param name="s">A <see cref="T:System.String"/>.</param>
+             <returns>True if <c>s</c> is numeric; otherwise, false.</returns>
+             <remarks>
+             <para>This method verify whether a <see cref="T:System.String"/> contains only numeric
+             characters, including current culture specific Number Group Separator.</para>
+             <para>Based on the <see cref="T:System.Globalization.CultureInfo"/> of the current thread.</para>
+             </remarks>
+             <example>
+             The following console application example show how to use IsNumeric method.
+             <code>
+             using System;
+             using SklLib;
+            
+             class Program
+             {
+                    static void Main()
+                    {
+                        string text1 = "4,687.59";
+                        string text2 = "8.98";
+                        string text3 = "51687";
+                        string text4 = "25,598";
+                        Console.WriteLine("First example: {0}", Strings.IsNumeric(text1));
+                        Console.WriteLine("Second example: {0}", Strings.IsNumeric(text2));
+                        Console.WriteLine("Third example: {0}", Strings.IsNumeric(text3));
+                        Console.WriteLine("Fourth example: {0}", Strings.IsNumeric(text4));
+                        Console.ReadKey();
+                    }
+                }
+             </code>
+             <br></br>This example returns the following output.
+             <code>
+             First example: False
+             Second example: False
+             Third example: True
+             Fourth example: True
+             </code>
+             </example>
+             <exception cref="T:System.ArgumentNullException"><c>s</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.IsNumeric(System.String,System.Globalization.NumberFormatInfo)">
+             <summary>
+             Indicates whether the <see cref="T:System.String"/> is categorized as a integer number.
+             </summary>
+             <param name="s">A <see cref="T:System.String"/>.</param>
+             <param name="numInfo">Culture specific <see cref="T:System.Globalization.NumberFormatInfo"/>.</param>
+             <returns>True if <c>s</c> is numeric; otherwise, false.</returns>
+             <remarks>
+             This method verify whether a <see cref="T:System.String"/> contains only numeric
+             characters, including the user-defined culture specific Number Group Separator.
+             </remarks>
+             <example>
+             The following console application example show how to use IsNumeric method.
+             <code>
+             using System;
+             using SklLib;
+             using System.Globalization;
+            
+             class Program
+             {
+                    static void Main()
+                    {
+                        NumberFormatInfo nfi = CultureInfo.GetCultureInfo("en-US").NumberFormat;
+                        string text1 = "4,687.59";
+                        string text2 = "8.98";
+                        string text3 = "51687";
+                        string text4 = "25,598";
+                        Console.WriteLine("First example: {0}", Strings.IsNumeric(text1, nfi));
+                        Console.WriteLine("Second example: {0}", Strings.IsNumeric(text2, nfi));
+                        Console.WriteLine("Third example: {0}", Strings.IsNumeric(text3, nfi));
+                        Console.WriteLine("Fourth example: {0}", Strings.IsNumeric(text4, nfi));
+                        Console.ReadKey();
+                    }
+                }
+             </code>
+             <br></br>This example returns the following output.
+             <code>
+             First example: False
+             Second example: False
+             Third example: True
+             Fourth example: True
+             </code>
+             </example>
+             <exception cref="T:System.ArgumentNullException"><c>s</c> or <c>numInfo</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.IsNumeric(System.String,System.Boolean)">
+             <summary>
+             Indicates whether the String is categorized as a integer number or
+             a decimal number.
+             </summary>
+             <param name="s">A <see cref="T:System.String"/>.</param>
+             <param name="decimalNumber">Indicates whether the can be a decimal number.</param>
+             <returns>True if <c>s</c> is a number; otherwise, false.</returns>
+             <remarks>
+             <para>This method verify whether a <see cref="T:System.String"/> contains only numeric
+             characters, including current culture specific Number Group Separator.</para>
+             <para>If decimalNumber parameter is true, this method accepts current culture
+             specific Number Decimal Separator.</para>
+             <para>Based on the <see cref="T:System.Globalization.CultureInfo"/> of the current thread.</para>
+             </remarks>
+             <example>
+             The following console application example show how to use IsNumeric method.
+             <code>
+             using System;
+             using SklLib;
+            
+             class Program
+             {
+                    static void Main()
+                    {
+                        string text1 = "46,87.59";
+                        string text2 = "78.98";
+                        string text3 = "51687.547";
+                        string text4 = "25,598.9";
+                        string text5 = "87643";
+                        Console.WriteLine("First example: {0}", Strings.IsNumeric(text1, true));
+                        Console.WriteLine("Second example: {0}", Strings.IsNumeric(text2, true));
+                        Console.WriteLine("Third example: {0}", Strings.IsNumeric(text3, true));
+                        Console.WriteLine("Fourth example: {0}", Strings.IsNumeric(text4, true));
+                        Console.WriteLine("Fifth example: {0}", Strings.IsNumeric(text5, true));
+                        Console.ReadKey();
+                    }
+                }
+             </code>
+             <br></br>This example returns the following output.
+             <code>
+             First example: False
+             Second example: True
+             Third example: True
+             Fourth example: True
+             Fifth example: True
+             </code>
+             </example>
+             <exception cref="T:System.ArgumentNullException"><c>s</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.IsNumeric(System.String,System.Globalization.NumberFormatInfo,System.Boolean)">
+             <summary>
+             Indicates whether the String is categorized as a integer number or
+             a decimal number.
+             </summary>
+             <param name="s">A <see cref="T:System.String"/>.</param>
+             <param name="numInfo">Culture specific <see cref="T:System.Globalization.NumberFormatInfo"/>.</param>
+             <param name="decimalNumber">Indicates whether the can be a decimal number.</param>
+             <returns>True if <c>s</c> is a number; otherwise, false.</returns>
+             <remarks>
+             <para>This method verify whether a <see cref="T:System.String"/> contains only numeric
+             characters, including the user-defined culture specific Number Group Separator.</para>
+             <para>If decimalNumber parameter is true, this method accepts user-defined culture
+             specific Number Decimal Separator.</para>
+             </remarks>
+             <example>
+             The following console application example show how to use IsNumeric method.
+             <code>
+             using System;
+             using SklLib;
+            
+             class Program
+             {
+                    static void Main()
+                    {
+                        NumberFormatInfo nfi = CultureInfo.GetCultureInfo("en-US").NumberFormat;
+                        string text1 = "46,87.59";
+                        string text2 = "78.98";
+                        string text3 = "51687.547";
+                        string text4 = "25,598.9";
+                        string text5 = "87643";
+                        Console.WriteLine("First example: {0}", Strings.IsNumeric(text1, nfi, true));
+                        Console.WriteLine("Second example: {0}", Strings.IsNumeric(text2, nfi, true));
+                        Console.WriteLine("Third example: {0}", Strings.IsNumeric(text3, nfi, true));
+                        Console.WriteLine("Fourth example: {0}", Strings.IsNumeric(text4, nfi, true));
+                        Console.WriteLine("Fifth example: {0}", Strings.IsNumeric(text5, nfi, true));
+                        Console.ReadKey();
+                    }
+                }
+             </code>
+             <br></br>This example returns the following output.
+             <code>
+             First example: False
+             Second example: True
+             Third example: True
+             Fourth example: True
+             Fifth example: True
+             </code>
+             </example>
+             <exception cref="T:System.ArgumentNullException"><c>s</c> or <c>numInfo</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Strings.RepeatString(System.String,System.Int32)">
+            <summary>
+            Repeats specified String to the number of times specified.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/>.</param>
+            <param name="count">The number of times that <c>s</c> occurs.</param>
+            <returns>The <c>s</c> repeated the number of times specified.</returns>
+            <remarks>
+            If <c>count</c> is zero, an <see cref="F:System.String.Empty"/> instance is returned.
+            </remarks>
+            <example>
+            <para>The following simple code example demonstrates how you can use the RepeatString
+            method.</para>
+            <code>
+            String str = "-=";
+            String repeated = RepeatString(str, 10);
+            // The value of repeated String is "-=-=-=-=-=-=-=-=-=-=", "-=" repeated 10 times.
+            </code>
+            </example>
+            <exception cref="T:System.ArgumentNullException"><c>s</c> is a null reference.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><c>count</c> is less than zero, or
+            <c>s</c> repeated in the specified times, by <c>count</c>, is too big to return.</exception>
+        </member>
+        <member name="T:SklLib.Strings.IndexedChar">
+            <summary>
+            Stores a <see cref="T:System.Char"/> and itself position in a <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="F:SklLib.Strings.IndexedChar.Character">
+            <summary>
+            A <see cref="T:System.Char"/>.
+            </summary>
+        </member>
+        <member name="F:SklLib.Strings.IndexedChar.Position">
+            <summary>
+            A integer position.
+            </summary>
+        </member>
+        <member name="M:SklLib.Strings.IndexedChar.#ctor(System.Char,System.Int32)">
+            <summary>
+            Initializes the IndexedChar structure with a <see cref="T:System.Char"/> and itself position.
+            </summary>
+            <param name="c">A <see cref="T:System.Char"/>.</param>
+            <param name="index">Position of <c>c</c> in a <see cref="T:System.String"/>.</param>
+        </member>
+        <member name="M:SklLib.Strings.IndexedChar.#ctor(System.String,System.Int32)">
+            <summary>
+            Initializes the IndexedChar structure with a specified <see cref="T:System.Char"/>
+            of a <see cref="T:System.String"/>.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/>.</param>
+            <param name="index">Position of <see cref="T:System.Char"/> to get.</param>
+        </member>
+        <member name="T:SklLib.LengthSize">
+            <summary>
+            Represents a size of length, and ables a conversion between measures.
+            </summary>
+        </member>
+        <member name="M:SklLib.LengthSize.#ctor(System.Decimal,SklLib.SILengthUnit)">
+            <summary>
+            Initializes a new instance of the LinearSize structure to specified value and measure.
+            </summary>
+            <param name="value">Value of measurement.</param>
+            <param name="unit">Linear measure unit of specified value.</param>
+        </member>
+        <member name="M:SklLib.LengthSize.#ctor(System.Decimal,SklLib.ImperialLengthUnit)">
+            <summary>
+            Initializes a new instance of the LinearSize structure to specified value and measure.
+            </summary>
+            <param name="value">Value of measurement.</param>
+            <param name="unit">Linear measure unit of specified value.</param>
+        </member>
+        <member name="M:SklLib.LengthSize.PixelsPerInches(System.Int64,System.Single)">
+            <summary>
+            Creates a LinearSize structure based in the specified pixels and dpi (Dots per Inch) resolution.
+            </summary>
+            <param name="pixels">Measure in pixels.</param>
+            <param name="dpi">dpi resolution.</param>
+            <returns>A LinearSize structure.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.PixelsPerMillimeters(System.Int64,System.Single)">
+            <summary>
+            Creates a LinearSize structure based in the specified pixels and ppm (Points per Millimeters).
+            </summary>
+            <param name="pixels">Measure in pixels.</param>
+            <param name="ppm">ppm resolution.</param>
+            <returns>A LinearSize structure.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_Addition(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Adds two specified LinearSize values.
+            </summary>
+            <param name="op1">A LinearSize.</param>
+            <param name="op2">A LinearSize.</param>
+            <returns>The LinearSize result of adding op1 and op2.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_Subtraction(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Subtracts two specified LinearSize values.
+            </summary>
+            <param name="op1">A LinearSize.</param>
+            <param name="op2">A LinearSize.</param>
+            <returns>The LinearSize result of subtracting op1 from op2.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_Multiply(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Multiplies two specified LinearSize values.
+            </summary>
+            <param name="op1">A LinearSize.</param>
+            <param name="op2">A LinearSize.</param>
+            <returns>The LinearSize result of multiplying op1 by op2.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_Division(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Divides two specified LinearSize values.
+            </summary>
+            <param name="op1">A LinearSize (the dividend).</param>
+            <param name="op2">A LinearSize (the divisor).</param>
+            <returns>The LinearSize result of op1 by op2.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_Modulus(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Returns the remainder resulting from dividing two specified LinearSize values.
+            </summary>
+            <param name="op1">A LinearSize.</param>
+            <param name="op2">A LinearSize.</param>
+            <returns>The LinearSize remainder resulting from dividing d1 by d2.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_Equality(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Determines whether two specified instances of LinearSize are equal.
+            </summary>
+            <param name="l">A LinearSize.</param>
+            <param name="m">A LinearSize.</param>
+            <returns>true if l and m represent the same linear measure value; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_Inequality(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Determines whether two specified instances of LinearSize are not equal.
+            </summary>
+            <param name="l">A LinearSize.</param>
+            <param name="m">A LinearSize.</param>
+            <returns>true if l and m do not represent the same linear measure value; otherwise, false</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_GreaterThan(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Determines whether one specified LinearSize is greater than another specified LinearSize.
+            </summary>
+            <param name="l">A LinearSize.</param>
+            <param name="m">A LinearSize.</param>
+            <returns>true if l is greater than m; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_GreaterThanOrEqual(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Determines whether one specified LinearSize is greater than or equal to another specified LinearSize.
+            </summary>
+            <param name="l">A LinearSize.</param>
+            <param name="m">A LinearSize.</param>
+            <returns>true if l is greater than or equal to m; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_LessThan(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Determines whether one specified LinearSize is less than another specified LinearSize.
+            </summary>
+            <param name="l">A LinearSize.</param>
+            <param name="m">A LinearSize.</param>
+            <returns>true if l is less than m; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.op_LessThanOrEqual(SklLib.LengthSize,SklLib.LengthSize)">
+            <summary>
+            Determines whether one specified LinearSize is less than or equal to another specified LinearSize.
+            </summary>
+            <param name="l">A LinearSize.</param>
+            <param name="m">A LinearSize.</param>
+            <returns>true if l is less than or equal to m; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>A 32-bit signed integer hash code.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance and a specified <see cref="T:System.Object"/>
+            represent the same type and value.
+            </summary>
+            <param name="obj">An object to compare to this instance.</param>
+            <returns>true if value is a LinearSize and equal to this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.ToString">
+            <summary>
+            Converts the numeric value of this instance to its equivalent <see cref="T:System.String"/> representation
+            </summary>
+            <returns>A <see cref="T:System.String"/> representing the value of this instance.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.GetPixelsByDpi(System.Single)">
+            <summary>
+            Get value represented by this instance in pixels.
+            </summary>
+            <param name="dpi">DPI (Dots Per Inch) resolution.</param>
+            <returns>The value in pixels in a specific resolution.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.GetPixelsByPpm(System.Single)">
+            <summary>
+            Get value represented by this instance in pixels.
+            </summary>
+            <param name="ppm">PPM (Points Per Millimeter) resolution.</param>
+            <returns>The value in pixels in a specific resolution.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.GetValue(SklLib.SILengthUnit)">
+            <summary>
+            Gets the value represented by this instance in the specified SI unit.
+            </summary>
+            <param name="unit">Specifies a SI unit.</param>
+            <returns>The value represented by this instance in the specified unit.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.GetValue(SklLib.ImperialLengthUnit)">
+            <summary>
+            Gets the value represented by this instance in the specified imperial unit.
+            </summary>
+            <param name="unit">Specifies a Imperial unit.</param>
+            <returns>The value represented by this instance in the specified unit.</returns>
+        </member>
+        <member name="M:SklLib.LengthSize.SetValue(SklLib.SILengthUnit,System.Decimal)">
+            <summary>
+            Sets the value represented by this instance in the specified SI unit.
+            </summary>
+            <param name="unit">
+            The SI unit from value.
+            </param>
+            <param name="value">
+            The value to set.
+            </param>
+        </member>
+        <member name="M:SklLib.LengthSize.SetValue(SklLib.ImperialLengthUnit,System.Decimal)">
+            <summary>
+            Sets the value represented by this instance in the specified imperial unit.
+            </summary>
+            <param name="unit">
+            The imperial unit from value.
+            </param>
+            <param name="value">
+            The value to set.
+            </param>
+        </member>
+        <member name="M:SklLib.LengthSize.CompareTo(System.Object)">
+            <summary>
+            Compares this instance to a specified object and returns an indication of their relative values.
+            </summary>
+            <param name="obj">A boxed LinearSize object to compare, or null.</param>
+            <returns>
+            <para>A signed number indicating the relative values of this instance and value.</para>
+            <para>Value Description:</para>
+            <para>- Less than zero: This instance is less than value.</para>
+            <para>- Zero: This instance is equal to value.</para>
+            <para>- Greater than zero: This instance is greater than value, or value is null.</para></returns>
+        </member>
+        <member name="M:SklLib.LengthSize.CompareTo(SklLib.LengthSize)">
+            <summary>
+            Compares this instance to a specified LinearSize object and returns an indication of their relative values.
+            </summary>
+            <param name="other">A LinearSize object to compare.</param>
+            <returns>
+            <para>A signed number indicating the relative values of this instance and the value parameter.</para>
+            <para>Value Description:</para>
+            <para>- Less than zero: This instance is less than value.</para>
+            <para>- Zero: This instance is equal to value.</para>
+            <para>- Greater than zero: This instance is greater than value.</para></returns>
+        </member>
+        <member name="M:SklLib.LengthSize.Equals(SklLib.LengthSize)">
+            <summary>
+            Returns a value indicating whether this instance is equal to the specified LinearSize instance.
+            </summary>
+            <param name="other">A LinearSize instance to compare to this instance.</param>
+            <returns>true if the value parameter equals the value of this instance; otherwise, false.</returns>
+        </member>
+        <member name="P:SklLib.LengthSize.Millimeters">
+            <summary>
+            Gets or sets the value represented by this instance in millimeters.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Centimeters">
+            <summary>
+            Gets or sets the value represented by this instance in centimeters.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Decimeters">
+            <summary>
+            Gets or sets the value represented by this instance in decimeters.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Meters">
+            <summary>
+            Gets or sets the value represented by this instance in meters.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Decameters">
+            <summary>
+            Gets or sets the value represented by this instance in decameters.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Hectometers">
+            <summary>
+            Gets or sets the value represented by this instance in hectometers.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Kilometers">
+            <summary>
+            Gets or sets the value represented by this instance in kilometers.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Inches">
+            <summary>
+            Gets or sets the value represented by this instance in inches.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Feet">
+            <summary>
+            Gets or sets the value represented by this instance in feet.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Yards">
+            <summary>
+            Gets or sets the value represented by this instance in yards.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Furlongs">
+            <summary>
+            Gets or sets the value represented by this instance in furlongs.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Miles">
+            <summary>
+            Gets or sets the value represented by this instance in miles.
+            </summary>
+        </member>
+        <member name="P:SklLib.LengthSize.Leagues">
+            <summary>
+            Gets or sets the value represented by this instance in leagues.
+            </summary>
+        </member>
+        <member name="T:SklLib.IMaskeable">
+            <summary>
+            Defines methods to masking support.
+            </summary>
+            <remarks>
+            The IMaskeable interface contains three members, which are intented to support
+            masking.
+            </remarks>
+        </member>
+        <member name="M:SklLib.IMaskeable.IsMatch(System.String)">
+            <summary>
+            Indicates whether this instance finds a match in the input string.
+            </summary>
+            <param name="input">The string to search for a match.</param>
+            <returns>true if this instance finds a match; otherwise, false.</returns>
+            <remarks>
+            <para>Masker classes uses this method to verify whether a user-typed <see cref="T:System.String"/> is
+            match with Mask.</para>
+            </remarks>
+        </member>
+        <member name="P:SklLib.IMaskeable.Mask">
+            <summary>
+            Provides a <see cref="T:System.String"/> to use as mask.
+            </summary>
+            <remarks>
+            <para>The masker classes uses a mask to filter user-typed <see cref="T:System.Char"/> and to
+            verify a automatic-typed <see cref="T:System.Char"/>.</para>
+            <para>To indicate a automatic-typed <see cref="T:System.Char"/>, uses "!" before of a
+            <see cref="T:System.Char"/>.</para>
+            <para>The Mask <see cref="T:System.String"/> need return true when used in <see cref="M:SklLib.IMaskeable.IsMatch(System.String)"/> method,
+            masker classes ignores "!" to match the Mask <see cref="T:System.String"/>.</para>
+            </remarks>
+        </member>
+        <member name="P:SklLib.IMaskeable.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this instance is read-only.
+            </summary>
+            <remarks>
+            <para>Masker classes uses this property to verify whether this instance is read-only.</para>
+            <para>No read-only instances can generate problems to masker classes, thus, the masker
+            class only accept read-only instances.</para>
+            </remarks>
+        </member>
+        <member name="T:SklLib.IWriteProtected`1">
+            <summary>
+            Defines methods that supports read-only instances.
+            </summary>
+            <typeparam name="T">Type of current instance.</typeparam>
+        </member>
+        <member name="M:SklLib.IWriteProtected`1.ReadOnly">
+            <summary>
+            Returns a read-only type-specific wrapper.
+            </summary>
+            <returns>A read-only type-specific wrapper around this instance.</returns>
+        </member>
+        <member name="M:SklLib.IWriteProtected`1.Clone">
+            <summary>
+            Creates a shallow copy of the type-specific.
+            </summary>
+            <returns>A new type-specific, not write protected, copied around this instance.</returns>
+        </member>
+        <member name="P:SklLib.IWriteProtected`1.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this instance is read-only.
+            </summary>
+        </member>
+        <member name="T:SklLib.DataSize">
+            <summary>
+            Represents a data size, based on bytes multiples.
+            </summary>
+        </member>
+        <member name="M:SklLib.DataSize.#ctor(System.Int64)">
+            <summary>
+            Initializes a new instance of the DataSize structure to specified bytes value.
+            </summary>
+            <param name="bytes">A value in bytes.</param>
+        </member>
+        <member name="M:SklLib.DataSize.#ctor(System.Int64,SklLib.ByteMeasure)">
+            <summary>
+            Initializes a new instance of the LinearSize structure to specified value.
+            </summary>
+            <param name="value">A value.</param>
+            <param name="mult">Greatness of value.</param>
+            <exception cref="T:System.OverflowException">The value is greater than 8 Exabytes.</exception>
+        </member>
+        <member name="M:SklLib.DataSize.op_Addition(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Adds two specified DataSize values.
+            </summary>
+            <param name="op1">A DataSize.</param>
+            <param name="op2">A DataSize.</param>
+            <returns>The DataSize result of adding op1 and op2.</returns>
+            <exception cref="T:System.OverflowException">The return value is greater than <see cref="F:System.UInt64.MaxValue"/>.</exception>
+        </member>
+        <member name="M:SklLib.DataSize.op_Subtraction(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Subtracts two specified DataSize values.
+            </summary>
+            <param name="op1">A DataSize.</param>
+            <param name="op2">A DataSize.</param>
+            <returns>The DataSize result of subtracting op1 from op2.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_Multiply(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Multiplies two specified DataSize values.
+            </summary>
+            <param name="op1">A DataSize.</param>
+            <param name="op2">A DataSize.</param>
+            <returns>The DataSize result of multiplying op1 by op2.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_Division(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Divides two specified DataSize values.
+            </summary>
+            <param name="op1">A DataSize (the dividend).</param>
+            <param name="op2">A DataSize (the divisor).</param>
+            <returns>The DataSize result from dividing of op1 by op2.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_Modulus(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Returns the remainder resulting from dividing two specified DataSize values.
+            </summary>
+            <param name="op1">A DataSize.</param>
+            <param name="op2">A DataSize.</param>
+            <returns>The DataSize remainder resulting from dividing d1 by d2.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_UnaryNegation(SklLib.DataSize)">
+            <summary>
+            Negates the value of the specified DataSize operand.
+            </summary>
+            <param name="op">The DataSize operand.</param>
+            <returns>The result of op multiplied by negative one (-1).</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_UnaryPlus(SklLib.DataSize)">
+            <summary>
+            Returns the value of the DataSize operand (the sign of the operand is unchanged).
+            </summary>
+            <param name="op">The DataSize operand.</param>
+            <returns>The value of the operand, op.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_Equality(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Determines whether two specified instances of DataSize are equal.
+            </summary>
+            <param name="b">A DataSize.</param>
+            <param name="m">A DataSize.</param>
+            <returns>true if b and m represent the same binary measure value; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_Inequality(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Determines whether two specified instances of DataSize are not equal.
+            </summary>
+            <param name="b">A DataSize.</param>
+            <param name="m">A DataSize.</param>
+            <returns>true if b and m do not represent the same binary measure value; otherwise, false</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_GreaterThan(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Determines whether one specified DataSize is greater than another specified DataSize.
+            </summary>
+            <param name="b">A DataSize.</param>
+            <param name="m">A DataSize.</param>
+            <returns>true if b is greater than m; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_GreaterThanOrEqual(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Determines whether one specified DataSize is greater than or equal to another specified DataSize.
+            </summary>
+            <param name="b">A DataSize.</param>
+            <param name="m">A DataSize.</param>
+            <returns>true if b is greater than or equal to m; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_LessThan(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Determines whether one specified DataSize is less than another specified DataSize.
+            </summary>
+            <param name="b">A DataSize.</param>
+            <param name="m">A DataSize.</param>
+            <returns>true if b is less than m; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.op_LessThanOrEqual(SklLib.DataSize,SklLib.DataSize)">
+            <summary>
+            Determines whether one specified DataSize is less than or equal to another specified DataSize.
+            </summary>
+            <param name="b">A DataSize.</param>
+            <param name="m">A DataSize.</param>
+            <returns>true if b is less than or equal to m; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>A 32-bit signed integer hash code.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance and a specified <see cref="T:System.Object"/>
+            represent the same type and value.
+            </summary>
+            <param name="obj">An object to compare to this instance.</param>
+            <returns>true if value is a DataSize and equal to this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.ToString">
+            <summary>
+            Converts the numeric value of this instance to its equivalent <see cref="T:System.String"/> representation
+            </summary>
+            <returns>A <see cref="T:System.String"/> representing the value of this instance.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.GetValue(SklLib.ByteMeasure)">
+            <summary>
+            Gets the value represented by this instance in the specified measure.
+            </summary>
+            <param name="mult">Specifies a measure.</param>
+            <returns>The value represented by this instance in the specified measure.</returns>
+        </member>
+        <member name="M:SklLib.DataSize.ToString(System.String)">
+            <summary>
+            Converts the value of this instance to its equivalent string representation using the specified format.
+            </summary>
+            <param name="format">A format string.</param>
+            <returns>A string representation of value of this instance as specified by <c>format</c>.</returns>
+            <exception cref="T:System.FormatException">format does not contain a valid custom format pattern.</exception>
+            <example>
+            The following console application example show how to use DataSize.ToString method.
+            <code>
+            using System;
+            using SklLib;
+            
+            class Program
+            {
+                static void Main()
+                {
+                       DataSize binMea = new DataSize();
+                       binMea.Megabytes = 15.317M;
+            
+                       Console.WriteLine(binMea.ToString("G|M-"));
+                           // output: "15.3169994354248046875 MB"
+            
+                       Console.WriteLine(binMea.ToString("G|M+"));
+                           // output: "15.3169994354248046875 Megabytes"
+            
+                       Console.WriteLine(binMea.ToString("N2|M-"));
+                           // output: "15.32 MB"
+            
+                       Console.WriteLine(binMea.ToString("G|K-"));
+                           // output: "15684.607421875 KB"
+            
+                    Console.WriteLine(binMea.ToString("N1|K-"));
+                           // output: "15,684.6 KB"
+            
+                       binMea.Gigabytes = 4000;
+            
+                       Console.WriteLine(binMea.ToString("G|&gt;-"));
+                           // output: "3.90625 TB"
+            
+                    Console.WriteLine(binMea.ToString("N0|&gt;-"));
+                           // output: "4 TB"
+            
+                    Console.WriteLine(binMea.ToString("G|0-"));
+                           // output: "4000 GB"
+            
+                    Console.ReadKey();
+                }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:SklLib.DataSize.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Converts the value of this instance to its equivalent string representation using the specified format
+            and culture-specific format information.
+            </summary>
+            <param name="format">A format string.</param>
+            <param name="provider">An <see cref="T:System.IFormatProvider"/> that supplies culture-specific formatting information.</param>
+            <returns>A string representation of value of this instance as specified by <c>format</c> and <c>provider</c>.</returns>
+            <exception cref="T:System.FormatException">format does not contain a valid custom format pattern.</exception>
+            <example>
+            The following console application example show how to use DataSize.ToString method.
+            <code>
+            using System;
+            using System.Globalization;
+            using SklLib;
+            
+            class Program
+            {
+                static void Main()
+                {
+                       DataSize binMea = new DataSize();
+                       binMea.Megabytes = 15.317M;
+            
+                       Console.WriteLine(binMea.ToString("G|M-", NumberFormatInfo.CurrentInfo));
+                           // output: "15.3169994354248046875 MB"
+            
+                       Console.WriteLine(binMea.ToString("G|M+", NumberFormatInfo.CurrentInfo));
+                           // output: "15.3169994354248046875 Megabytes"
+            
+                       Console.WriteLine(binMea.ToString("N2|M-", NumberFormatInfo.CurrentInfo));
+                           // output: "15.32 MB"
+            
+                       Console.WriteLine(binMea.ToString("G|K-", NumberFormatInfo.CurrentInfo));
+                           // output: "15684.607421875 KB"
+            
+                    Console.WriteLine(binMea.ToString("N1|K-", NumberFormatInfo.CurrentInfo));
+                           // output: "15,684.6 KB"
+            
+                       binMea.Gigabytes = 4000;
+            
+                       Console.WriteLine(binMea.ToString("G|&gt;-", NumberFormatInfo.CurrentInfo));
+                           // output: "3.90625 TB"
+            
+                    Console.WriteLine(binMea.ToString("N0|&gt;-", NumberFormatInfo.CurrentInfo));
+                           // output: "4 TB"
+            
+                    Console.WriteLine(binMea.ToString("G|0-", NumberFormatInfo.CurrentInfo));
+                           // output: "4000 GB"
+            
+                    Console.ReadKey();
+                }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:SklLib.DataSize.CompareTo(System.Object)">
+            <summary>
+            Compares this instance to a specified object and returns an indication of their relative values.
+            </summary>
+            <param name="obj">A boxed DataSize object to compare, or null.</param>
+            <returns>
+            <para>A signed number indicating the relative values of this instance and value.</para>
+            <para>Value Description:</para>
+            <para>- Less than zero: This instance is less than value.</para>
+            <para>- Zero: This instance is equal to value.</para>
+            <para>- Greater than zero: This instance is greater than value, or value is null.</para></returns>
+        </member>
+        <member name="M:SklLib.DataSize.CompareTo(SklLib.DataSize)">
+            <summary>
+            Compares this instance to a specified DataSize object and returns an indication of their relative values.
+            </summary>
+            <param name="other">A DataSize object to compare.</param>
+            <returns>
+            <para>A signed number indicating the relative values of this instance and the value parameter.</para>
+            <para>Value Description:</para>
+            <para>- Less than zero: This instance is less than value.</para>
+            <para>- Zero: This instance is equal to value.</para>
+            <para>- Greater than zero: This instance is greater than value.</para></returns>
+        </member>
+        <member name="M:SklLib.DataSize.Equals(SklLib.DataSize)">
+            <summary>
+            Returns a value indicating whether this instance is equal to the specified DataSize instance.
+            </summary>
+            <param name="other">A DataSize instance to compare to this instance.</param>
+            <returns>true if the value parameter equals the value of this instance; otherwise, false.</returns>
+        </member>
+        <member name="P:SklLib.DataSize.Bytes">
+            <summary>
+            Gets or sets the value represented by this instance in bytes.
+            </summary>
+        </member>
+        <member name="P:SklLib.DataSize.Kilobytes">
+            <summary>
+            Gets or sets the value represented by this instance in kilobytes.
+            </summary>
+            <exception cref="T:System.OverflowException">The value is greater than 8 Exabytes.</exception>
+        </member>
+        <member name="P:SklLib.DataSize.Megabytes">
+            <summary>
+            Gets or sets the value represented by this instance in megabytes.
+            </summary>
+            <exception cref="T:System.OverflowException">The value is greater than 8 Exabytes.</exception>
+        </member>
+        <member name="P:SklLib.DataSize.Gigabytes">
+            <summary>
+            Gets or sets the value represented by this instance in gigabytes.
+            </summary>
+            <exception cref="T:System.OverflowException">The value is greater than 8 Exabytes.</exception>
+        </member>
+        <member name="P:SklLib.DataSize.Terabytes">
+            <summary>
+            Gets or sets the value represented by this instance in terabytes.
+            </summary>
+            <exception cref="T:System.OverflowException">The value is greater than 8 Exabytes.</exception>
+        </member>
+        <member name="P:SklLib.DataSize.Petabytes">
+            <summary>
+            Gets or sets the value represented by this instance in petabytes.
+            </summary>
+            <exception cref="T:System.OverflowException">The value is greater than 8 Exabytes.</exception>
+        </member>
+        <member name="P:SklLib.DataSize.Exabytes">
+            <summary>
+            Gets or sets the value represented by this instance in exabytes.
+            </summary>
+            <exception cref="T:System.OverflowException">The value is greater than 8 Exabytes.</exception>
+        </member>
+        <member name="T:SklLib.Security.Cryptography.Simple">
+            <summary>
+            Provides methods to make more easily works with cryptography.
+            </summary>
+        </member>
+        <member name="M:SklLib.Security.Cryptography.Simple.EncryptText(System.String,System.String)">
+            <summary>
+            Encrypt a text using a TripleDES symmetric encryptor and MD5 hashed key.
+            </summary>
+            <param name="text">Specifies a text to encrypt.</param>
+            <param name="key">Specifies a key to encrypt.</param>
+            <returns>Encrypted text.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>text</c> or <c>key</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Security.Cryptography.Simple.DecryptText(System.String,System.String)">
+            <summary>
+            Decrypt a text using a TripleDES symmetric encryptor and MD5 hashed key.
+            </summary>
+            <param name="text">Specifies a text to decrypt.</param>
+            <param name="key">Specifies a key to decrypt.</param>
+            <returns>Decrypted text.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>text</c> or <c>key</c> is a null reference.</exception>
+        </member>
+        <member name="T:SklLib.Formatting.FormatStringBase">
+            <summary>
+            Provides base methods to format any <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="F:SklLib.Formatting.FormatStringBase.expr">
+            <summary>
+            Used by <see cref="T:SklLib.Formatting.FormatStringBase"/> class to stores standard expression <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="F:SklLib.Formatting.FormatStringBase.regex">
+            <summary>
+            Used by <see cref="T:SklLib.Formatting.FormatStringBase"/> class to stores a <see cref="T:System.Text.RegularExpressions.Regex"/> to validade
+            standard expressions.
+            </summary>
+        </member>
+        <member name="F:SklLib.Formatting.FormatStringBase.cExpr">
+            <summary>
+            Used by <see cref="T:SklLib.Formatting.FormatStringBase"/> class to stores compact expression <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="F:SklLib.Formatting.FormatStringBase.cRegex">
+            <summary>
+            Used by <see cref="T:SklLib.Formatting.FormatStringBase"/> class to stores a <see cref="T:System.Text.RegularExpressions.Regex"/> to validade
+            compact expressions.
+            </summary>
+        </member>
+        <member name="F:SklLib.Formatting.FormatStringBase.remChars">
+            <summary>
+            Used by <see cref="T:SklLib.Formatting.FormatStringBase"/> class to stores a <see cref="T:SklLib.Strings.IndexedChar"/> <see cref="T:System.Array"/>
+            to indicate additional chars of standard expresion, comparing with compact expression.
+            </summary>
+        </member>
+        <member name="F:SklLib.Formatting.FormatStringBase.isReadOnly">
+            <summary>
+            Used by <see cref="T:SklLib.Formatting.FormatStringBase"/> class to indicate whether this instance is read-only.
+            </summary>
+        </member>
+        <member name="F:SklLib.Formatting.FormatStringBase.mask">
+            <summary>
+            Used by <see cref="T:SklLib.Formatting.FormatStringBase"/> class to stores a mask <see cref="T:System.String"/>.
+            </summary>
+        </member>
+        <member name="M:SklLib.Formatting.FormatStringBase.#ctor">
+            <summary>
+            Initializes a new writable instance of the <see cref="T:SklLib.Formatting.FormatStringBase"/> class.
+            </summary>
+            <remarks>
+            The properties of the new instance can be modified if you want user-defined formatting.
+            </remarks>
+        </member>
+        <member name="M:SklLib.Formatting.FormatStringBase.CompactIsMatch(System.String)">
+            <summary>
+            Indicates whether the <see cref="P:SklLib.Formatting.FormatStringBase.CompactExpression"/> finds a match in the input <see cref="T:System.String"/>.
+            </summary>
+            <param name="input">The string to search for a match.</param>
+            <returns>true if the input string is valid; otherwise, false.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>input</c> is a null reference.</exception>
+            <exception cref="T:System.InvalidOperationException"><see cref="P:SklLib.Formatting.FormatStringBase.CompactExpression"/> was not set.</exception>
+        </member>
+        <member name="M:SklLib.Formatting.FormatStringBase.GetStandardFormat(System.String)">
+            <summary>
+            Provides a <see cref="T:System.String"/> in standard format of compact format, generally used to show to user.
+            </summary>
+            <param name="input">A compact format.</param>
+            <returns>A standard format.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>input</c> is a null reference.</exception>
+            <exception cref="T:System.ArgumentException">Don't is a valid compact format string.</exception>
+            <exception cref="T:System.InvalidOperationException"><see cref="P:SklLib.Formatting.FormatStringBase.RemovableChars"/> was not set.</exception>
+        </member>
+        <member name="M:SklLib.Formatting.FormatStringBase.GetCompactFormat(System.String)">
+            <summary>
+            Provides a <see cref="T:System.String"/> in compact format of standard format, generally used to store in DataBases.
+            </summary>
+            <param name="input">A standard postal code.</param>
+            <returns>A compact postal code.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>input</c> is a null reference.</exception>
+            <exception cref="T:System.ArgumentException">Don't is a valid standard format string.</exception>
+            <exception cref="T:System.NullReferenceException"><see cref="P:SklLib.Formatting.FormatStringBase.RemovableChars"/> was not set.</exception>
+        </member>
+        <member name="M:SklLib.Formatting.FormatStringBase.VerifyWritable">
+            <summary>
+            <para>Verify whether this instance is read-only</para>
+            If <c>true</c> causes a exception, otherwise, don't do anything.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="M:SklLib.Formatting.FormatStringBase.IsMatch(System.String)">
+            <summary>
+            Indicates whether this instance finds a match in the input <see cref="T:System.String"/>.
+            </summary>
+            <param name="input">The <see cref="T:System.String"/> to search for a match.</param>
+            <returns>true if the input <see cref="T:System.String"/> is valid; otherwise, false.</returns>
+            <remarks>
+            Verify whether the input <see cref="T:System.String"/> is meatched by this instance.
+            </remarks>
+            <exception cref="T:System.ArgumentNullException"><c>input</c> is a null reference.</exception>
+            <exception cref="T:System.NullReferenceException"><see cref="P:SklLib.Formatting.FormatStringBase.Expression"/> was not set.</exception>
+        </member>
+        <member name="M:SklLib.Formatting.FormatStringBase.ReadOnly">
+            <summary>
+            Returns a read-only FormatStringBase wrapper.
+            </summary>
+            <returns>A read-only FormatStringBase wrapper around this instance.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.FormatStringBase.Clone">
+            <summary>
+            Creates a shallow copy of a FormatStringBase.
+            </summary>
+            <returns>A new FormatStringBase, not write protected, copied around this instance.</returns>
+        </member>
+        <member name="P:SklLib.Formatting.FormatStringBase.Expression">
+            <summary>
+            Gets or sets a regular expression pattern to match a Standard format.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">The property is being set to a null
+            reference.</exception>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+            <value>A valid pattern to use in <see cref="T:System.Text.RegularExpressions.Regex"/>
+            class.</value>
+            <example>
+            The following code example demonstrates the Expression property.
+            <code>
+            // Initialize a new writable instance.
+            FormatStringBase fStr = new FormatStringBase();
+            // Defines a personalized pattern to match an string.
+            fStr.Expression = @"^[A-F]{3}_\d{6}[JK]$";
+            // One example of a valid string in this Expression is "CAE_842947K".
+            </code>
+            </example>
+        </member>
+        <member name="P:SklLib.Formatting.FormatStringBase.CompactExpression">
+            <summary>
+            Gets or sets a regular expression pattern to match a compact version of
+            <see cref="P:SklLib.Formatting.FormatStringBase.Expression"/> property.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">The property is being set to a null
+            reference.</exception>
+            <exception cref="T:System.InvalidOperationException">The property is being set and the
+            <see cref="T:SklLib.Formatting.PostalCode"/> is read-only.</exception>
+            <value>A valid pattern to use in <see cref="T:System.Text.RegularExpressions.Regex"/>
+            class.</value>
+            <example>
+            The following code example demonstrates the CompactExpression property.
+            <code>
+            // Initialize a new writable instance.
+            FormatStringBase fStr = new FormatStringBase();
+            // Defines a personalized pattern to match a compacted version of Expression string.
+            fStr.CompactExpression = @"^[A-F]{3}\d{6}[JK]$";
+            // One example of a valid string in this CompactExpression is "CAE842947K".
+            </code>
+            </example>
+        </member>
+        <member name="P:SklLib.Formatting.FormatStringBase.RemovableChars">
+            <summary>
+            Gets or sets a Array of <see cref="T:SklLib.Strings.IndexedChar"/> struct that indicates additional
+            chars of Standard format, comparing with compact expression.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">The property is being set to a null
+            reference.</exception>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+            <value>A Array of <see cref="T:SklLib.Strings.IndexedChar"/> struct</value>
+            <example>
+            The following code example demonstrates the RemovableChars property.
+            <code>
+            // Initialize a new writable instance.
+            FormatStringBase fStr = new FormatStringBase();
+            
+            // Defines a personalized pattern to match a string.
+            fStr.Expression = @"^[A-F]{3}_\d{6}-[JK]$";
+            // One example of a valid string in this Expression is "CAE_842947-J".
+            
+            // Defines a personalized pattern to match a compacted version of Expression string.
+            fStr.CompactExpression = @"^[A-F]{3}\d{6}[JK]$";
+            // One example of a valid string in this CompactExpression is "CAE842947J".
+            
+            // Defines aditional chars in the standard format.
+            Strings.IndexedChar[] idxCh = new Strings.IndexedChar[2]; // has two aditional characters.
+            idxCh[0] = new Strings.IndexedChar('_', 3);
+            idxCh[1] = new Strings.IndexedChar('-', 10);
+            fStr.RemovableChars = idxCh;
+            </code>
+            </example>
+        </member>
+        <member name="P:SklLib.Formatting.FormatStringBase.Mask">
+            <summary>
+            Provides a <see cref="T:System.String"/> to use as mask.
+            </summary>
+            <remarks>
+            <para>The masker classes will use this mask to filter user-typed <see cref="T:System.Char"/> and to
+            verify a automatic-typed <see cref="T:System.Char"/>.</para>
+            <para>To indicate a automatic-typed <see cref="T:System.Char"/>, uses "!" before of a
+            <see cref="T:System.Char"/>.</para>
+            <para>The Mask <see cref="T:System.String"/> need return true when used in <see cref="M:SklLib.Formatting.FormatStringBase.IsMatch(System.String)"/>
+            method, masker classes ignores "!" to match the Mask <see cref="T:System.String"/>.</para>
+            </remarks>
+            <exception cref="T:System.NullReferenceException"><see cref="P:SklLib.Formatting.FormatStringBase.Expression"/> not defined.</exception>
+            <exception cref="T:System.Exception">Mask property is being set to a invalid value.</exception>
+        </member>
+        <member name="P:SklLib.Formatting.FormatStringBase.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this instance is read-only.
+            </summary>
+            <remarks>
+            <para>A read-only instance guarantees that its values don't changes.</para>
+            <para>No read-only instances can generate problems to masker classes, thus, the masker
+            class only accept read-only instances.</para>
+            </remarks>
+        </member>
+        <member name="T:SklLib.Formatting.GrammarRules">
+            <summary>
+            Provides methods to apply grammar rules to strings.
+            </summary>
+        </member>
+        <member name="M:SklLib.Formatting.GrammarRules.#ctor">
+            <summary>
+            Initializes an empty instance of GrammarRules class.
+            </summary>
+        </member>
+        <member name="M:SklLib.Formatting.GrammarRules.ApplyRules(System.String)">
+            <summary>
+            Apply rules stored rules to a <see cref="T:System.String"/>.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/>.</param>
+            <returns>A formatted <see cref="T:System.String"/> based on rules of this instance.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.GrammarRules.ApplyRules(System.String,System.Boolean)">
+            <summary>
+            Apply rules stored rules to a <see cref="T:System.String"/>.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/></param>
+            <param name="titleCase">Whether all words will be titlecase formatted.</param>
+            <returns>A formatted <see cref="T:System.String"/> based on rules of this instance.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.GrammarRules.ApplyRules(System.String,System.Boolean,System.Globalization.TextInfo)">
+            <summary>
+            Apply rules stored rules to a <see cref="T:System.String"/>.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/>.</param>
+            <param name="titleCase">Whether all words will be titlecase formatted.</param>
+            <param name="txtInfo">A <see cref="T:System.Globalization.TextInfo"/>.</param>
+            <returns>A formatted <see cref="T:System.String"/> based on stored rules.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.GrammarRules.GetCultureBasedInfo(System.String)">
+            <summary>
+            Retrieves a cached, instance of a GrammarRules based on the specified culture name.
+            </summary>
+            <param name="name">The name of a culture.</param>
+            <returns>A GrammarRules object.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.GrammarRules.GetDisponibleCultures">
+            <summary>
+            Gets the list of names of supported cultures by GrammarRules.
+            </summary>
+            <returns>An <see cref="T:System.Array"/> of type <see cref="T:System.String"/> that contains the cultures names.
+            The <see cref="T:System.Array"/> of cultures is sorted.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.GrammarRules.ReadOnly">
+            <summary>
+            Returns a read-only GrammarRules wrapper.
+            </summary>
+            <returns>A read-only GrammarRules wrapper around this instance.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.GrammarRules.Clone">
+            <summary>
+            Creates a shallow copy of the GrammarRules.
+            </summary>
+            <returns>A new GrammarRules, not write protected, copied around this instance.</returns>
+        </member>
+        <member name="P:SklLib.Formatting.GrammarRules.CurrentInfo">
+            <summary>
+            Gets a GrammarRules with values based on the current culture.
+            </summary>
+            <value>A GrammarRules based on the <see cref="T:System.Globalization.CultureInfo"/> of the current thread.</value>
+        </member>
+        <member name="P:SklLib.Formatting.GrammarRules.AccentedSuffixes">
+            <summary>
+            Gets or sets Rules to accented suffixes.
+            </summary>
+            <value>A <see cref="!:Dictionary"/> as suffixes rule.</value>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+            <exception cref="T:System.ArgumentNullException">The AccentedSuffixes property is being
+            set to a null reference.</exception>
+            <remarks>
+            Defines word-suffixes that is accented. This property is used in all cases that
+            <see cref="M:SklLib.Formatting.GrammarRules.ApplyRules(System.String)"/> function is used.
+            </remarks>
+        </member>
+        <member name="P:SklLib.Formatting.GrammarRules.LoweredWords">
+            <summary>
+            Gets or sets Rules to fully lower cases words.
+            </summary>
+            <value>A <see cref="!:List"/> as words rule.</value>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+            <exception cref="T:System.ArgumentNullException">The LoweredWords property is being set
+            to a null reference.</exception>
+            <remarks>
+            Defines words that never apply title case. Of course, this property only is used
+            if titleCase parameter of <see cref="M:SklLib.Formatting.GrammarRules.ApplyRules(System.String)"/> function have a true value.
+            </remarks>
+        </member>
+        <member name="P:SklLib.Formatting.GrammarRules.Exceptions">
+            <summary>
+            Gets or Sets rules exceptions, when this rule is applied other rules is ignored.
+            </summary>
+            <value>A <see cref="!:Dictionary"/> as words rule.</value>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+            <exception cref="T:System.ArgumentNullException">The Exceptions property is being
+            set to a null reference.</exception>
+            <remarks>
+            Defines words that other rules not is applied. This property is used in all cases
+            that <see cref="M:SklLib.Formatting.GrammarRules.ApplyRules(System.String)"/> function is used.
+            </remarks>
+        </member>
+        <member name="P:SklLib.Formatting.GrammarRules.TitleCaseExceptions">
+            <summary>
+            Gets or sets rules exceptions, only to Title case words, when this rule is applied
+            other rules is ignored.
+            </summary>
+            <value>A <see cref="!:Dictionary"/> as words rule.</value>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+            <exception cref="T:System.ArgumentNullException">The TitleCaseExceptions property is being
+            set to a null reference.</exception>
+            <remarks>
+            Defines words that other rules not is applied, when titleCase parameter of
+            <see cref="M:SklLib.Formatting.GrammarRules.ApplyRules(System.String)"/> function have a true value.
+            </remarks>
+        </member>
+        <member name="P:SklLib.Formatting.GrammarRules.IgnoredCharacters">
+            <summary>
+            Gets or sets characters that will be ignored by <see cref="M:SklLib.Formatting.GrammarRules.ApplyRules(System.String)"/> method.
+            </summary>
+            <value>A <see cref="T:System.String"/> as rule to ignored characters.</value>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+            <exception cref="T:System.ArgumentNullException">The IgnoredCharacters property is being
+            set to a null reference.</exception>
+        </member>
+        <member name="P:SklLib.Formatting.GrammarRules.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this instance is read-only.
+            </summary>
+        </member>
+        <member name="T:SklLib.Formatting.PostalCode">
+            <summary>
+            Provides methods to format Postal Codes.
+            </summary>
+            <remarks>
+            <para>This class contains information as a Postal Code is formatted and stores several Postal Code
+            format information of specific cultures.</para>
+            <para>To create a PostalCode for a specific culture, use <see cref="M:SklLib.Formatting.PostalCode.GetCultureBasedInfo(System.String)"/>
+            method. To create a PostalCode for the culture of the current thread, use the
+            <see cref="P:SklLib.Formatting.PostalCode.CurrentInfo"/> property. Use the PostalCode constructor for a writable version.</para>
+            <para>This class implements the ICloneable interface to enable duplication of PostalCode objects.
+            It also implements IMaskeable indicating that this class can be used by SklLib.Windows.Forms.Mask
+            class.</para>
+            </remarks>
+            <example>
+            The following console application example show how to use PostalCode class.
+            <code>
+            using System;
+            using SklLib.Formatting;
+            
+            class Program
+            {
+                static void Main()
+                {
+                    PostalCode pCode = PostalCode.GetCulturePostalCodeInfo("en-US");
+                       string userPCode = "12345-6789";
+                    Console.WriteLine("Compacted Postal Code: {0}", pCode.GetCompactPostalCode(userPCode));
+                    string internalPCode = "987654321";
+                    Console.WriteLine("Standard Postal Code: {0}", pCode.GetStandardPostalCode(internalPCode));
+                    Console.ReadKey();
+                }
+            }
+            </code>
+            This example returns the following output.
+            <code>
+            Compacted Postal Code: 123456789
+            Standard Postal Code: 98765-4321
+            </code>
+            </example>
+        </member>
+        <member name="F:SklLib.Formatting.PostalCode.storedCultureInfo">
+            <summary>
+            Stores a <see cref="!:Dictionary"/>, where key is a culture name and value
+            is a delegate to get type- and culture-specific.
+            </summary>
+        </member>
+        <member name="M:SklLib.Formatting.PostalCode.#ctor">
+            <summary>
+            Initializes a new writable instance of the <see cref="T:SklLib.Formatting.PostalCode"/> class.
+            </summary>
+            <remarks>
+            The properties of the new instance can be modified if you want user-defined formatting.
+            </remarks>
+        </member>
+        <member name="M:SklLib.Formatting.PostalCode.GetCultureBasedInfo(System.String)">
+            <summary>
+            Retrieves a cached, instance of a PostalCode using the specified culture name.
+            </summary>
+            <param name="name">The name of a culture.</param>
+            <returns>A PostalCode object.</returns>
+            <exception cref="T:System.ArgumentException">name specifies a culture that is not supported.</exception>
+        </member>
+        <member name="M:SklLib.Formatting.PostalCode.GetDisponibleCultures">
+            <summary>
+            Gets the list of names of supported cultures by <see cref="T:SklLib.Formatting.PostalCode"/>.
+            </summary>
+            <returns>An <see cref="T:System.Array"/> of type <see cref="T:System.String"/> that contains the cultures names.
+            The <see cref="T:System.Array"/> of cultures is sorted.</returns>
+        </member>
+        <member name="P:SklLib.Formatting.PostalCode.CurrentInfo">
+            <summary>
+            Gets a read-only <see cref="T:SklLib.Formatting.PostalCode"/> with informations based on the current culture.
+            </summary>
+            <value>A read-only <see cref="T:SklLib.Formatting.PostalCode"/> based on the
+            <see cref="T:System.Globalization.CultureInfo"/> of the current thread.</value>
+        </member>
+        <member name="T:SklLib.Formatting.Telephones">
+            <summary>
+            Provides methods to format Telephones.
+            </summary>
+        </member>
+        <member name="F:SklLib.Formatting.Telephones.storedCultureInfo">
+            <summary>
+            Stores a <see cref="!:Dictionary"/>, where key is a culture name and value
+            is a delegate to get type- and culture-specific.
+            </summary>
+        </member>
+        <member name="M:SklLib.Formatting.Telephones.#ctor">
+            <summary>
+            Initializes a new writable instance of the <see cref="T:SklLib.Formatting.Telephones"/> class.
+            </summary>
+            <remarks>
+            The properties of the new instance can be modified if you want user-defined formatting.
+            </remarks>
+        </member>
+        <member name="M:SklLib.Formatting.Telephones.GetCultureBasedInfo(System.String)">
+            <summary>
+            Retrieves a cached, instance of a Telephones using the specified culture name.
+            </summary>
+            <param name="name">The name of a culture.</param>
+            <returns>A Telephones object.</returns>
+            <exception cref="T:System.ArgumentException">name specifies a culture that is not supported.</exception>
+        </member>
+        <member name="M:SklLib.Formatting.Telephones.GetDisponibleCultures">
+            <summary>
+            Gets the list of names of supported cultures by Telephones.
+            </summary>
+            <returns>An <see cref="T:System.Array"/> of type <see cref="T:System.String"/> that contains the cultures names.
+            The <see cref="T:System.Array"/> of cultures is sorted.</returns>
+        </member>
+        <member name="P:SklLib.Formatting.Telephones.CurrentInfo">
+            <summary>
+            Gets a Telephones with values based on the current culture.
+            </summary>
+            <value>A Telephones based on the <see cref="T:System.Globalization.CultureInfo"/> of the current thread.</value>
+        </member>
+        <member name="T:SklLib.Globalization.NumberWriteInfo">
+            <summary>
+            Defines how numeric values are written, depending on the culture.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:SklLib.Globalization.NumberWriteInfo.storedCultureInfo" -->
+        <member name="M:SklLib.Globalization.NumberWriteInfo.#cctor">
+            <summary>
+            Initializes static fields of NumberWriteInfo.
+            </summary>
+        </member>
+        <member name="M:SklLib.Globalization.NumberWriteInfo.GetCultureBasedInfo(System.String)">
+            <summary>
+            Retrieves a cached, instance of a NumberWriteInfo using the specified culture name.
+            </summary>
+            <param name="name">The name of a culture.</param>
+            <returns>A NumberWriteInfo object.</returns>
+            <exception cref="T:System.ArgumentException"><c>name</c> specifies a culture that is not
+            supported.</exception>
+        </member>
+        <member name="M:SklLib.Globalization.NumberWriteInfo.GetDisponibleCultures">
+            <summary>
+            Gets the list of names of supported cultures by NumberWriteInfo.
+            </summary>
+            <returns>An <see cref="T:System.Array"/> of type <see cref="T:System.String"/> that contains the cultures names.
+            The <see cref="T:System.Array"/> of cultures is sorted.</returns>
+        </member>
+        <member name="M:SklLib.Globalization.NumberWriteInfo.ReadOnly">
+            <summary>
+            Returns a read-only NumberWriteInfo wrapper.
+            </summary>
+            <returns>A read-only NumberWriteInfo wrapper around this instance.</returns>
+        </member>
+        <member name="M:SklLib.Globalization.NumberWriteInfo.Clone">
+            <summary>
+            Creates a shallow copy of the NumberWriteInfo.
+            </summary>
+            <returns>A new NumberWriteInfo, not write protected, copied around this instance.</returns>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.CurrentInfo">
+            <summary>
+            Gets a type-specific with values based on the current culture.
+            </summary>
+            <value>A type-specific based on the <see cref="T:System.Globalization.CultureInfo"/> of the current thread.</value>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.UnityValues">
+            <summary>
+            Gets or sets how unit values are written (example: "four").
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.DozenValues">
+            <summary>
+            Gets or sets how dozen values are writen (example: "twenty").
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.HundredValues">
+            <summary>
+            Gets or sets how hundred values are written (example: "Five Hundred").
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.ThousandValues">
+            <summary>
+            Gets or sets how thousand values are written (example: "billion").
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.DecimalValues">
+            <summary>
+            Gets or sets how decimal values are written (example: "ten-thousandth").
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.DozenUnitSeparator">
+            <summary>
+            Gets or sets a String to separates Dozen numbers of the Units numbers (example: "-").
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.HundredDozenSeparator">
+            <summary>
+            Gets or sets a String to separates Hundred numbers of the Dozen numbers (example: " and ").
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.ThousandsSeparator">
+            <summary>
+            Gets or sets separator used between Thousand values.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.IntegerDecimalSeparator">
+            <summary>
+            Gets or sets separator used between integer values and decimal values.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.CurrencyIntegerName">
+            <summary>
+            Gets or sets how currency integer name is written (example: "dollar&amp;dollars").
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.CurrencyDecimalName">
+            <summary>
+            Gets or sets how currency decimal name is written (example: "cent&amp;cents").
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.SpecialCases">
+            <summary>
+            Gets or sets how specific values are written.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The property is being set and this
+            instance is read-only.</exception>
+        </member>
+        <member name="P:SklLib.Globalization.NumberWriteInfo.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this instance is read-only.
+            </summary>
+        </member>
+        <member name="T:SklLib.Globalization.WriteNumber">
+            <summary>
+            Stores how writes a number.
+            </summary>
+        </member>
+        <member name="F:SklLib.Globalization.WriteNumber.value">
+            <summary>
+            A value.
+            </summary>
+        </member>
+        <member name="F:SklLib.Globalization.WriteNumber.write">
+            <summary>
+            How <c>value</c> is written.
+            </summary>
+        </member>
+        <member name="M:SklLib.Globalization.WriteNumber.#ctor(System.Int64,System.String)">
+            <summary>
+            Initializes the WriteNumber struct with loaded values.
+            </summary>
+            <param name="v">A value.</param>
+            <param name="w">How <c>v</c> is written.</param>
+        </member>
+        <member name="T:SklLib.IO.ConfigFileBase">
+            <summary>
+            Provides base methods to work with configuration files.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase.DefaultEncoding">
+            <summary>
+            Stores the default encoding used by this class.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase._buffer">
+            <summary>
+            Stores a String array where each item is a line from config file.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase._encoding">
+            <summary>
+            Character encoding to read and write config file.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase._fileName">
+            <summary>
+            Stores config file name.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase._sectionBuffer">
+            <summary>
+            Stores a Int32 array where each item is a index to a section in config file.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.#cctor">
+            <summary>
+            Initializes static fields.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.#ctor(System.String)">
+            <summary>
+            Initializes a new ConfigFileBase.
+            </summary>
+            <param name="fileName">The file name to handle configurations.</param>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.#ctor(System.String,System.Text.Encoding)">
+            <summary>
+            Initializes a new ConfigFileBase.
+            </summary>
+            <param name="fileName">The file name to handle configurations.</param>
+            <param name="encoding">Encoding of configuration file.</param>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.IsValidFile(System.String)">
+            <summary>
+            Check whether indicated file is valid configuration file.
+            </summary>
+            <param name="fileName">File to check validty.</param>
+            <returns>True if fileName is a valid cofiguration file; otherwise, false.</returns>
+            <exception cref="T:System.IO.FileNotFoundException">The indicated file was not found.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.IsValidFile(System.String,System.Text.Encoding)">
+            <summary>
+            Check whether indicated file is valid configuration file.
+            </summary>
+            <param name="fileName">File to check validty.</param>
+            <param name="encoding">Encoding to read file.</param>
+            <returns>True if fileName is a valid cofiguration file; otherwise, false.</returns>
+            <exception cref="T:System.IO.FileNotFoundException">The indicated file was not found.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.FindKey(System.String,System.Int32,System.Int32)">
+            <summary>
+            Search a key in current config file.
+            </summary>
+            <param name="key">Key name to search.</param>
+            <param name="start">Line number to start search.</param>
+            <param name="count">How many lines to search.</param>
+            <returns>Line number where key is found; otherwise returns -1.</returns>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.FindRange(System.String,System.Int32@,System.Int32@)">
+            <summary>
+            Search a section in current config file.
+            </summary>
+            <param name="section">Section name to search.</param>
+            <param name="index">Line number where is found section.</param>
+            <param name="count">Line count from section.</param>
+            <returns>True whether section is found; otherwise false.</returns>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.ReadFile">
+            <summary>
+            Reads the file and fills all buffers.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.SetBasicInfo(System.String)">
+            <summary>
+            Sets full path for file name and verifies directory existence.
+            </summary>
+            <param name="fileName">The configuration file.</param>
+        </member>
+        <member name="P:SklLib.IO.ConfigFileBase.FileName">
+            <summary>
+            Gets the file name used by this instance.
+            </summary>
+        </member>
+        <member name="T:SklLib.IO.ConfigFileWriter">
+            <summary>
+            Provides methods to write into configuration files.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileWriter.#ctor(System.String)">
+            <summary>
+            Initilizes a new ConfigFileWriter object pointed to specified file name.
+            </summary>
+            <param name="fileName">The file name to writes configurations.</param>
+            <exception cref="T:System.ArgumentNullException"><c>fileName</c> is a null reference.</exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException">The specifield directory was not found.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileWriter.#ctor(System.String,System.IO.FileMode)">
+            <summary>
+            Initilizes a new ConfigFileWriter object pointed to specified file name.
+            </summary>
+            <param name="fileName">The file name to writes configurations.</param>
+            <param name="mode">Specifies how the specified file should be open.</param>
+            <exception cref="T:System.ArgumentNullException">fileName is a null reference.</exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException">The specifield directory was not found.</exception>
+            <exception cref="T:System.IO.IOException">Was specifield <see cref="!:FileMode.CreateNew"/> flag and the
+            specifield file already exists.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">Was specifield <see cref="!:FileMode.Open"/> flag and the
+            specifield file already was not found.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileWriter.#ctor(System.String,System.IO.FileMode,System.Text.Encoding)">
+            <summary>
+            Initilizes a new ConfigFileWriter object pointed to specified file name.
+            </summary>
+            <param name="fileName">The file name to writes configurations.</param>
+            <param name="mode">Specifies how the specified file should be open.</param>
+            <exception cref="T:System.ArgumentNullException">fileName is a null reference.</exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException">The specifield directory was not found.</exception>
+            <exception cref="T:System.IO.IOException">Was specifield <see cref="!:FileMode.CreateNew"/> flag and the
+            specifield file already exists.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">Was specifield <see cref="!:FileMode.Open"/> flag and the
+            specifield file already was not found.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileWriter.ClearSection(System.String,System.Boolean)">
+            <summary>
+            Clears entire section, including all entries within the section.
+            </summary>
+            <param name="section">The section name.</param>
+            <param name="remSection">Specifies whether should remove the section itself.</param>
+            <exception cref="T:System.ArgumentNullException">section parameter is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileWriter.WriteChanges">
+            <summary>
+            Writes all changes to file pointed by this instance.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileWriter.DeleteKey(System.String,System.String)">
+            <summary>
+            Deletes the specifield key.
+            </summary>
+            <param name="section">The section name where key is found.</param>
+            <param name="key">The key name.</param>
+            <exception cref="T:System.ArgumentNullException">section or key parameter is a null reference.</exception>
+            <exception cref="T:System.Exception">section or key was not found.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileWriter.WriteKey(System.String,System.String,System.String)">
+            <summary>
+            Writes a value into specifield key.
+            </summary>
+            <param name="section">The section where key is found.</param>
+            <param name="key">The key name.</param>
+            <param name="value">The key value.</param>
+            <exception cref="T:System.ArgumentNullException">section, key or value parameter is a null reference.</exception>
+            <exception cref="T:System.ArgumentException">section, key or value has invalid characters.</exception>
+        </member>
+        <member name="T:SklLib.IO.ConfigFileReader">
+            <summary>
+            Provides methods to read configuration files.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileReader.#ctor(System.String)">
+            <summary>
+            Initilizes a new ConfigFileReader object pointed to specified file name.
+            </summary>
+            <param name="fileName">The file name to reads configurations.</param>
+            <exception cref="T:System.ArgumentNullException"><c>fileName</c> is a null reference.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">The specifield file was not found.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileReader.#ctor(System.String,System.Text.Encoding)">
+            <summary>
+            Initilizes a new ConfigFileReader object pointed to specified file name.
+            </summary>
+            <param name="fileName">The file name to reads configurations.</param>
+            <param name="encoding">Encoding of configuration file.</param>
+            <exception cref="T:System.ArgumentNullException"><c>fileName</c> is a null reference.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">The specifield file was not found.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileReader.ReadValue(System.String,System.String)">
+            <summary>
+            Reads the value into specifield key.
+            </summary>
+            <param name="section">The section where key is found.</param>
+            <param name="key">The key name.</param>
+            <returns>Value stored into key.</returns>
+            <exception cref="T:System.ArgumentNullException">section or key parameter is a null reference.</exception>
+            <exception cref="T:System.Exception">section or key was not found.</exception>
+            <exception cref="T:System.IO.FileLoadException">The key has a invalid value.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileReader.ReadSectionsName">
+            <summary>
+            Reads all sections name.
+            </summary>
+            <returns>All sections name read.</returns>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileReader.ReadKeysValues(System.String)">
+            <summary>
+            Reads all keys and values into specifield section.
+            </summary>
+            <param name="section">The section where keys are found.</param>
+            <returns>All keys and values stored into section.</returns>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileReader.ReloadFile">
+            <summary>
+            Clears any buffered data and reloads them again.
+            </summary>
+        </member>
+        <member name="T:SklLib.Formatting.Numbers">
+            <summary>
+            Provides methods to format numbers.
+            </summary>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.SpellNumber(System.Decimal)">
+            <summary>
+            Writes a number in a spelling mode (example: "fifty-two").
+            </summary>
+            <param name="number">A number.</param>
+            <returns>A String that represents a spelt number.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.SpellNumber(System.Decimal,System.Boolean)">
+            <summary>
+            Writes a number in a spelling mode (example: "fifty-two").
+            </summary>
+            <param name="number">A number.</param>
+            <param name="currency">Indicates whether is a currency number.</param>
+            <returns>A String that represents a spelt number.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.SpellNumber(System.Decimal,System.Boolean,SklLib.Globalization.NumberWriteInfo,System.Globalization.NumberFormatInfo)">
+            <summary>
+            Writes a number in a spelling mode (example: "fifty-two").
+            </summary>
+            <param name="number">A number.</param>
+            <param name="currency">Indicates whether is a currency number.</param>
+            <param name="numWInfo">An NumberWriteInfo that supplies culture-specific writting
+            information.</param>
+            <param name="numFInfo">An NumberFormatInfo that supplies culture-specific formatting
+            information.</param>
+            <returns>A String that represents a spelt number.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>numWInfo</c> or <c>numFInfo</c> is a null reference.</exception>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringKeepLength(System.Int16,System.Int32)">
+            <summary>
+            Converts the indicated numeric value to its equivalent string representation and
+            keeps the number of indicated characters adding zero characters.
+            </summary>
+            <param name="number">Numeric value.</param>
+            <param name="count">Number of characters to keeps.</param>
+            <returns>The string representation of the value of this instance, with length equal or
+            greater than indicated value.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringKeepLength(System.Int16,System.Int16)">
+            <summary>
+            Converts the indicated numeric value to its equivalent string representation and
+            keeps the number of indicated characters adding zero characters.
+            </summary>
+            <param name="number">Numeric value.</param>
+            <param name="count">Number of characters to keeps.</param>
+            <returns>The string representation of the value of this instance, with length equal or
+            greater than indicated value.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringKeepLength(System.Int32,System.Int32)">
+            <summary>
+            Converts the indicated numeric value to its equivalent string representation and
+            keeps the number of indicated characters adding zero characters.
+            </summary>
+            <param name="number">Numeric value.</param>
+            <param name="count">Number of characters to keeps.</param>
+            <returns>The string representation of the value of this instance, with length equal or
+            greater than indicated value.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringKeepLength(System.Int32,System.Int16)">
+            <summary>
+            Converts the indicated numeric value to its equivalent string representation and
+            keeps the number of indicated characters adding zero characters.
+            </summary>
+            <param name="number">Numeric value.</param>
+            <param name="count">Number of characters to keeps.</param>
+            <returns>The string representation of the value of this instance, with length equal or
+            greater than indicated value.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringKeepLength(System.Int64,System.Int32)">
+            <summary>
+            Converts the indicated numeric value to its equivalent string representation and
+            keeps the number of indicated characters adding zero characters.
+            </summary>
+            <param name="number">Numeric value.</param>
+            <param name="count">Number of characters to keeps.</param>
+            <returns>The string representation of the value of this instance, with length equal or
+            greater than indicated value.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringKeepLength(System.Int64,System.Int16)">
+            <summary>
+            Converts the indicated numeric value to its equivalent string representation and
+            keeps the number of indicated characters adding zero characters.
+            </summary>
+            <param name="number">Numeric value.</param>
+            <param name="count">Number of characters to keeps.</param>
+            <returns>The string representation of the value of this instance, with length equal or
+            greater than indicated value.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringTrimExcess(System.Single,System.String)">
+            <summary>
+            Converts the numeric value of this instance to its equivalent String representation,
+            using the specified format and remove excedent decimal.
+            </summary>
+            <param name="number">A number.</param>
+            <param name="format">A format specification.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringTrimExcess(System.Single,System.String,System.Globalization.NumberFormatInfo)">
+            <summary>
+            Converts the numeric value of this instance to its equivalent String representation
+            using the specified format and culture-specific format information and remove excedent
+            decimal.
+            </summary>
+            <param name="number">A number.</param>
+            <param name="format">A format specification.</param>
+            <param name="numInfo">An NumberFormatInfo that supplies culture-specific formatting
+            information.</param>
+            <returns>The String representation of the value of this instance as specified by format and
+            provider and cutted excedent decimal.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringTrimExcess(System.Double,System.String)">
+            <summary>
+            Converts the numeric value of this instance to its equivalent String representation,
+            using the specified format and remove excedent decimal.
+            </summary>
+            <param name="number">A number.</param>
+            <param name="format">A format specification.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringTrimExcess(System.Double,System.String,System.Globalization.NumberFormatInfo)">
+            <summary>
+            Converts the numeric value of this instance to its equivalent String representation
+            using the specified format and culture-specific format information and remove excedent
+            decimal.
+            </summary>
+            <param name="number">A number.</param>
+            <param name="format">A format specification.</param>
+            <param name="numInfo">An NumberFormatInfo that supplies culture-specific formatting
+            information.</param>
+            <returns>The String representation of the value of this instance as specified by format and
+            provider and cutted excedent decimal.</returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringTrimExcess(System.Decimal,System.String)">
+            <summary>
+            Converts the numeric value of this instance to its equivalent String representation,
+            using the specified format and remove excedent decimal.
+            </summary>
+            <param name="number">A number.</param>
+            <param name="format">A format specification.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SklLib.Formatting.Numbers.ToStringTrimExcess(System.Decimal,System.String,System.Globalization.NumberFormatInfo)">
+            <summary>
+            Converts the numeric value of this instance to its equivalent String representation
+            using the specified format and culture-specific format information and remove excedent
+            decimal.
+            </summary>
+            <param name="number">A number.</param>
+            <param name="format">A format specification.</param>
+            <param name="numInfo">An NumberFormatInfo that supplies culture-specific formatting
+            information.</param>
+            <returns>The String representation of the value of this instance as specified by format and
+            provider and cutted excedent decimal.</returns>
+        </member>
+        <member name="T:SklLib.Performance.Strings">
+            <summary>
+            <para>Perform fatest operations with Strings.</para>
+            <para>Dangerous unsafe class.</para>
+            </summary>
+        </member>
+        <member name="M:SklLib.Performance.Strings.ToUpper(System.String)">
+            <summary>
+            Converts the value of each Unicode character to its uppercase equivalent, using the casing
+            rules of the current culture.
+            </summary>
+            <param name="str">A Unicode String.</param>
+        </member>
+        <member name="M:SklLib.Performance.Strings.GetCapacity(System.String)">
+            <summary>
+            Gets the maximum number of characters that can be contained in the
+            memory allocated by the current instance.
+            </summary>
+            <param name="str">A Unicode String.</param>
+            <returns>
+            The maximum number of characters that can be contained in the memory allocated
+            by the current instance.
+            </returns>
+        </member>
+        <member name="M:SklLib.Performance.Strings.GetLength(System.String)">
+            <summary>
+            Gets the number of characters in the specified string.
+            </summary>
+            <param name="str">A Unicode String.</param>
+            <returns>The number of characters in this instance.</returns>
+            <remarks>
+            This function is redundant, because it accomplishes
+            the same role as String.Length.
+            </remarks>
+        </member>
+        <member name="M:SklLib.Performance.Strings.SetLength(System.String,System.Int32)">
+            <summary>
+            Sets the number of characters in the specified string.
+            </summary>
+            <param name="str">A Unicode String.</param>
+            <param name="length">The length of this instance.</param>
+        </member>
+        <member name="M:SklLib.Performance.Strings.NewString(System.Int32)">
+            <summary>
+            Creates a new String with specified capacity.
+            </summary>
+            <param name="capacity">The String capacity.</param>
+            <returns>A new String.</returns>
+        </member>
+        <member name="M:SklLib.Performance.Strings.SetChar(System.String,System.Int32,System.Char)">
+            <summary>
+            Sets a char into a String.
+            </summary>
+            <param name="str">A Unicode String.</param>
+            <param name="index">Index into String to sets.</param>
+            <param name="ch">Char to replacement.</param>
+        </member>
+        <member name="T:SklLib.LockedMultiAccess`1">
+            <summary>
+            Stores a object protected by multiaccess.
+            </summary>
+            <typeparam name="T">Type of object to protect.</typeparam>
+        </member>
+        <member name="M:SklLib.LockedMultiAccess`1.#ctor">
+            <summary>
+            Initializes LockedMultiAccess.
+            </summary>
+        </member>
+        <member name="M:SklLib.LockedMultiAccess`1.#ctor(`0)">
+            <summary>
+            Initializes LockedMultiAccess and stores a initial value.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:SklLib.LockedMultiAccess`1.LockObject">
+            <summary>
+            Locks stored object to be accessed by <see cref="P:SklLib.LockedMultiAccess`1.SafeAccess"/>, if the object is locked then
+            waits to unlock.
+            </summary>
+        </member>
+        <member name="M:SklLib.LockedMultiAccess`1.UnLockObject">
+            <summary>
+            Unlocks stored object to be accessed by <see cref="P:SklLib.LockedMultiAccess`1.SafeAccess"/>.
+            </summary>
+        </member>
+        <member name="P:SklLib.LockedMultiAccess`1.DirectAccess">
+            <summary>
+            Gets or sets the object stored by this instance directly.
+            </summary>
+        </member>
+        <member name="P:SklLib.LockedMultiAccess`1.SafeAccess">
+            <summary>
+            Gets or sets the object stored by this instance; If the object is locked then
+            waits to unlock.
+            </summary>
+        </member>
+        <member name="P:SklLib.LockedMultiAccess`1.IsLocked">
+            <summary>
+            Gets a boolean indicating whether current object is locked.
+            </summary>
+        </member>
+        <member name="T:SklLib.OSInformation">
+            <summary>
+            Provides basic information from current operating system.
+            </summary>
+        </member>
+        <member name="P:SklLib.OSInformation.IsAspNetServer">
+            <summary>
+            Gets whether this machine is ASP.NET Server.
+            </summary>
+        </member>
+        <member name="P:SklLib.OSInformation.IsPostWindows2000">
+            <summary>
+            Gets whether current operating system is newest than Windows 2000.
+            </summary>
+        </member>
+        <member name="P:SklLib.OSInformation.IsWindows2000">
+            <summary>
+            Gets whether current operating system is Windows 2000.
+            </summary>
+        </member>
+        <member name="P:SklLib.OSInformation.IsWindows2003">
+            <summary>
+            Gets whether current operating system is Windows 2003.
+            </summary>
+        </member>
+        <member name="P:SklLib.OSInformation.IsWindows9x">
+            <summary>
+            Gets whether current operating system is Windows 9x.
+            </summary>
+        </member>
+        <member name="P:SklLib.OSInformation.IsHttp51">
+            <summary>
+            Gets whether current machine have installed HTTP 5.1.
+            </summary>
+        </member>
+        <member name="P:SklLib.OSInformation.IsWindowsNT">
+            <summary>
+            Gets whether current operating system is Windows NT Family.
+            </summary>
+        </member>
+        <member name="P:SklLib.OSInformation.GetOSVersion">
+            <summary>
+            Gets current operating system version.
+            </summary>
+        </member>
+        <member name="T:SklLib.Telephone">
+            <summary>
+            Stores a complete telephone number; includes country code, area code and
+            subscriber number.
+            </summary>
+        </member>
+        <member name="M:SklLib.Telephone.op_Equality(SklLib.Telephone,SklLib.Telephone)">
+            <summary>
+            Determines whether two specified instances of Telephone are equal.
+            </summary>
+            <param name="l">A Telephone.</param>
+            <param name="m">A Telephone.</param>
+            <returns>true if tel1 and tel2 represent the same telephone value; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.Telephone.op_Inequality(SklLib.Telephone,SklLib.Telephone)">
+            <summary>
+            Determines whether two specified instances of Telephone are not equal.
+            </summary>
+            <param name="l">A Telephone.</param>
+            <param name="m">A Telephone.</param>
+            <returns>true if tel1 and tel2 do not represent the same telephone value; otherwise, false</returns>
+        </member>
+        <member name="M:SklLib.Telephone.GetHashCode">
+            <summary>
+            Returns the hash code for this instance.
+            </summary>
+            <returns>A 32-bit signed integer hash code.</returns>
+        </member>
+        <member name="M:SklLib.Telephone.Equals(System.Object)">
+            <summary>
+            Returns a value indicating whether this instance and a specified <see cref="T:System.Object"/>
+            represent the same type and value.
+            </summary>
+            <param name="obj">An object to compare to this instance.</param>
+            <returns>true if value is a Telephone and equal to this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:SklLib.Telephone.ToString">
+            <summary>
+            Converts the numeric value of this instance to its equivalent <see cref="T:System.String"/> representation.
+            </summary>
+            <returns>A <see cref="T:System.String"/> representing the value of this instance.</returns>
+        </member>
+        <member name="M:SklLib.Telephone.Equals(SklLib.Telephone)">
+            <summary>
+            Returns a value indicating whether this instance is equal to the specified Telephone instance.
+            </summary>
+            <param name="other">A Telephone instance to compare to this instance.</param>
+            <returns>true if the value parameter equals the value of this instance; otherwise, false.</returns>
+        </member>
+        <member name="T:SklLib.Telephone.AlphabeticMnemonicSystem">
+            <summary>
+            Alphabetic mnemonic system used to telephone numbers.
+            </summary>
+            <remarks>
+            An oddity of NANP telephone numbering is the popularity of
+            alphabetic dialing. On most US and Canadian telephones, three
+            letters appear on each number button from 2 through 9. This
+            accommodates 24 letters. Historically, the letters Q and Z were
+            omitted, though on some modern telephones, they are added.
+            </remarks>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.A">
+            <summary>
+            Letter "A" is button 2.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.B">
+            <summary>
+            Letter "B" is button 2.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.C">
+            <summary>
+            Letter "C" is button 2.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.D">
+            <summary>
+            Letter "D" is button 3.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.E">
+            <summary>
+            Letter "E" is button 3.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.F">
+            <summary>
+            Letter "F" is button 3.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.G">
+            <summary>
+            Letter "G" is button 4.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.H">
+            <summary>
+            Letter "H" is button 4.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.I">
+            <summary>
+            Letter "I" is button 4.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.J">
+            <summary>
+            Letter "J" is button 5.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.K">
+            <summary>
+            Letter "K" is button 5.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.L">
+            <summary>
+            Letter "L" is button 5.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.M">
+            <summary>
+            Letter "M" is button 6.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.N">
+            <summary>
+            Letter "N" is button 6.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.O">
+            <summary>
+            Letter "O" is button 6.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.P">
+            <summary>
+            Letter "P" is button 7.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.Q">
+            <summary>
+            Letter "Q" is button 7.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.R">
+            <summary>
+            Letter "R" is button 7.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.S">
+            <summary>
+            Letter "S" is button 7.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.T">
+            <summary>
+            Letter "T" is button 8.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.U">
+            <summary>
+            Letter "U" is button 8.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.V">
+            <summary>
+            Letter "V" is button 8.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.W">
+            <summary>
+            Letter "W" is button 9.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.X">
+            <summary>
+            Letter "X" is button 9.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.Y">
+            <summary>
+            Letter "Y" is button 9.
+            </summary>
+        </member>
+        <member name="F:SklLib.Telephone.AlphabeticMnemonicSystem.Z">
+            <summary>
+            Letter "Z" is button 9.
+            </summary>
+        </member>
+        <member name="T:SklLib.Performance.Process">
+            <summary>
+            Provides performance improvements to processes.
+            </summary>
+        </member>
+        <member name="M:SklLib.Performance.Process.TrimMemoryUsage">
+            <summary>
+            Trims memory usage from current process.
+            </summary>
+            <exception cref="T:System.PlatformNotSupportedException">
+            Only works on Microsoft Windows 2000 or better.
+            </exception>
+        </member>
+        <member name="M:SklLib.Performance.Process.TrimMemoryUsage(System.Diagnostics.Process)">
+            <summary>
+            Trims memory usage from desired process.
+            </summary>
+            <param name="process">
+            The process to trim memory usage.
+            </param>
+            <exception cref="T:System.PlatformNotSupportedException">
+            Only works on Microsoft Windows 2000 or better.
+            </exception>
+        </member>
+        <member name="T:SklLib.Swap">
+            <summary>
+            Provides variables swapping.
+            </summary>
+        </member>
+        <member name="M:SklLib.Swap.Do``1(``0@,``0@)">
+            <summary>
+            Swaps the values from variables.
+            </summary>
+            <param name="var1">First variable.</param>
+            <param name="var2">Second variable.</param>
+        </member>
+        <member name="M:SklLib.Swap.Do(System.Object@,System.Object@)">
+            <summary>
+            Swaps the values from variables.
+            </summary>
+            <param name="var1">First variable.</param>
+            <param name="var2">Second variable.</param>
+        </member>
+    </members>
+</doc>
