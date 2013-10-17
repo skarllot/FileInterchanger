@@ -4,6 +4,72 @@
         <name>SklLib</name>
     </assembly>
     <members>
+        <member name="T:SklLib.IO.KeyNotFoundException">
+            <summary>
+            Exception that is thrown when the key specified for accessing a
+            configuration file does not match any key in the section.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.KeyNotFoundException.#ctor">
+            <summary>
+            Initializes a new KeyNotFoundException object using default values.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.KeyNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new KeyNotFoundException object using specified error
+            message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:SklLib.IO.KeyNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new KeyNotFoundException object using specified error
+            message and an inner exception that caused this exception.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+            <param name="innerException">The exception that caused this exception.</param>
+        </member>
+        <member name="M:SklLib.IO.KeyNotFoundException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new KeyNotFoundException object using serialized data.
+            </summary>
+            <param name="info">Serialization data.</param>
+            <param name="context">Serialization context.</param>
+        </member>
+        <member name="T:SklLib.IO.SectionNotFoundException">
+            <summary>
+            Exception that is thrown when the section specified for accessing a
+            configuration file does not match any section in the file.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.SectionNotFoundException.#ctor">
+            <summary>
+            Initializes a new SectionNotFoundException object using default values.
+            </summary>
+        </member>
+        <member name="M:SklLib.IO.SectionNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new SectionNotFoundException object using specified error
+            message.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:SklLib.IO.SectionNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new SectionNotFoundException object using specified error
+            message and an inner exception that caused this exception.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+            <param name="innerException">The exception that caused this exception.</param>
+        </member>
+        <member name="M:SklLib.IO.SectionNotFoundException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new SectionNotFoundException object using serialized data.
+            </summary>
+            <param name="info">Serialization data.</param>
+            <param name="context">Serialization context.</param>
+        </member>
         <member name="T:SklLib.resExceptions">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -2273,6 +2339,7 @@
             Initializes a new ConfigFileBase.
             </summary>
             <param name="fileName">The file name to handle configurations.</param>
+            <exception cref="T:System.ArgumentNullException"><c>fileName</c> is a null reference.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileBase.#ctor(System.String,System.Text.Encoding)">
             <summary>
@@ -2280,6 +2347,7 @@
             </summary>
             <param name="fileName">The file name to handle configurations.</param>
             <param name="encoding">Encoding of configuration file.</param>
+            <exception cref="T:System.ArgumentNullException"><c>fileName</c> is a null reference.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileBase.IsValidFile(System.String)">
             <summary>
@@ -2345,6 +2413,13 @@
             <exception cref="T:System.ArgumentNullException"><c>fileName</c> is a null reference.</exception>
             <exception cref="T:System.IO.DirectoryNotFoundException">The specifield directory was not found.</exception>
         </member>
+        <member name="M:SklLib.IO.ConfigFileWriter.#ctor(System.String,System.Text.Encoding)">
+            <summary>
+            Initilizes a new ConfigFileWriter object pointed to specified file name and encoding.
+            </summary>
+            <param name="fileName"></param>
+            <param name="encoding"></param>
+        </member>
         <member name="M:SklLib.IO.ConfigFileWriter.#ctor(System.String,System.IO.FileMode)">
             <summary>
             Initilizes a new ConfigFileWriter object pointed to specified file name.
@@ -2378,6 +2453,7 @@
             <param name="section">The section name.</param>
             <param name="remSection">Specifies whether should remove the section itself.</param>
             <exception cref="T:System.ArgumentNullException">section parameter is a null reference.</exception>
+            <exception cref="T:SklLib.IO.SectionNotFoundException">section was not found.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileWriter.WriteChanges">
             <summary>
@@ -2391,7 +2467,8 @@
             <param name="section">The section name where key is found.</param>
             <param name="key">The key name.</param>
             <exception cref="T:System.ArgumentNullException">section or key parameter is a null reference.</exception>
-            <exception cref="T:System.Exception">section or key was not found.</exception>
+            <exception cref="T:SklLib.IO.SectionNotFoundException">section was not found.</exception>
+            <exception cref="T:SklLib.IO.KeyNotFoundException">key was not found.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileWriter.WriteKey(System.String,System.String,System.String)">
             <summary>
@@ -2418,7 +2495,7 @@
         </member>
         <member name="M:SklLib.IO.ConfigFileReader.#ctor(System.String,System.Text.Encoding)">
             <summary>
-            Initilizes a new ConfigFileReader object pointed to specified file name.
+            Initilizes a new ConfigFileReader object pointed to specified file name and encoding.
             </summary>
             <param name="fileName">The file name to reads configurations.</param>
             <param name="encoding">Encoding of configuration file.</param>
@@ -2433,7 +2510,8 @@
             <param name="key">The key name.</param>
             <returns>Value stored into key.</returns>
             <exception cref="T:System.ArgumentNullException">section or key parameter is a null reference.</exception>
-            <exception cref="T:System.Exception">section or key was not found.</exception>
+            <exception cref="T:SklLib.IO.SectionNotFoundException">section was not found.</exception>
+            <exception cref="T:SklLib.IO.KeyNotFoundException">key was not found.</exception>
             <exception cref="T:System.IO.FileLoadException">The key has a invalid value.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileReader.ReadSectionsName">
@@ -2448,6 +2526,8 @@
             </summary>
             <param name="section">The section where keys are found.</param>
             <returns>All keys and values stored into section.</returns>
+            <exception cref="T:System.ArgumentNullException">section parameter is a null reference.</exception>
+            <exception cref="T:SklLib.IO.SectionNotFoundException">section was not found.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileReader.ReloadFile">
             <summary>
