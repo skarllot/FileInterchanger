@@ -4,18 +4,31 @@ namespace ftp_sync
 {
     class Config
     {
-        IniFile ini;
+        const string CFG_MAIN = "MAIN";
+        SklLib.IO.ConfigFileReader cfgreader;
+        string[] sections;
 
         public Config(string path)
         {
-            ini = new IniFile(path);
+            cfgreader = new SklLib.IO.ConfigFileReader(path);
+            sections = cfgreader.ReadSectionsName();
+            if (sections.Length < 1 || sections[0] != CFG_MAIN)
+                throw new Exception(SklLib.resExceptions.InvalidFile.Replace("%var", path));
         }
 
         public string Id
         {
             get
             {
-                return ini.ReadValue("MAIN", "ID");
+                string res = null;
+                try { res = cfgreader.ReadValue(CFG_MAIN, "ID"); }
+                catch (Exception ex)
+                {
+                    if (!(ex is SklLib.IO.KeyNotFoundException) &&
+                        !(ex is SklLib.IO.SectionNotFoundException))
+                        throw;
+                }
+                return res;
             }
         }
 
@@ -23,7 +36,7 @@ namespace ftp_sync
         {
             get
             {
-                string val = ini.ReadValue("MAIN", "RefreshTime");
+                string val = cfgreader.ReadValue(CFG_MAIN, "RefreshTime");
                 int result;
                 if (!int.TryParse(val, out result))
                     result = -1;

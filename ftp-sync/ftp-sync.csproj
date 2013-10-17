@@ -77,6 +77,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SklLib">
+      <HintPath>..\References\SklLib\SklLib.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -104,6 +107,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Config.cs" />
+    <Compile Include="ConfigSyncItem.cs" />
     <Compile Include="IniFile.cs" />
     <Compile Include="Service.cs">
       <SubType>Component</SubType>
