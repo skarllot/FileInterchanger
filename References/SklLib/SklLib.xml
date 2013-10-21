@@ -243,6 +243,16 @@
             <typeparam name="T">Any type-specific.</typeparam>
             <returns>Specified type-specific.</returns>
         </member>
+        <member name="T:SklLib.GetType`2">
+            <summary>
+            Represents a generic function that returns a type-specific and receives
+            another type-specific.
+            </summary>
+            <typeparam name="Ret">Any type-specific to return.</typeparam>
+            <typeparam name="P1">Any type-specific to receive.</typeparam>
+            <param name="param1">First parameter.</param>
+            <returns>Specified type-specific.</returns>
+        </member>
         <member name="T:SklLib.ByteMeasure">
             <summary>
             Byte multiples.
@@ -678,7 +688,14 @@
             <param name="numInfo">Culture specific <see cref="T:System.Globalization.NumberFormatInfo"/>.</param>
             <returns>true if <c>s</c> is an letter- and space-only and/or numeric String; otherwise, false.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SklLib.Strings.IsAlphabeticAndNumeric(System.String,System.Boolean)" -->
+        <member name="M:SklLib.Strings.IsAlphabeticAndNumeric(System.String,System.Boolean)">
+            <summary>
+            Indicates whether the <see cref="T:System.String"/> contains only letters, spaces and numeric chars.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/>.</param>
+            <param name="decimalNumber">Indicates whether the can be a decimal number.</param>
+            <returns>true if <c>s</c> is an letter- and space-only and/or numeric String; otherwise, false.</returns>
+        </member>
         <member name="M:SklLib.Strings.IsAlphabeticAndNumeric(System.String,System.Globalization.NumberFormatInfo,System.Boolean)">
             <summary>
             Indicates whether the <see cref="T:System.String"/> contains only letters, spaces and numeric chars.
@@ -974,6 +991,16 @@
         <member name="T:SklLib.LengthSize">
             <summary>
             Represents a size of length, and ables a conversion between measures.
+            </summary>
+        </member>
+        <member name="F:SklLib.LengthSize.DefaultSIUnit">
+            <summary>
+            Defines the default SI lenght unit as meter.
+            </summary>
+        </member>
+        <member name="F:SklLib.LengthSize.DefaultImperialUnit">
+            <summary>
+            Defines the default imperial unit as yard.
             </summary>
         </member>
         <member name="M:SklLib.LengthSize.#ctor(System.Decimal,SklLib.SILengthUnit)">
@@ -2303,6 +2330,30 @@
             <summary>
             Provides base methods to work with configuration files.
             </summary>
+            <remarks>
+            The configuration files are by default treated as INI files.
+            See http://en.wikipedia.org/wiki/INI_file for more details.
+            </remarks>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase.DEFAULT_COMMENT">
+            <summary>
+            Stores the default character that indicates beginning of a comment.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase.DEFAULT_KEY_VALUE_SEP">
+            <summary>
+            Stores the default separator between key and value.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase.DEFAULT_SEC_PREFIX">
+            <summary>
+            Stores the default prefix that identifies sections.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase.DEFAULT_SEC_SUFFIX">
+            <summary>
+            Stores the default suffix that identifies sections.
+            </summary>
         </member>
         <member name="F:SklLib.IO.ConfigFileBase.DefaultEncoding">
             <summary>
@@ -2314,6 +2365,16 @@
             Stores a String array where each item is a line from config file.
             </summary>
         </member>
+        <member name="F:SklLib.IO.ConfigFileBase._canTrim">
+            <summary>
+            Defines if file lines, key names and key values should be trimmed.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase._comment">
+            <summary>
+            Character that indicates beginning of a comment.
+            </summary>
+        </member>
         <member name="F:SklLib.IO.ConfigFileBase._encoding">
             <summary>
             Character encoding to read and write config file.
@@ -2322,6 +2383,21 @@
         <member name="F:SklLib.IO.ConfigFileBase._fileName">
             <summary>
             Stores config file name.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase._keyValueSep">
+            <summary>
+            Separator between key and value.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase._secPrefix">
+            <summary>
+            Prefix that identifies sections.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase._secSuffix">
+            <summary>
+            Suffix that identifies sections.
             </summary>
         </member>
         <member name="F:SklLib.IO.ConfigFileBase._sectionBuffer">
@@ -2348,6 +2424,7 @@
             <param name="fileName">The file name to handle configurations.</param>
             <param name="encoding">Encoding of configuration file.</param>
             <exception cref="T:System.ArgumentNullException"><c>fileName</c> is a null reference.</exception>
+            <exception cref="!:DirectoryNotFoundException">Directory defined to file was not found.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileBase.IsValidFile(System.String)">
             <summary>
@@ -2366,14 +2443,37 @@
             <returns>True if fileName is a valid cofiguration file; otherwise, false.</returns>
             <exception cref="T:System.IO.FileNotFoundException">The indicated file was not found.</exception>
         </member>
+        <member name="M:SklLib.IO.ConfigFileBase.IsValidFile">
+            <summary>
+            Check whether current file is valid configuration file.
+            </summary>
+            <returns>True if current file is a valid cofiguration file; otherwise, false.</returns>
+            <exception cref="T:System.IO.FileNotFoundException">The indicated file was not found.</exception>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.FillBuffer">
+            <summary>
+            Reads the file, validate and fills all buffers.
+            </summary>
+            <returns>True if current file is a valid cofiguration file; otherwise, false.</returns>
+            <exception cref="T:System.IO.FileNotFoundException">The indicated file was not found.</exception>
+        </member>
         <member name="M:SklLib.IO.ConfigFileBase.FindKey(System.String,System.Int32,System.Int32)">
             <summary>
             Search a key in current config file.
             </summary>
             <param name="key">Key name to search.</param>
-            <param name="start">Line number to start search.</param>
-            <param name="count">How many lines to search.</param>
+            <param name="start">Item index to start search.</param>
+            <param name="count">How many items to search.</param>
+            <returns>Item index where key is found; otherwise returns -1.</returns>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileBase.FindKey(System.String,System.String)">
+            <summary>
+            Search a key in current config file.
+            </summary>
+            <param name="section">Section name to search.</param>
+            <param name="key">Key name to search.</param>
             <returns>Line number where key is found; otherwise returns -1.</returns>
+            <exception cref="T:SklLib.IO.SectionNotFoundException">section was not found.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileBase.FindRange(System.String,System.Int32@,System.Int32@)">
             <summary>
@@ -2388,12 +2488,18 @@
             <summary>
             Reads the file and fills all buffers.
             </summary>
+            <exception cref="!:FileLoadException">The current file is invalid.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileBase.SetBasicInfo(System.String)">
             <summary>
             Sets full path for file name and verifies directory existence.
             </summary>
             <param name="fileName">The configuration file.</param>
+        </member>
+        <member name="P:SklLib.IO.ConfigFileBase.CanTrim">
+            <summary>
+            Gets or sets if file lines, key names and key values should be trimmed.
+            </summary>
         </member>
         <member name="P:SklLib.IO.ConfigFileBase.FileName">
             <summary>
@@ -2533,6 +2639,19 @@
             <summary>
             Clears any buffered data and reloads them again.
             </summary>
+        </member>
+        <member name="M:SklLib.IO.ConfigFileReader.TryReadValue(System.String,System.String,System.String@)">
+            <summary>
+            Read the value into specifield key.
+            </summary>
+            <param name="section">The section where key is found.</param>
+            <param name="key">The key name.</param>
+            <param name="value">Value stored into requested key and section.</param>
+            <returns>True is the value was successfully ready; otherwise, false.</returns>
+            <exception cref="T:System.ArgumentNullException">section or key parameter is a null reference.</exception>
+            <exception cref="T:SklLib.IO.SectionNotFoundException">section was not found.</exception>
+            <exception cref="T:SklLib.IO.KeyNotFoundException">key was not found.</exception>
+            <exception cref="T:System.IO.FileLoadException">The key has a invalid value.</exception>
         </member>
         <member name="T:SklLib.Formatting.Numbers">
             <summary>
@@ -2849,16 +2968,16 @@
             <summary>
             Determines whether two specified instances of Telephone are equal.
             </summary>
-            <param name="l">A Telephone.</param>
-            <param name="m">A Telephone.</param>
+            <param name="tel1">A Telephone.</param>
+            <param name="tel2">A Telephone.</param>
             <returns>true if tel1 and tel2 represent the same telephone value; otherwise, false.</returns>
         </member>
         <member name="M:SklLib.Telephone.op_Inequality(SklLib.Telephone,SklLib.Telephone)">
             <summary>
             Determines whether two specified instances of Telephone are not equal.
             </summary>
-            <param name="l">A Telephone.</param>
-            <param name="m">A Telephone.</param>
+            <param name="tel1">A Telephone.</param>
+            <param name="tel2">A Telephone.</param>
             <returns>true if tel1 and tel2 do not represent the same telephone value; otherwise, false</returns>
         </member>
         <member name="M:SklLib.Telephone.GetHashCode">
