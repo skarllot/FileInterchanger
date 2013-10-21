@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ftp_sync
 {
-    class Config
+    class Config : IEnumerable<ConfigSyncItem>
     {
         const string CFG_MAIN = "MAIN";
         SklLib.IO.ConfigFileReader cfgreader;
         string[] sections;
+        int idxMain;
 
         public Config(string path)
         {
             cfgreader = new SklLib.IO.ConfigFileReader(path);
             sections = cfgreader.ReadSectionsName();
-            if (sections.Length < 1 || sections[0] != CFG_MAIN)
+            idxMain = Array.IndexOf<string>(sections, CFG_MAIN);
+            if (idxMain == -1)
                 throw new Exception(SklLib.resExceptions.InvalidFile.Replace("%var", path));
         }
 
@@ -20,14 +23,8 @@ namespace ftp_sync
         {
             get
             {
-                string res = null;
-                try { res = cfgreader.ReadValue(CFG_MAIN, "ID"); }
-                catch (Exception ex)
-                {
-                    if (!(ex is SklLib.IO.KeyNotFoundException) &&
-                        !(ex is SklLib.IO.SectionNotFoundException))
-                        throw;
-                }
+                string res;
+                cfgreader.TryReadValue(CFG_MAIN, "ID", out res);
                 return res;
             }
         }
@@ -36,53 +33,39 @@ namespace ftp_sync
         {
             get
             {
-                string val = cfgreader.ReadValue(CFG_MAIN, "RefreshTime");
+                string val;
                 int result;
+                if (!cfgreader.TryReadValue(CFG_MAIN, "RefreshTime", out val))
+                    return -1;
                 if (!int.TryParse(val, out result))
-                    result = -1;
+                    return -1;
                 return result;
             }
         }
 
-        public string[] GetSections()
+        public ConfigSyncItem this[int index]
         {
-            string[] result = ini.GetSectionNames();
-            string[] ret = new string[result.Length - 1];
-            Array.Copy(result, 1, ret, 0, ret.Length);
-            return ret;
+            get
+            {
+                if (index >= idxMain)
+                    index++;
+                return new ConfigSyncItem(cfgreader, sections[index]);
+            }
         }
 
-        public string GetStoredSession(string section)
+        IEnumerator<ConfigSyncItem> IEnumerable<ConfigSyncItem>.GetEnumerator()
         {
-            return ini.ReadValue(section, "StoredSession");
+            ConfigSyncItem[] list = new ConfigSyncItem[sections.Length - 1];
+            for (int i = 0; i < list.Length; i++)
+            {
+                list[i] = this[i];
+            }
+            return ((IEnumerable<ConfigSyncItem>)list).GetEnumerator();
         }
 
-        public bool GetKeepFiles(string section)
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            string val = ini.ReadValue(section, "KeepFiles");
-            bool result;
-            if (!bool.TryParse(val, out result))
-                result = true;
-            return result;
-        }
-
-        public string GetLocal(string section)
-        {
-            return ini.ReadValue(section, "Local");
-        }
-
-        public string GetRemote(string section)
-        {
-            return ini.ReadValue(section, "Remote");
-        }
-
-        public string[] GetFiles(string section)
-        {
-            string val = ini.ReadValue(section, "Files");
-            string[] ret = new string[0];
-            if (!string.IsNullOrEmpty(val))
-                ret = val.Split(';');
-            return ret;
+            return ((IEnumerable<ConfigSyncItem>)this).GetEnumerator();
         }
     }
 }

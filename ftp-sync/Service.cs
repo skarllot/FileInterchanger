@@ -10,7 +10,6 @@ namespace ftp_sync
         const string DEFAULT_CFG_FILE_NAME = "ftpsync.ini";
         const string EVT_SOURCE = "FtpSync";
         const string EVT_LOG = "FtpSync";
-        const int DEFAULT_REFRESH = 60000;
 
         private System.Diagnostics.EventLog eventLog;
         private System.ComponentModel.Container components = null;
@@ -123,25 +122,23 @@ namespace ftp_sync
             started = true;
             string cfgpath = (string)obj;
 
-            Config cfg = new Config(cfgpath);
+            Config config = new Config(cfgpath);
             Synchronizer syncer = new Synchronizer();
-            if (!string.IsNullOrEmpty(cfg.Id))
-                syncer.Id = cfg.Id;
-            int refresh = DEFAULT_REFRESH;
-            if (cfg.Refresh < 0)
-                refresh = cfg.Refresh;
 
-            string[] sections = cfg.GetSections();
+            if (!string.IsNullOrEmpty(config.Id))
+                syncer.Id = config.Id;
+            if (config.Refresh != -1)
+                syncer.Refresh = config.Refresh;
 
             while (!stopping)
             {
-                foreach (string item in sections)
+                foreach (ConfigSyncItem item in config)
                 {
-                    string storedsession = cfg.GetStoredSession(item);
-                    bool keepfiles = cfg.GetKeepFiles(item);
-                    string local = cfg.GetLocal(item);
-                    string remote = cfg.GetRemote(item);
-                    string[] files = cfg.GetFiles(item);
+                    string storedsession = item.StoredSession;
+                    bool keepfiles = item.KeepFiles;
+                    string local = item.Local;
+                    string remote = item.Remote;
+                    string[] files = item.Files;
 
                     if (stopping)
                         break;
@@ -149,7 +146,7 @@ namespace ftp_sync
                 if (stopping)
                     break;
 
-                Thread.Sleep(refresh);
+                Thread.Sleep(syncer.Refresh);
             }
         }
 
