@@ -16,11 +16,19 @@ namespace ftp_sync
             this.section = section;
         }
 
-        public string[] Files { get { return GetCsvString("Files"); } }
-        public bool KeepFiles { get { return GetBoolean("KeepFiles"); } }
+        public string DeleteAfter { get { return GetString("DeleteAfter"); } }
+        public string Files { get { return GetString("Files"); } }
+        public string Fingerprint { get { return GetString("Fingerprint"); } }
+        public string FtpSecure { get { return GetString("FtpSecure"); } }
+        public string HostName { get { return GetString("HostName"); } }
         public string Local { get { return GetString("Local"); } }
+        public string Password { get { return GetString("Password"); } }
+        public string Protocol { get { return GetString("Protocol"); } }
         public string Remote { get { return GetString("Remote"); } }
+        public string Section { get { return section; } }
         public string StoredSession { get { return GetString("StoredSession"); } }
+        public string SyncTarget { get { return GetString("SyncTarget"); } }
+        public string UserName { get { return GetString("UserName"); } }
 
         private bool GetBoolean(string key)
         {

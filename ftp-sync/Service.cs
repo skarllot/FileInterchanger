@@ -124,6 +124,7 @@ namespace ftp_sync
 
             Config config = new Config(cfgpath);
             Synchronizer syncer = new Synchronizer();
+            syncer.EventLog = eventLog;
 
             if (!string.IsNullOrEmpty(config.Id))
                 syncer.Id = config.Id;
@@ -134,11 +135,7 @@ namespace ftp_sync
             {
                 foreach (ConfigSyncItem item in config)
                 {
-                    string storedsession = item.StoredSession;
-                    bool keepfiles = item.KeepFiles;
-                    string local = item.Local;
-                    string remote = item.Remote;
-                    string[] files = item.Files;
+                    syncer.Synchronize(item);
 
                     if (stopping)
                         break;

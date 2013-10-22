@@ -99,7 +99,7 @@
       <Name>System.XML</Name>
     </Reference>
     <Reference Include="WinSCP">
-      <HintPath>..\..\WinSCP.dll</HintPath>
+      <HintPath>..\References\WinSCP\WinSCP.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
