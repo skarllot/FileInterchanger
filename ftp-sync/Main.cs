@@ -7,11 +7,13 @@ namespace ftp_sync
 {
     class MainClass
     {
+        public static readonly bool DEBUG = System.Diagnostics.Debugger.IsAttached;
+
         public static void Main(string[] args)
         {
             Service ftp = new Service();
 
-            if (!System.Diagnostics.Debugger.IsAttached)
+            if (!DEBUG)
             {
                 System.ServiceProcess.ServiceBase[] ServicesToRun;
 

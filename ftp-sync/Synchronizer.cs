@@ -9,6 +9,7 @@ namespace ftp_sync
         readonly string DEFAULT_ID = Environment.MachineName;
         const int DEFAULT_REFRESH = 60000;
         const int EVENT_LOG_MAX_LENGHT = 32766;
+        const string REGEX_FILE_MASK = @".+[<>]?";
 
         string id;
         int refresh;
@@ -58,51 +59,73 @@ namespace ftp_sync
             };
 
             Session session = new Session();
-            //session.SessionLogPath = @"C:\temp\ftp-session.log";
+            if (MainClass.DEBUG)
+                session.SessionLogPath = @"ftp-session.log";
             session.Open(sessionOpt);
 
             TransferOptions transfOpt = new TransferOptions();
             transfOpt.TransferMode = TransferMode.Binary;
             transfOpt.FileMask = config.Files;
 
-            //RemoteDirectoryInfo dir = session.ListDirectory(config.Remote);
-            TransferOperationResult result = null;
-
-            switch (syncmode)
+            SynchronizationResult result = session.SynchronizeDirectories(
+                syncmode, config.Local, config.Remote, false, false,
+                SynchronizationCriteria.Time, transfOpt);
+            if (!result.IsSuccess)
+                log.AppendLine(string.Format("[{0}] Operation failed: synchronize files", GetDateNow()));
+            if (result.Downloads.Count > 0)
             {
-                case SynchronizationMode.Both:
-                    throw new NotImplementedException();
-                    //break;
-                case SynchronizationMode.Local:
-                    result = session.GetFiles(config.Remote, config.Local, false, transfOpt);
-                    if (!result.IsSuccess)
-                        log.AppendLine(string.Format("[{0}] Operation failed: downloaded files", GetDateNow()));
-                    if (result.Transfers.Count > 0)
-                    {
-                        foreach (TransferEventArgs item in result.Transfers)
-                            log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), item.FileName));
-                    }
-
-                    string f = string.Format("{0}/{1}", config.Remote, config.DeleteAfter);
-                    RemovalOperationResult remResult = session.RemoveFiles(f);
-                    if (!remResult.IsSuccess)
-                        log.AppendLine(string.Format("[{0}] Operation failed: remove old files", GetDateNow()));
-                    if (remResult.Removals.Count > 0)
-                    {
-                        foreach (RemovalEventArgs item in remResult.Removals)
-                            log.AppendLine(string.Format("[{0}] Removed: {1}", GetDateNow(), item.FileName));
-                    }
-                    break;
-                case SynchronizationMode.Remote:
-                    throw new NotImplementedException();
-                    //break;
+                foreach (TransferEventArgs item in result.Downloads)
+                    log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), item.FileName));
+            }
+            if (result.Uploads.Count > 0)
+            {
+                foreach (TransferEventArgs item in result.Uploads)
+                    log.AppendLine(string.Format("[{0}] Uploaded: {1}", GetDateNow(), item.FileName));
             }
 
+            Action cleanRemote = delegate()
+            {
+                string f = string.Format("{0}/{1}", config.Remote, config.DeleteAfter);
+                RemovalOperationResult remResult = session.RemoveFiles(f);
+                if (!remResult.IsSuccess)
+                    log.AppendLine(string.Format("[{0}] Operation failed: remove old files", GetDateNow()));
+                if (remResult.Removals.Count > 0)
+                {
+                    foreach (RemovalEventArgs item in remResult.Removals)
+                        log.AppendLine(string.Format("[{0}] Removed: {1}", GetDateNow(), item.FileName));
+                }
+            };
+
+            if (config.DeleteAfter != null)
+            {
+                switch (syncmode)
+                {
+                    case SynchronizationMode.Both:
+                        CleanLocal(config.Local, config.DeleteAfter);
+                        cleanRemote();
+                        break;
+                    case SynchronizationMode.Local:
+                        cleanRemote();
+                        break;
+                    case SynchronizationMode.Remote:
+                        CleanLocal(config.Local, config.DeleteAfter);
+                        break;
+                }
+            }
+
+            session.Dispose();
             log.AppendLine(string.Format("[{0}] Synchronization finalized", GetDateNow()));
-            if (log.Length > EVENT_LOG_MAX_LENGHT)
-                log.Remove(EVENT_LOG_MAX_LENGHT - 1, log.Length - EVENT_LOG_MAX_LENGHT);
-            eventLog.WriteEntry(log.ToString(), System.Diagnostics.EventLogEntryType.Information);
+
+            string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGHT);
+            foreach (string item in logArr)
+                eventLog.WriteEntry(item, System.Diagnostics.EventLogEntryType.Information);
+
             return result.IsSuccess;
+        }
+
+        private void CleanLocal(string path, string mask)
+        {
+            throw new NotImplementedException();
         }
     }
 }
