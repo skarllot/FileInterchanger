@@ -958,6 +958,16 @@
             <exception cref="T:System.ArgumentOutOfRangeException"><c>count</c> is less than zero, or
             <c>s</c> repeated in the specified times, by <c>count</c>, is too big to return.</exception>
         </member>
+        <member name="M:SklLib.Strings.Split(System.String,System.Int32)">
+            <summary>
+            Splits specified String into chunks of specified size.
+            </summary>
+            <param name="s">A <see cref="T:System.String"/>.</param>
+            <param name="chunkSize">The chunk size.</param>
+            <returns>An String array from specified String.</returns>
+            <exception cref="T:System.ArgumentNullException"><c>s</c> is a null reference.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><c>chunkSize</c> is less than zero.</exception>
+        </member>
         <member name="T:SklLib.Strings.IndexedChar">
             <summary>
             Stores a <see cref="T:System.Char"/> and itself position in a <see cref="T:System.String"/>.
@@ -2618,7 +2628,6 @@
             <exception cref="T:System.ArgumentNullException">section or key parameter is a null reference.</exception>
             <exception cref="T:SklLib.IO.SectionNotFoundException">section was not found.</exception>
             <exception cref="T:SklLib.IO.KeyNotFoundException">key was not found.</exception>
-            <exception cref="T:System.IO.FileLoadException">The key has a invalid value.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileReader.ReadSectionsName">
             <summary>
@@ -2648,10 +2657,6 @@
             <param name="key">The key name.</param>
             <param name="value">Value stored into requested key and section.</param>
             <returns>True is the value was successfully ready; otherwise, false.</returns>
-            <exception cref="T:System.ArgumentNullException">section or key parameter is a null reference.</exception>
-            <exception cref="T:SklLib.IO.SectionNotFoundException">section was not found.</exception>
-            <exception cref="T:SklLib.IO.KeyNotFoundException">key was not found.</exception>
-            <exception cref="T:System.IO.FileLoadException">The key has a invalid value.</exception>
         </member>
         <member name="T:SklLib.Formatting.Numbers">
             <summary>
