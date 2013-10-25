@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using WinSCP;
 using stringb = System.Text.StringBuilder;
 
@@ -47,6 +48,28 @@ namespace ftp_sync
             SynchronizationMode syncmode;
             if (!Enum.TryParse<SynchronizationMode>(config.SyncTarget, true, out syncmode))
                 syncmode = SynchronizationMode.Local;
+            Regex r = new Regex(config.Files);
+            TimeSpan temp;
+            TimeSpan? filter = null;
+            bool filterGT = true;
+            if (config.TimeFilter != null)
+            {
+                if (config.TimeFilter[0] == '<')
+                    filterGT = false;
+                if (TimeSpan.TryParse(config.TimeFilter.Substring(1), out temp))
+                    filter = temp;
+            }
+            TimeSpan? cleanup = null;
+            bool clenupGT = true;
+            if (config.Cleanup != null)
+            {
+                if (config.Cleanup[0] == '<')
+                    clenupGT = false;
+                if (TimeSpan.TryParse(config.Cleanup.Substring(1), out temp))
+                    cleanup = temp;
+            }
+            bool move = config.Move;
+            string backupFolder = config.BackupFolder;
 
             SessionOptions sessionOpt = new SessionOptions
             {
@@ -66,24 +89,57 @@ namespace ftp_sync
 
             TransferOptions transfOpt = new TransferOptions();
             transfOpt.TransferMode = TransferMode.Binary;
-            transfOpt.FileMask = config.Files;
+            //transfOpt.FileMask = config.Files;
 
-            SynchronizationResult result = session.SynchronizeDirectories(
-                syncmode, config.Local, config.Remote, false, false,
-                SynchronizationCriteria.Time, transfOpt);
-            if (!result.IsSuccess)
-                log.AppendLine(string.Format("[{0}] Operation failed: synchronize files", GetDateNow()));
-            if (result.Downloads.Count > 0)
+            switch (syncmode)
             {
-                foreach (TransferEventArgs item in result.Downloads)
-                    log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), item.FileName));
-            }
-            if (result.Uploads.Count > 0)
-            {
-                foreach (TransferEventArgs item in result.Uploads)
-                    log.AppendLine(string.Format("[{0}] Uploaded: {1}", GetDateNow(), item.FileName));
-            }
+                case SynchronizationMode.Both:
+                    throw new NotImplementedException();
+                    break;
+                case SynchronizationMode.Local:
+                    RemoteDirectoryInfo dirInfo = session.ListDirectory(config.Remote);
+                    foreach (RemoteFileInfo item in dirInfo.Files)
+                    {
+                        if (item.IsDirectory || !r.IsMatch(item.Name))
+                            continue;
+                        if (filter.HasValue)
+                        {
+                            if (filterGT)
+                            {
+                                if (!((DateTime.Now - item.LastWriteTime) > filter))
+                                    continue;
+                            }
+                            else
+                            {
+                                if (!((DateTime.Now - item.LastWriteTime) < filter))
+                                    continue;
+                            }
+                        }
 
+                        string origFile = string.Format("{0}/{1}", config.Remote, item.Name);
+                        if (move && !string.IsNullOrWhiteSpace(backupFolder))
+                        {
+                            string bkpFile = string.Format("{0}/{1}", backupFolder, item.Name);
+                            session.MoveFile(origFile, bkpFile);
+                            origFile = bkpFile;
+                            log.AppendLine(string.Format("[{0}] Done backup from file: {1}", GetDateNow(), item.Name));
+                        }
+
+                        TransferOperationResult result = session.GetFiles(origFile, config.Local, move, transfOpt);
+                        if (!result.IsSuccess)
+                            log.AppendLine(string.Format("[{0}] Operation failed: download files", GetDateNow()));
+                        if (result.Transfers.Count > 0)
+                        {
+                            foreach (TransferEventArgs t in result.Transfers)
+                                log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), t.FileName));
+                        }
+                    }
+                    break;
+                case SynchronizationMode.Remote:
+                    throw new NotImplementedException();
+                    break;
+            }
+            /*
             Action cleanRemote = delegate()
             {
                 string f = string.Format("{0}/{1}", config.Remote, config.DeleteAfter);
@@ -112,7 +168,7 @@ namespace ftp_sync
                         CleanLocal(config.Local, config.DeleteAfter);
                         break;
                 }
-            }
+            }*/
 
             session.Dispose();
             log.AppendLine(string.Format("[{0}] Synchronization finalized", GetDateNow()));
@@ -121,7 +177,8 @@ namespace ftp_sync
             foreach (string item in logArr)
                 eventLog.WriteEntry(item, System.Diagnostics.EventLogEntryType.Information);
 
-            return result.IsSuccess;
+            //return result.IsSuccess;
+            return true;
         }
 
         private void CleanLocal(string path, string mask)
