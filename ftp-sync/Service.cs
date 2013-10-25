@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
-namespace ftp_sync
+namespace ftp_exchange
 {
     public class Service : System.ServiceProcess.ServiceBase
     {

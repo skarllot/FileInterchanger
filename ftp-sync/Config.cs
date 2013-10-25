@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ftp_sync
+namespace ftp_exchange
 {
     class Config : IEnumerable<ConfigSyncItem>
     {

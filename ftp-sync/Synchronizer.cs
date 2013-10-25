@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using WinSCP;
 using stringb = System.Text.StringBuilder;
 
-namespace ftp_sync
+namespace ftp_exchange
 {
     class Synchronizer
     {

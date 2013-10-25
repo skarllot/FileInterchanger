@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ftp-sync", "ftp-sync\ftp-sync.csproj", "{70E55E6E-6A36-4321-B150-8ECE2F5E3C14}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ftp-exchange", "ftp-sync\ftp-exchange.csproj", "{70E55E6E-6A36-4321-B150-8ECE2F5E3C14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
