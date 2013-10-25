@@ -10,12 +10,12 @@ namespace ftp_sync
         const string DEFAULT_CFG_FILE_NAME = "ftpsync.ini";
         const string EVT_SOURCE = "FtpSync";
         const string EVT_LOG = "FtpSync";
+        const int MINUTE_TO_MILLISECONDS = 1000 * 60;
 
         private System.Diagnostics.EventLog eventLog;
         private System.ComponentModel.Container components = null;
         Thread svcThread;
-        bool started = false;
-        bool stopping = false;
+        ManualResetEvent stopEvent;
 
         public Service()
         {
@@ -41,7 +41,7 @@ namespace ftp_sync
             eventLog.Log = EVT_LOG;
             this.ServiceName = "FtpSync";
 
-
+            stopEvent = new ManualResetEvent(true);
             //eventLog.Source = "FtpSynchronizer";
             //eventLog.Log = "ftp-sync";
         }
@@ -103,9 +103,9 @@ namespace ftp_sync
         {
             base.OnStop();
 
-            if (started && svcThread != null && svcThread.IsAlive)
+            if (svcThread != null && svcThread.IsAlive)
             {
-                stopping = true;
+                stopEvent.Set();
                 svcThread.Join();
             }
 
@@ -119,31 +119,31 @@ namespace ftp_sync
 
         private void StartThread(object obj)
         {
-            started = true;
+            stopEvent.Reset();
             string cfgpath = (string)obj;
 
             Config config = new Config(cfgpath);
             Synchronizer syncer = new Synchronizer();
             syncer.EventLog = eventLog;
 
-            if (!string.IsNullOrEmpty(config.Id))
-                syncer.Id = config.Id;
             if (config.Refresh != -1)
                 syncer.Refresh = config.Refresh;
 
-            while (!stopping)
+            DateTime before;
+            while (!stopEvent.WaitOne(0))
             {
+                before = DateTime.Now;
                 foreach (ConfigSyncItem item in config)
                 {
                     syncer.Synchronize(item);
 
-                    if (stopping)
+                    if (stopEvent.WaitOne(0))
                         break;
                 }
-                if (stopping)
-                    break;
 
-                Thread.Sleep(syncer.Refresh);
+                int elapsedMs = (int)Math.Ceiling((DateTime.Now - before).TotalMilliseconds);
+                if (stopEvent.WaitOne(syncer.Refresh * MINUTE_TO_MILLISECONDS - elapsedMs))
+                    break;
             }
         }
 

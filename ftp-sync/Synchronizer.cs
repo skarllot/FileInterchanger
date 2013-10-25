@@ -7,7 +7,7 @@ namespace ftp_sync
     class Synchronizer
     {
         readonly string DEFAULT_ID = Environment.MachineName;
-        const int DEFAULT_REFRESH = 60000;
+        const int DEFAULT_REFRESH = 5;
         const int EVENT_LOG_MAX_LENGHT = 32766;
         const string REGEX_FILE_MASK = @".+[<>]?";
 
@@ -54,9 +54,10 @@ namespace ftp_sync
                 FtpSecure = ftpsecure,
                 HostName = config.HostName,
                 UserName = config.UserName,
-                Password = config.Password,
-                SslHostCertificateFingerprint = config.Fingerprint
+                Password = config.Password
             };
+            if (sessionOpt.FtpSecure != FtpSecure.None)
+                sessionOpt.SslHostCertificateFingerprint = config.Fingerprint;
 
             Session session = new Session();
             if (MainClass.DEBUG)

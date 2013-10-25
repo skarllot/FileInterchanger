@@ -15,18 +15,6 @@ namespace ftp_sync
             cfgreader = new SklLib.IO.ConfigFileReader(path);
             sections = cfgreader.ReadSectionsName();
             idxMain = Array.IndexOf<string>(sections, CFG_MAIN);
-            if (idxMain == -1)
-                throw new Exception(SklLib.resExceptions.InvalidFile.Replace("%var", path));
-        }
-
-        public string Id
-        {
-            get
-            {
-                string res;
-                cfgreader.TryReadValue(CFG_MAIN, "ID", out res);
-                return res;
-            }
         }
 
         public int Refresh
