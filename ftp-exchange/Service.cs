@@ -7,9 +7,9 @@ namespace ftp_exchange
 {
     public class Service : System.ServiceProcess.ServiceBase
     {
-        const string DEFAULT_CFG_FILE_NAME = "ftpsync.ini";
-        const string EVT_SOURCE = "FtpSync";
-        const string EVT_LOG = "FtpSync";
+        const string DEFAULT_CFG_FILE_NAME = "ftp-exchange.ini";
+        const string EVT_SOURCE = "FtpExchange";
+        const string EVT_LOG = "FtpExchange";
         const int MINUTE_TO_MILLISECONDS = 1000 * 60;
 
         private System.Diagnostics.EventLog eventLog;
@@ -20,12 +20,12 @@ namespace ftp_exchange
         public Service()
         {
             // PS> Remove-EventLog <logname>
-            /*if (System.Diagnostics.EventLog.SourceExists(EVT_SOURCE))
+            if (System.Diagnostics.EventLog.SourceExists(EVT_SOURCE))
             {
                 eventLog = new EventLog { Source = EVT_SOURCE };
                 if (eventLog.Log != EVT_LOG)
                     System.Diagnostics.EventLog.DeleteEventSource(EVT_SOURCE);
-            }*/
+            }
 
             bool evtExists = false;
             try { evtExists = System.Diagnostics.EventLog.SourceExists(EVT_SOURCE); }
@@ -39,11 +39,9 @@ namespace ftp_exchange
             this.eventLog = new System.Diagnostics.EventLog();
             eventLog.Source = EVT_SOURCE;
             eventLog.Log = EVT_LOG;
-            this.ServiceName = "FtpSync";
+            this.ServiceName = "FtpExchange";
 
             stopEvent = new ManualResetEvent(true);
-            //eventLog.Source = "FtpSynchronizer";
-            //eventLog.Log = "ftp-sync";
         }
 
         /// <summary>
