@@ -8,12 +8,15 @@ namespace ftp_exchange
     public class Service : System.ServiceProcess.ServiceBase
     {
         const string DEFAULT_CFG_FILE_NAME = "ftp-exchange.ini";
+        const string DEFAULT_CREDENTIALS_CFG_FILE_NAME = "credentials.ini";
+        const int DEFAULT_REFRESH = 5;
         const string EVT_SOURCE = "FtpExchange";
         const string EVT_LOG = "FtpExchange";
         const int MINUTE_TO_MILLISECONDS = 1000 * 60;
 
         private System.Diagnostics.EventLog eventLog;
         private System.ComponentModel.Container components = null;
+        int refresh = DEFAULT_REFRESH;
         Thread svcThread;
         ManualResetEvent stopEvent;
 
@@ -37,11 +40,37 @@ namespace ftp_exchange
             }
 
             this.eventLog = new System.Diagnostics.EventLog();
-            eventLog.Source = EVT_SOURCE;
+            eventLog.Source = "Service";
             eventLog.Log = EVT_LOG;
             this.ServiceName = "FtpExchange";
 
             stopEvent = new ManualResetEvent(true);
+        }
+
+        private string GetConfigFileFullName(string dir, string fileName)
+        {
+            string cfgFile = null;
+            if (dir == null)
+            {
+                string cfgDir = Path.Combine(Environment.GetFolderPath(
+                    Environment.SpecialFolder.CommonApplicationData,
+                    Environment.SpecialFolderOption.None), this.ServiceName);
+                if (!Directory.Exists(cfgDir))
+                    Directory.CreateDirectory(cfgDir);
+                cfgFile = Path.Combine(cfgDir, fileName);
+            }
+            else
+                cfgFile = Path.Combine(dir, fileName);
+            if (!File.Exists(cfgFile))
+            {
+                string msg = string.Format("The configuration file \"{0}\" does not exist.", cfgFile);
+                eventLog.WriteEntry(msg, EventLogEntryType.Error);
+                // http://msdn.microsoft.com/en-us/library/ms681384%28v=vs.85%29
+                this.ExitCode = 15010;
+                throw new FileNotFoundException(msg, cfgFile);
+            }
+
+            return cfgFile;
         }
 
         /// <summary>
@@ -66,31 +95,15 @@ namespace ftp_exchange
         {
             base.OnStart(args);
 
-            string cfgFile = null;
+            string dir = null;
             if (args.Length == 1)
-            {
-                cfgFile = args[0];
-            }
-            if (cfgFile == null)
-            {
-                string cfgDir = Path.Combine(Environment.GetFolderPath(
-                    Environment.SpecialFolder.CommonApplicationData,
-                    Environment.SpecialFolderOption.None), EVT_SOURCE);
-                if (!Directory.Exists(cfgDir))
-                    Directory.CreateDirectory(cfgDir);
-                cfgFile = Path.Combine(cfgDir, DEFAULT_CFG_FILE_NAME);
-            }
-            if (!File.Exists(cfgFile))
-            {
-                string msg = string.Format("The configuration file \"{0}\" does not exist.", cfgFile);
-                eventLog.WriteEntry(msg, EventLogEntryType.Error);
-                // http://msdn.microsoft.com/en-us/library/ms681384%28v=vs.85%29
-                this.ExitCode = 15010;
-                throw new FileNotFoundException(msg, cfgFile);
-            }
+                dir = args[0];
+
+            string cfgFile = GetConfigFileFullName(dir, DEFAULT_CFG_FILE_NAME);
+            string credentialFile = GetConfigFileFullName(dir, DEFAULT_CREDENTIALS_CFG_FILE_NAME);
 
             svcThread = new Thread(new ParameterizedThreadStart(StartThread));
-            svcThread.Start(cfgFile);
+            svcThread.Start(new string[] { cfgFile, credentialFile });
             eventLog.WriteEntry("FtpSync service started");
         }
 
@@ -107,7 +120,7 @@ namespace ftp_exchange
                 svcThread.Join();
             }
 
-            eventLog.WriteEntry("FtpSync service stoped");
+            eventLog.WriteEntry("FtpSync service stopped");
         }
 
         /*protected override void OnContinue()
@@ -118,38 +131,44 @@ namespace ftp_exchange
         private void StartThread(object obj)
         {
             stopEvent.Reset();
-            string cfgpath = (string)obj;
+            string cfgpath = ((string[])obj)[0];
+            string credpath = ((string[])obj)[1];
 
-            ConfigReader config = new ConfigReader(cfgpath);
-            Exchanger syncer = new Exchanger();
-            syncer.EventLog = eventLog;
+            System.Diagnostics.EventLog evlogTransf = new System.Diagnostics.EventLog();
+            evlogTransf.Source = "Transfer";
+            evlogTransf.Log = EVT_LOG;
+
+            IO.ConfigReader config = new IO.ConfigReader(cfgpath);
+            IO.CredentialsReader credReader = new IO.CredentialsReader(credpath);
+            Exchanger exchanger = new Exchanger();
+            exchanger.EventLog = evlogTransf;
 
             if (config.Refresh != -1)
-                syncer.Refresh = config.Refresh;
+                refresh = config.Refresh;
 
             DateTime before;
             while (!stopEvent.WaitOne(0))
             {
                 before = DateTime.Now;
-                foreach (ConfigReaderItem item in config)
+                foreach (IO.ConfigReaderItem item in config)
                 {
                     ExchangeInfo? info;
-                    try { info = ExchangeInfo.Parse(item); }
+                    try { info = ExchangeInfo.Parse(item, credReader); }
                     catch (Exception e)
                     {
-                        eventLog.WriteEntry(e.Message, EventLogEntryType.Error);
+                        evlogTransf.WriteEntry(e.Message, EventLogEntryType.Error);
                         info = null;
                     }
 
                     if (info.HasValue)
-                        syncer.Exchange(info.Value);
+                        exchanger.Exchange(info.Value);
 
                     if (stopEvent.WaitOne(0))
                         break;
                 }
 
                 int elapsedMs = (int)Math.Ceiling((DateTime.Now - before).TotalMilliseconds);
-                if (stopEvent.WaitOne(syncer.Refresh * MINUTE_TO_MILLISECONDS - elapsedMs))
+                if (stopEvent.WaitOne(refresh * MINUTE_TO_MILLISECONDS - elapsedMs))
                     break;
             }
         }

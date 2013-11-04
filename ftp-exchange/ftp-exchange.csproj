@@ -109,11 +109,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExchangeInfo.cs" />
+    <Compile Include="IO\ConfigReaderBase.cs" />
+    <Compile Include="IO\CredentialItemReader.cs" />
+    <Compile Include="IO\CredentialsReader.cs" />
+    <Compile Include="NetworkConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ConfigReader.cs" />
-    <Compile Include="ConfigReaderItem.cs" />
+    <Compile Include="IO\ConfigReader.cs" />
+    <Compile Include="IO\ConfigReaderItem.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

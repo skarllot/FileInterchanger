@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using WinSCP;
 using stringb = System.Text.StringBuilder;
 
@@ -7,23 +8,15 @@ namespace ftp_exchange
 {
     class Exchanger
     {
-        const int DEFAULT_REFRESH = 5;
         static readonly TransferOptions DEFAULT_TRANSFER_OPTIONS = new TransferOptions
         {
             TransferMode = TransferMode.Binary
         };
         const int EVENT_LOG_MAX_LENGHT = 32766;
 
-        int refresh;
         System.Diagnostics.EventLog eventLog;
 
-        public Exchanger()
-        {
-            refresh = DEFAULT_REFRESH;
-        }
-
         public System.Diagnostics.EventLog EventLog { get { return eventLog; } set { eventLog = value; } }
-        public int Refresh { get { return refresh; } set { refresh = value; } }
 
         private string GetDateNow()
         {
@@ -40,15 +33,18 @@ namespace ftp_exchange
                 Protocol = info.Protocol,
                 FtpSecure = info.FtpSecure,
                 HostName = info.HostName,
-                UserName = info.UserName,
-                Password = info.Password
+                UserName = info.FtpCredential.UserName,
+                Password = info.FtpCredential.Password
             };
             if (sessionOpt.FtpSecure != FtpSecure.None)
                 sessionOpt.SslHostCertificateFingerprint = info.Fingerprint;
 
-            Session session = new Session();
+            Session session = null;
+            NetworkConnection netConn = null;
             try
             {
+                netConn = new NetworkConnection(info.Local, info.NetworkCredential);
+                session = new Session();
                 if (MainClass.DEBUG)
                     session.SessionLogPath = @"ftp-session.log";
                 session.Open(sessionOpt);
@@ -82,6 +78,8 @@ namespace ftp_exchange
             }
             finally
             {
+                if (netConn != null)
+                    netConn.Dispose();
                 if (session != null)
                     session.Dispose();
                 log.AppendLine(string.Format("[{0}] Synchronization finalized", GetDateNow()));
@@ -91,7 +89,6 @@ namespace ftp_exchange
                     eventLog.WriteEntry(item, System.Diagnostics.EventLogEntryType.Information);
             }
 
-            //return result.IsSuccess;
             return true;
         }
 

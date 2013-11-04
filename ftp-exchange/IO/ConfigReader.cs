@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ftp_exchange
+namespace ftp_exchange.IO
 {
-    class ConfigReader : IEnumerable<ConfigReaderItem>
+    class ConfigReader : ConfigReaderBase, IEnumerable<ConfigReaderItem>
     {
         const string CFG_MAIN = "MAIN";
-        SklLib.IO.ConfigFileReader cfgreader;
-        string[] sections;
         int idxMain;
 
         public ConfigReader(string path)
