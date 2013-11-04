@@ -18,6 +18,7 @@ namespace ftp_exchange
 
         public string BackupFolder { get { return GetString("BackupFolder"); } }
         public string Cleanup { get { return GetString("Cleanup"); } }
+        public bool CleanupTarget { get { return GetBoolean("CleanupTarget"); } }
         public string Files { get { return GetString("Files"); } }
         public string Fingerprint { get { return GetString("Fingerprint"); } }
         public string FtpSecure { get { return GetString("FtpSecure"); } }

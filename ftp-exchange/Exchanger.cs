@@ -47,41 +47,49 @@ namespace ftp_exchange
                 sessionOpt.SslHostCertificateFingerprint = info.Fingerprint;
 
             Session session = new Session();
-            if (MainClass.DEBUG)
-                session.SessionLogPath = @"ftp-session.log";
-            session.Open(sessionOpt);
-
-            switch (info.SyncTarget)
+            try
             {
-                case SynchronizationMode.Local:
-                    if (!ExchangeToLocal(info, session, log))
+                if (MainClass.DEBUG)
+                    session.SessionLogPath = @"ftp-session.log";
+                session.Open(sessionOpt);
+
+                switch (info.SyncTarget)
+                {
+                    case SynchronizationMode.Local:
+                        if (!ExchangeToLocal(info, session, log))
+                            return false;
+                        if (info.Cleanup.HasValue)
+                        {
+                            CleanupRemote(info, session, log);
+                            if (info.CleanupTarget)
+                                CleanupLocal(info, session, log);
+                        }
+                        break;
+                    case SynchronizationMode.Remote:
+                        if (!ExchangeToRemote(info, session, log))
+                            return false;
+                        if (info.Cleanup.HasValue)
+                        {
+                            CleanupLocal(info, session, log);
+                            if (info.CleanupTarget)
+                                CleanupRemote(info, session, log);
+                        }
+                        break;
+                    default:
+                        log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}", GetDateNow(), info.SyncTarget.ToString()));
                         return false;
-                    if (info.Cleanup.HasValue)
-                    {
-                        CleanupRemote(info, session, log);
-                        CleanupLocal(info, session, log);
-                    }
-                    break;
-                case SynchronizationMode.Remote:
-                    if (!ExchangeToRemote(info, session, log))
-                        return false;
-                    if (info.Cleanup.HasValue)
-                    {
-                        CleanupLocal(info, session, log);
-                        CleanupRemote(info, session, log);
-                    }
-                    break;
-                default:
-                    log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}", GetDateNow(), info.SyncTarget.ToString()));
-                    return false;
+                }
             }
+            finally
+            {
+                if (session != null)
+                    session.Dispose();
+                log.AppendLine(string.Format("[{0}] Synchronization finalized", GetDateNow()));
 
-            session.Dispose();
-            log.AppendLine(string.Format("[{0}] Synchronization finalized", GetDateNow()));
-
-            string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGHT);
-            foreach (string item in logArr)
-                eventLog.WriteEntry(item, System.Diagnostics.EventLogEntryType.Information);
+                string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGHT);
+                foreach (string item in logArr)
+                    eventLog.WriteEntry(item, System.Diagnostics.EventLogEntryType.Information);
+            }
 
             //return result.IsSuccess;
             return true;
@@ -122,22 +130,24 @@ namespace ftp_exchange
                         continue;
                 }
 
+                bool move = info.Move;
                 string origFile = string.Format("{0}/{1}", info.Remote, item.Name);
                 if (info.Move && !string.IsNullOrWhiteSpace(info.BackupFolder))
                 {
                     string bkpFile = string.Format("{0}/{1}", info.BackupFolder, item.Name);
                     session.MoveFile(origFile, bkpFile);
                     origFile = bkpFile;
+                    move = false;
                     log.AppendLine(string.Format("[{0}] Done backup from file: {1}", GetDateNow(), item.Name));
                 }
 
                 if (File.Exists(localFile))
                 {
                     File.Delete(localFile);
-                    log.AppendLine(string.Format("[{0}] Local file deleted: {1}", GetDateNow(), localFile));
+                    log.AppendLine(string.Format("[{0}] Local file deleted: {1}", GetDateNow(), item.Name));
                 }
 
-                TransferOperationResult result = session.GetFiles(origFile, localFile, info.Move, DEFAULT_TRANSFER_OPTIONS);
+                TransferOperationResult result = session.GetFiles(origFile, localFile, move, DEFAULT_TRANSFER_OPTIONS);
                 if (!result.IsSuccess)
                 {
                     log.AppendLine(string.Format("[{0}] Operation failed: download files", GetDateNow()));
@@ -187,12 +197,14 @@ namespace ftp_exchange
                         continue;
                 }
 
+                bool move = info.Move;
                 string origFile = item.FullName;
                 if (info.Move && !string.IsNullOrWhiteSpace(info.BackupFolder))
                 {
                     string bkpFile = Path.Combine(info.BackupFolder, item.Name);
                     File.Move(origFile, bkpFile);
                     origFile = bkpFile;
+                    move = false;
                     log.AppendLine(string.Format("[{0}] Done backup from file: {1}", GetDateNow(), item.Name));
                 }
 
@@ -201,13 +213,13 @@ namespace ftp_exchange
                     RemovalOperationResult remResult = session.RemoveFiles(remoteFile);
                     if (!remResult.IsSuccess)
                     {
-                        log.AppendLine(string.Format("[{0}] Delete remote file failed: {1}", GetDateNow(), remoteFile));
+                        log.AppendLine(string.Format("[{0}] Delete remote file failed: {1}", GetDateNow(), item.Name));
                         return false;
                     }
-                    log.AppendLine(string.Format("[{0}] Remote file deleted: {1}", GetDateNow(), remoteFile));
+                    log.AppendLine(string.Format("[{0}] Remote file deleted: {1}", GetDateNow(), item.Name));
                 }
 
-                TransferOperationResult result = session.PutFiles(origFile, remoteFile, info.Move, DEFAULT_TRANSFER_OPTIONS);
+                TransferOperationResult result = session.PutFiles(origFile, remoteFile, move, DEFAULT_TRANSFER_OPTIONS);
                 if (!result.IsSuccess)
                 {
                     log.AppendLine(string.Format("[{0}] Operation failed: upload files", GetDateNow()));

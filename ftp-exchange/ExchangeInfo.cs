@@ -8,6 +8,7 @@ namespace ftp_exchange
     {
         string backupFolder;
         TimeSpanExpression? cleanup;
+        bool cleanupTarget;
         Regex files;
         string fingerprint;
         FtpSecure ftpSecure;
@@ -24,6 +25,7 @@ namespace ftp_exchange
 
         public string BackupFolder { get { return backupFolder; } }
         public TimeSpanExpression? Cleanup { get { return cleanup; } }
+        public bool CleanupTarget { get { return cleanupTarget; } }
         public Regex Files { get { return files; } }
         public string Fingerprint { get { return fingerprint; } }
         public FtpSecure FtpSecure { get { return ftpSecure; } }
@@ -42,6 +44,7 @@ namespace ftp_exchange
         {
             ExchangeInfo result = new ExchangeInfo();
             result.backupFolder = item.BackupFolder;
+            result.cleanupTarget = item.CleanupTarget;
             result.fingerprint = item.Fingerprint;
             result.hostname = item.HostName;
             result.id = item.Section;
