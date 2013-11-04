@@ -5,12 +5,12 @@ using System.Text;
 
 namespace ftp_exchange
 {
-    class ConfigSyncItem
+    class ConfigReaderItem
     {
         SklLib.IO.ConfigFileReader cfgreader;
         string section;
 
-        public ConfigSyncItem(SklLib.IO.ConfigFileReader reader, string section)
+        public ConfigReaderItem(SklLib.IO.ConfigFileReader reader, string section)
         {
             this.cfgreader = reader;
             this.section = section;
@@ -37,9 +37,9 @@ namespace ftp_exchange
             bool result;
             string val;
             if (!cfgreader.TryReadValue(section, key, out val))
-                result = true;
+                return false;
             if (!bool.TryParse(val, out result))
-                result = true;
+                return false;
             return result;
         }
 

@@ -120,7 +120,7 @@ namespace ftp_exchange
             stopEvent.Reset();
             string cfgpath = (string)obj;
 
-            Config config = new Config(cfgpath);
+            ConfigReader config = new ConfigReader(cfgpath);
             Exchanger syncer = new Exchanger();
             syncer.EventLog = eventLog;
 
@@ -131,9 +131,18 @@ namespace ftp_exchange
             while (!stopEvent.WaitOne(0))
             {
                 before = DateTime.Now;
-                foreach (ConfigSyncItem item in config)
+                foreach (ConfigReaderItem item in config)
                 {
-                    syncer.Synchronize(item);
+                    ExchangeInfo? info;
+                    try { info = ExchangeInfo.Parse(item); }
+                    catch (Exception e)
+                    {
+                        eventLog.WriteEntry(e.Message, EventLogEntryType.Error);
+                        info = null;
+                    }
+
+                    if (info.HasValue)
+                        syncer.Exchange(info.Value);
 
                     if (stopEvent.WaitOne(0))
                         break;

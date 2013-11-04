@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace ftp_exchange
 {
-    class Config : IEnumerable<ConfigSyncItem>
+    class ConfigReader : IEnumerable<ConfigReaderItem>
     {
         const string CFG_MAIN = "MAIN";
         SklLib.IO.ConfigFileReader cfgreader;
         string[] sections;
         int idxMain;
 
-        public Config(string path)
+        public ConfigReader(string path)
         {
             cfgreader = new SklLib.IO.ConfigFileReader(path);
             sections = cfgreader.ReadSectionsName();
@@ -31,29 +31,29 @@ namespace ftp_exchange
             }
         }
 
-        public ConfigSyncItem this[int index]
+        public ConfigReaderItem this[int index]
         {
             get
             {
                 if (index >= idxMain)
                     index++;
-                return new ConfigSyncItem(cfgreader, sections[index]);
+                return new ConfigReaderItem(cfgreader, sections[index]);
             }
         }
 
-        IEnumerator<ConfigSyncItem> IEnumerable<ConfigSyncItem>.GetEnumerator()
+        IEnumerator<ConfigReaderItem> IEnumerable<ConfigReaderItem>.GetEnumerator()
         {
-            ConfigSyncItem[] list = new ConfigSyncItem[sections.Length - 1];
+            ConfigReaderItem[] list = new ConfigReaderItem[sections.Length - 1];
             for (int i = 0; i < list.Length; i++)
             {
                 list[i] = this[i];
             }
-            return ((IEnumerable<ConfigSyncItem>)list).GetEnumerator();
+            return ((IEnumerable<ConfigReaderItem>)list).GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<ConfigSyncItem>)this).GetEnumerator();
+            return ((IEnumerable<ConfigReaderItem>)this).GetEnumerator();
         }
     }
 }

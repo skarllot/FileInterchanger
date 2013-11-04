@@ -7,23 +7,18 @@ namespace ftp_exchange
 {
     class Exchanger
     {
-        readonly string DEFAULT_ID = Environment.MachineName;
         const int DEFAULT_REFRESH = 5;
         const int EVENT_LOG_MAX_LENGHT = 32766;
-        const string REGEX_FILE_MASK = @".+[<>]?";
 
-        string id;
         int refresh;
         System.Diagnostics.EventLog eventLog;
 
         public Exchanger()
         {
-            id = DEFAULT_ID;
             refresh = DEFAULT_REFRESH;
         }
 
         public System.Diagnostics.EventLog EventLog { get { return eventLog; } set { eventLog = value; } }
-        public string Id { get { return id; } set { id = value; } }
         public int Refresh { get { return refresh; } set { refresh = value; } }
 
         private string GetDateNow()
@@ -31,56 +26,21 @@ namespace ftp_exchange
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        public bool Synchronize(ConfigSyncItem config)
+        public bool Exchange(ExchangeInfo info)
         {
             stringb log = new stringb();
-            log.AppendLine(string.Format("[{0}] Initializing synchronization to {1}", GetDateNow(), config.Section));
-            Protocol protocol;
-            if (!Enum.TryParse<Protocol>(config.Protocol, true, out protocol))
-            {
-                log.AppendLine(string.Format("[{0}] Missing Protocol setting", GetDateNow()));
-                eventLog.WriteEntry(log.ToString(), System.Diagnostics.EventLogEntryType.Error);
-                return false;
-            }
-            FtpSecure ftpsecure;
-            if (!Enum.TryParse<FtpSecure>(config.FtpSecure, true, out ftpsecure))
-                ftpsecure = FtpSecure.None;
-            SynchronizationMode syncmode;
-            if (!Enum.TryParse<SynchronizationMode>(config.SyncTarget, true, out syncmode))
-                syncmode = SynchronizationMode.Local;
-            Regex r = new Regex(config.Files);
-            TimeSpan temp;
-            TimeSpan? filter = null;
-            bool filterGT = true;
-            if (config.TimeFilter != null)
-            {
-                if (config.TimeFilter[0] == '<')
-                    filterGT = false;
-                if (TimeSpan.TryParse(config.TimeFilter.Substring(1), out temp))
-                    filter = temp;
-            }
-            TimeSpan? cleanup = null;
-            bool clenupGT = true;
-            if (config.Cleanup != null)
-            {
-                if (config.Cleanup[0] == '<')
-                    clenupGT = false;
-                if (TimeSpan.TryParse(config.Cleanup.Substring(1), out temp))
-                    cleanup = temp;
-            }
-            bool move = config.Move;
-            string backupFolder = config.BackupFolder;
+            log.AppendLine(string.Format("[{0}] Initializing synchronization to {1}", GetDateNow(), info.Id));
 
             SessionOptions sessionOpt = new SessionOptions
             {
-                Protocol = protocol,
-                FtpSecure = ftpsecure,
-                HostName = config.HostName,
-                UserName = config.UserName,
-                Password = config.Password
+                Protocol = info.Protocol,
+                FtpSecure = info.FtpSecure,
+                HostName = info.HostName,
+                UserName = info.UserName,
+                Password = info.Password
             };
             if (sessionOpt.FtpSecure != FtpSecure.None)
-                sessionOpt.SslHostCertificateFingerprint = config.Fingerprint;
+                sessionOpt.SslHostCertificateFingerprint = info.Fingerprint;
 
             Session session = new Session();
             if (MainClass.DEBUG)
@@ -91,38 +51,30 @@ namespace ftp_exchange
             transfOpt.TransferMode = TransferMode.Binary;
             //transfOpt.FileMask = config.Files;
 
-            switch (syncmode)
+            switch (info.SyncTarget)
             {
                 case SynchronizationMode.Local:
-                    RemoteDirectoryInfo dirInfo = session.ListDirectory(config.Remote);
+                    RemoteDirectoryInfo dirInfo = session.ListDirectory(info.Remote);
                     foreach (RemoteFileInfo item in dirInfo.Files)
                     {
-                        if (item.IsDirectory || !r.IsMatch(item.Name))
+                        if (item.IsDirectory || !info.Files.IsMatch(item.Name))
                             continue;
-                        if (filter.HasValue)
+                        if (info.TimeFilter.HasValue)
                         {
-                            if (filterGT)
-                            {
-                                if (!((DateTime.Now - item.LastWriteTime) > filter))
-                                    continue;
-                            }
-                            else
-                            {
-                                if (!((DateTime.Now - item.LastWriteTime) < filter))
-                                    continue;
-                            }
+                            if (!TimeSpanExpression.Match(DateTime.Now - item.LastWriteTime, info.TimeFilter.Value))
+                                continue;
                         }
 
-                        string origFile = string.Format("{0}/{1}", config.Remote, item.Name);
-                        if (move && !string.IsNullOrWhiteSpace(backupFolder))
+                        string origFile = string.Format("{0}/{1}", info.Remote, item.Name);
+                        if (info.Move && !string.IsNullOrWhiteSpace(info.BackupFolder))
                         {
-                            string bkpFile = string.Format("{0}/{1}", backupFolder, item.Name);
+                            string bkpFile = string.Format("{0}/{1}", info.BackupFolder, item.Name);
                             session.MoveFile(origFile, bkpFile);
                             origFile = bkpFile;
                             log.AppendLine(string.Format("[{0}] Done backup from file: {1}", GetDateNow(), item.Name));
                         }
 
-                        TransferOperationResult result = session.GetFiles(origFile, config.Local, move, transfOpt);
+                        TransferOperationResult result = session.GetFiles(origFile, info.Local, info.Move, transfOpt);
                         if (!result.IsSuccess)
                             log.AppendLine(string.Format("[{0}] Operation failed: download files", GetDateNow()));
                         if (result.Transfers.Count > 0)
@@ -136,7 +88,7 @@ namespace ftp_exchange
                     throw new NotImplementedException();
                     break;
                 default:
-                    log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}", GetDateNow(), syncmode.ToString()));
+                    log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}", GetDateNow(), info.SyncTarget.ToString()));
                     return false;
             }
             /*
