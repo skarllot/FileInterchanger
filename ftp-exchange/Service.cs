@@ -121,7 +121,7 @@ namespace ftp_exchange
             string cfgpath = (string)obj;
 
             Config config = new Config(cfgpath);
-            Synchronizer syncer = new Synchronizer();
+            Exchanger syncer = new Exchanger();
             syncer.EventLog = eventLog;
 
             if (config.Refresh != -1)

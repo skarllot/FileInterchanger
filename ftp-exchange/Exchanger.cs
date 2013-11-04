@@ -5,7 +5,7 @@ using stringb = System.Text.StringBuilder;
 
 namespace ftp_exchange
 {
-    class Synchronizer
+    class Exchanger
     {
         readonly string DEFAULT_ID = Environment.MachineName;
         const int DEFAULT_REFRESH = 5;
@@ -16,7 +16,7 @@ namespace ftp_exchange
         int refresh;
         System.Diagnostics.EventLog eventLog;
 
-        public Synchronizer()
+        public Exchanger()
         {
             id = DEFAULT_ID;
             refresh = DEFAULT_REFRESH;
@@ -93,9 +93,6 @@ namespace ftp_exchange
 
             switch (syncmode)
             {
-                case SynchronizationMode.Both:
-                    throw new NotImplementedException();
-                    break;
                 case SynchronizationMode.Local:
                     RemoteDirectoryInfo dirInfo = session.ListDirectory(config.Remote);
                     foreach (RemoteFileInfo item in dirInfo.Files)
@@ -138,6 +135,9 @@ namespace ftp_exchange
                 case SynchronizationMode.Remote:
                     throw new NotImplementedException();
                     break;
+                default:
+                    log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}", GetDateNow(), syncmode.ToString()));
+                    return false;
             }
             /*
             Action cleanRemote = delegate()
