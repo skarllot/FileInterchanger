@@ -113,7 +113,6 @@
     </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="ConfigSyncItem.cs" />
-    <Compile Include="IniFile.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
