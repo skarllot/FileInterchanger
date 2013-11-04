@@ -96,11 +96,14 @@ namespace ftp_exchange
                 log.AppendLine(string.Format("[{0}] Remote directory could not be read: {1}", GetDateNow(), info.Remote));
                 return false;
             }
-            try { session.ListDirectory(info.BackupFolder); }
-            catch (SessionRemoteException)
+            if (!string.IsNullOrWhiteSpace(info.BackupFolder))
             {
-                log.AppendLine(string.Format("[{0}] Remote backup directory could not be read: {1}", GetDateNow(), info.Remote));
-                return false;
+                try { session.ListDirectory(info.BackupFolder); }
+                catch (SessionRemoteException)
+                {
+                    log.AppendLine(string.Format("[{0}] Remote backup directory could not be read: {1}", GetDateNow(), info.Remote));
+                    return false;
+                }
             }
             if (!Directory.Exists(info.Local))
             {
@@ -134,7 +137,7 @@ namespace ftp_exchange
                     log.AppendLine(string.Format("[{0}] Local file deleted: {1}", GetDateNow(), localFile));
                 }
 
-                TransferOperationResult result = session.GetFiles(origFile, info.Local, info.Move, DEFAULT_TRANSFER_OPTIONS);
+                TransferOperationResult result = session.GetFiles(origFile, localFile, info.Move, DEFAULT_TRANSFER_OPTIONS);
                 if (!result.IsSuccess)
                 {
                     log.AppendLine(string.Format("[{0}] Operation failed: download files", GetDateNow()));
@@ -164,10 +167,13 @@ namespace ftp_exchange
                 log.AppendLine(string.Format("[{0}] Local directory does not exist: {1}", GetDateNow(), info.Local));
                 return false;
             }
-            if (!Directory.Exists(info.BackupFolder))
+            if (!string.IsNullOrWhiteSpace(info.BackupFolder))
             {
-                log.AppendLine(string.Format("[{0}] Remote backup directory does not exist: {1}", GetDateNow(), info.BackupFolder));
-                return false;
+                if (!Directory.Exists(info.BackupFolder))
+                {
+                    log.AppendLine(string.Format("[{0}] Remote backup directory does not exist: {1}", GetDateNow(), info.BackupFolder));
+                    return false;
+                }
             }
 
             foreach (FileInfo item in lDir.GetFiles("*", SearchOption.TopDirectoryOnly))
@@ -201,7 +207,7 @@ namespace ftp_exchange
                     log.AppendLine(string.Format("[{0}] Remote file deleted: {1}", GetDateNow(), remoteFile));
                 }
 
-                TransferOperationResult result = session.PutFiles(origFile, info.Remote, info.Move, DEFAULT_TRANSFER_OPTIONS);
+                TransferOperationResult result = session.PutFiles(origFile, remoteFile, info.Move, DEFAULT_TRANSFER_OPTIONS);
                 if (!result.IsSuccess)
                 {
                     log.AppendLine(string.Format("[{0}] Operation failed: upload files", GetDateNow()));
