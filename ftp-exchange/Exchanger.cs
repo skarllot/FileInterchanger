@@ -93,6 +93,15 @@ namespace ftp_exchange
                 eventLog.WriteEntry("Failed to authenticate or connect to server", System.Diagnostics.EventLogEntryType.Error);
                 return false;
             }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                if (e.ErrorCode == 1219)
+                {
+                    eventLog.WriteEntry("A connection to a shared resource using another credential already exists", System.Diagnostics.EventLogEntryType.Error);
+                    return false;
+                }
+                throw;
+            }
             finally
             {
                 if (netConn != null)
@@ -157,7 +166,11 @@ namespace ftp_exchange
 
                 if (File.Exists(localFile))
                 {
-                    log.AppendLine(string.Format("[{0}] Local file already exists: {1}", GetDateNow(), item.Name));
+                    if (!info.Move)
+                    {
+                        log.AppendLine(string.Format("[{0}] Local file '{1}' already exists", GetDateNow(), item.Name));
+                        continue;
+                    }
                     int counter = 1;
                     string ext = Path.GetExtension(item.Name);
                     string fname = Path.GetFileNameWithoutExtension(item.Name);
@@ -166,6 +179,8 @@ namespace ftp_exchange
                         localFile = string.Format(@"{0}\{1}-{2}{3}", info.Local, fname, counter, ext);
                         counter++;
                     } while (File.Exists(localFile));
+                    log.AppendLine(string.Format("[{0}] Local file '{1}' already exists. New name: {2}",
+                        GetDateNow(), item.Name, Path.GetFileName(localFile)));
                 }
 
                 TransferOperationResult result = session.GetFiles(origFile, localFile, move, DEFAULT_TRANSFER_OPTIONS);
@@ -231,7 +246,11 @@ namespace ftp_exchange
 
                 if (session.FileExists(remoteFile))
                 {
-                    log.AppendLine(string.Format("[{0}] Remote file already exists: {1}", GetDateNow(), item.Name));
+                    if (!info.Move)
+                    {
+                        log.AppendLine(string.Format("[{0}] Remote file '{1}' already exists", GetDateNow(), item.Name));
+                        continue;
+                    }
                     int counter = 1;
                     string ext = Path.GetExtension(item.Name);
                     string fname = Path.GetFileNameWithoutExtension(item.Name);
@@ -240,6 +259,8 @@ namespace ftp_exchange
                         remoteFile = string.Format(@"{0}/{1}-{2}{3}", info.Remote, fname, counter, ext);
                         counter++;
                     } while (session.FileExists(remoteFile));
+                    log.AppendLine(string.Format("[{0}] Remote file '{1}' already exists. New name: {2}",
+                        GetDateNow(), item.Name, Path.GetFileName(remoteFile)));
                 }
 
                 TransferOperationResult result = session.PutFiles(origFile, remoteFile, move, DEFAULT_TRANSFER_OPTIONS);

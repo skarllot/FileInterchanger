@@ -195,6 +195,22 @@ namespace ftp_exchange
                         break;
                 }
 
+                if (reloadEvent.WaitOne(0))
+                {
+                    ExchangeInfo[] infoArrNew = LoadConfiguration(config, credReader);
+                    if (infoArrNew == null)
+                        eventLog.WriteEntry("Configuration file was changed to invalid state", EventLogEntryType.Error);
+                    else
+                    {
+                        infoArr = infoArrNew;
+                        if (config.Refresh != -1)
+                            refresh = config.Refresh;
+
+                        eventLog.WriteEntry("Configuration file reloaded", EventLogEntryType.Information);
+                    }
+                    reloadEvent.Reset();
+                }
+
                 elapsed = DateTime.Now - before;
                 int elapsedMs = (int)Math.Ceiling(elapsed.TotalMilliseconds);
                 int waitMs = refresh * MINUTE_TO_MILLISECONDS - elapsedMs;
@@ -205,16 +221,9 @@ namespace ftp_exchange
                         "File exchange took {0} and refresh time is set to {1}", elapsed, new TimeSpan(0, refresh, 0)),
                         EventLogEntryType.Warning);
                 }
+
                 if (stopEvent.WaitOne(waitMs))
                     break;
-
-                if (reloadEvent.WaitOne(0))
-                {
-                    ExchangeInfo[] infoArrNew = LoadConfiguration(config, credReader);
-                    if (infoArrNew == null)
-                        eventLog.WriteEntry("Configuration file was changed to invalid state", EventLogEntryType.Error);
-                    reloadEvent.Reset();
-                }
             }
         }
 
