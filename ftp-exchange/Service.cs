@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -18,7 +20,9 @@ namespace ftp_exchange
         private System.ComponentModel.Container components = null;
         int refresh = DEFAULT_REFRESH;
         Thread svcThread;
+        Thread reloadThread;
         ManualResetEvent stopEvent;
+        ManualResetEvent reloadEvent;
 
         public Service()
         {
@@ -42,9 +46,31 @@ namespace ftp_exchange
             this.eventLog = new System.Diagnostics.EventLog();
             eventLog.Source = "Service";
             eventLog.Log = EVT_LOG;
+
             this.ServiceName = "FtpExchange";
 
             stopEvent = new ManualResetEvent(true);
+            reloadEvent = new ManualResetEvent(false);
+        }
+
+        private void ConfigWatcher(object obj)
+        {
+            string cfgpath = ((string[])obj)[0];
+            string credpath = ((string[])obj)[1];
+
+            DateTime dtCfg = File.GetLastWriteTime(cfgpath);
+            DateTime dtCred = File.GetLastWriteTime(credpath);
+            DateTime dtCfg2, dtCred2;
+            while (!stopEvent.WaitOne(0))
+            {
+                dtCfg2 = File.GetLastWriteTime(cfgpath);
+                dtCred2 = File.GetLastWriteTime(credpath);
+                if (dtCfg != dtCfg2 || dtCred != dtCred2)
+                    reloadEvent.Set();
+
+                if (stopEvent.WaitOne(30000))
+                    break;
+            }
         }
 
         private string GetConfigFileFullName(string dir, string fileName)
@@ -105,6 +131,9 @@ namespace ftp_exchange
             svcThread = new Thread(new ParameterizedThreadStart(StartThread));
             svcThread.Start(new string[] { cfgFile, credentialFile });
             eventLog.WriteEntry("FtpSync service started");
+
+            reloadThread = new Thread(new ParameterizedThreadStart(ConfigWatcher));
+            reloadThread.Start(new string[] { cfgFile, credentialFile });
         }
 
         /// <summary>
@@ -118,6 +147,7 @@ namespace ftp_exchange
             {
                 stopEvent.Set();
                 svcThread.Join();
+                reloadThread.Join();
             }
 
             eventLog.WriteEntry("FtpSync service stopped");
@@ -134,50 +164,103 @@ namespace ftp_exchange
             string cfgpath = ((string[])obj)[0];
             string credpath = ((string[])obj)[1];
 
-            System.Diagnostics.EventLog evlogTransf = new System.Diagnostics.EventLog();
-            evlogTransf.Source = "Transfer";
-            evlogTransf.Log = EVT_LOG;
-
             IO.ConfigReader config = new IO.ConfigReader(cfgpath);
             IO.CredentialsReader credReader = new IO.CredentialsReader(credpath);
+            ExchangeInfo[] infoArr = LoadConfiguration(config, credReader);
+            if (infoArr == null)
+            {
+                eventLog.WriteEntry("None of configuration sections could be parsed", EventLogEntryType.Error);
+                return;
+            }
+
             Exchanger exchanger = new Exchanger();
-            exchanger.EventLog = evlogTransf;
 
             if (config.Refresh != -1)
                 refresh = config.Refresh;
 
             DateTime before;
+            TimeSpan elapsed;
             while (!stopEvent.WaitOne(0))
             {
                 before = DateTime.Now;
-                foreach (IO.ConfigReaderItem item in config)
+                foreach (ExchangeInfo item in infoArr)
                 {
-                    ExchangeInfo? info;
-                    try { info = ExchangeInfo.Parse(item, credReader); }
-                    catch (Exception e)
-                    {
-                        evlogTransf.WriteEntry(e.Message, EventLogEntryType.Error);
-                        info = null;
-                    }
-
-                    if (info.HasValue)
-                        exchanger.Exchange(info.Value);
+                    exchanger.Exchange(item);
 
                     if (stopEvent.WaitOne(0))
                         break;
                 }
 
-                int elapsedMs = (int)Math.Ceiling((DateTime.Now - before).TotalMilliseconds);
+                elapsed = DateTime.Now - before;
+                int elapsedMs = (int)Math.Ceiling(elapsed.TotalMilliseconds);
                 int waitMs = refresh * MINUTE_TO_MILLISECONDS - elapsedMs;
-                if (waitMs < 0) waitMs = 0;
+                if (waitMs < 0)
+                {
+                    waitMs = 0;
+                    eventLog.WriteEntry(string.Format(
+                        "File exchange took {0} and refresh time is set to {1}", elapsed, new TimeSpan(0, refresh, 0)),
+                        EventLogEntryType.Warning);
+                }
                 if (stopEvent.WaitOne(waitMs))
                     break;
+
+                if (reloadEvent.WaitOne(0))
+                {
+                    ExchangeInfo[] infoArrNew = LoadConfiguration(config, credReader);
+                    if (infoArrNew == null)
+                        eventLog.WriteEntry("Configuration file was changed to invalid state", EventLogEntryType.Error);
+                    reloadEvent.Reset();
+                }
             }
+        }
+
+        private ExchangeInfo[] LoadConfiguration(IO.ConfigReader config, IO.CredentialsReader credReader)
+        {
+            if (!ValidateConfiguration(config.FileName))
+            {
+                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", config.FileName), EventLogEntryType.Error);
+                return null;
+            }
+            if (!ValidateConfiguration(credReader.FileName))
+            {
+                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", credReader.FileName), EventLogEntryType.Error);
+                return null;
+            }
+            config.LoadFile();
+            credReader.LoadFile();
+
+            List<ExchangeInfo> tmp = new List<ExchangeInfo>();
+            foreach (IO.ConfigReaderItem item in config)
+            {
+                ExchangeInfo? info;
+                try { info = ExchangeInfo.Parse(item, credReader); }
+                catch (Exception e)
+                {
+                    eventLog.WriteEntry(e.Message, EventLogEntryType.Error);
+                    info = null;
+                }
+
+                if (info.HasValue)
+                    tmp.Add(info.Value);
+            }
+
+            if (tmp.Count == 0)
+                return null;
+
+            return tmp.ToArray();
         }
 
         internal void Start()
         {
             this.OnStart(new string[0]);
+        }
+
+        private bool ValidateConfiguration(string file)
+        {
+            try { SklLib.IO.ConfigFileReader reader = new SklLib.IO.ConfigFileReader(file); }
+            catch (FileLoadException) { return false; }
+            return true;
+            // return reader.IsValidFile();
         }
     }
 }

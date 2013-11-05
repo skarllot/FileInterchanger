@@ -9,8 +9,7 @@ namespace ftp_exchange.IO
     {
         public CredentialsReader(string path)
         {
-            cfgreader = new SklLib.IO.ConfigFileReader(path);
-            sections = cfgreader.ReadSectionsName();
+            base.filename = path;
         }
 
         public CredentialItemReader this[int index]
@@ -45,6 +44,11 @@ namespace ftp_exchange.IO
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<CredentialItemReader>)this).GetEnumerator();
+        }
+
+        new public void LoadFile()
+        {
+            base.LoadFile();
         }
     }
 }

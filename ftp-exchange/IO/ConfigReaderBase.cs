@@ -8,7 +8,10 @@ namespace ftp_exchange.IO
     abstract class ConfigReaderBase
     {
         protected SklLib.IO.ConfigFileReader cfgreader;
+        protected string filename;
         protected string[] sections;
+
+        public string FileName { get { return filename; } }
 
         protected bool GetBoolean(string section, string key)
         {
@@ -36,6 +39,15 @@ namespace ftp_exchange.IO
             if (!string.IsNullOrWhiteSpace(val))
                 list = val.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             return list;
+        }
+
+        protected void LoadFile()
+        {
+            if (cfgreader == null)
+                cfgreader = new SklLib.IO.ConfigFileReader(filename);
+
+            cfgreader.ReloadFile();
+            sections = cfgreader.ReadSectionsName();
         }
     }
 }

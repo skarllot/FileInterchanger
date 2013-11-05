@@ -10,9 +10,7 @@ namespace ftp_exchange.IO
 
         public ConfigReader(string path)
         {
-            cfgreader = new SklLib.IO.ConfigFileReader(path);
-            sections = cfgreader.ReadSectionsName();
-            idxMain = Array.IndexOf<string>(sections, CFG_MAIN);
+            base.filename = path;
         }
 
         public int Refresh
@@ -52,6 +50,12 @@ namespace ftp_exchange.IO
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<ConfigReaderItem>)this).GetEnumerator();
+        }
+
+        new public void LoadFile()
+        {
+            base.LoadFile();
+            idxMain = Array.IndexOf<string>(sections, CFG_MAIN);
         }
     }
 }

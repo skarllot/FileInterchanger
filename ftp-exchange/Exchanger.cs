@@ -8,6 +8,7 @@ namespace ftp_exchange
 {
     class Exchanger
     {
+        const string EVT_LOG = "FtpExchange";
         static readonly TransferOptions DEFAULT_TRANSFER_OPTIONS = new TransferOptions
         {
             TransferMode = TransferMode.Binary
@@ -16,7 +17,12 @@ namespace ftp_exchange
 
         System.Diagnostics.EventLog eventLog;
 
-        public System.Diagnostics.EventLog EventLog { get { return eventLog; } set { eventLog = value; } }
+        public Exchanger()
+        {
+            eventLog = new System.Diagnostics.EventLog();
+            eventLog.Source = "Transfer";
+            eventLog.Log = EVT_LOG;
+        }
 
         private string GetDateNow()
         {
@@ -81,6 +87,11 @@ namespace ftp_exchange
                         log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}", GetDateNow(), info.SyncTarget.ToString()));
                         return false;
                 }
+            }
+            catch (SessionRemoteException)
+            {
+                eventLog.WriteEntry("Failed to authenticate or connect to server", System.Diagnostics.EventLogEntryType.Error);
+                return false;
             }
             finally
             {
