@@ -66,7 +66,11 @@ namespace ftp_exchange
                 dtCfg2 = File.GetLastWriteTime(cfgpath);
                 dtCred2 = File.GetLastWriteTime(credpath);
                 if (dtCfg != dtCfg2 || dtCred != dtCred2)
+                {
+                    dtCfg = dtCfg2;
+                    dtCred = dtCred2;
                     reloadEvent.Set();
+                }
 
                 if (stopEvent.WaitOne(30000))
                     break;
