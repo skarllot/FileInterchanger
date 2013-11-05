@@ -157,8 +157,15 @@ namespace ftp_exchange
 
                 if (File.Exists(localFile))
                 {
-                    File.Delete(localFile);
-                    log.AppendLine(string.Format("[{0}] Local file deleted: {1}", GetDateNow(), item.Name));
+                    log.AppendLine(string.Format("[{0}] Local file already exists: {1}", GetDateNow(), item.Name));
+                    int counter = 1;
+                    string ext = Path.GetExtension(item.Name);
+                    string fname = Path.GetFileNameWithoutExtension(item.Name);
+                    do
+                    {
+                        localFile = string.Format(@"{0}\{1}-{2}{3}", info.Local, fname, counter, ext);
+                        counter++;
+                    } while (File.Exists(localFile));
                 }
 
                 TransferOperationResult result = session.GetFiles(origFile, localFile, move, DEFAULT_TRANSFER_OPTIONS);
@@ -224,13 +231,15 @@ namespace ftp_exchange
 
                 if (session.FileExists(remoteFile))
                 {
-                    RemovalOperationResult remResult = session.RemoveFiles(remoteFile);
-                    if (!remResult.IsSuccess)
+                    log.AppendLine(string.Format("[{0}] Remote file already exists: {1}", GetDateNow(), item.Name));
+                    int counter = 1;
+                    string ext = Path.GetExtension(item.Name);
+                    string fname = Path.GetFileNameWithoutExtension(item.Name);
+                    do
                     {
-                        log.AppendLine(string.Format("[{0}] Delete remote file failed: {1}", GetDateNow(), item.Name));
-                        return false;
-                    }
-                    log.AppendLine(string.Format("[{0}] Remote file deleted: {1}", GetDateNow(), item.Name));
+                        remoteFile = string.Format(@"{0}/{1}-{2}{3}", info.Remote, fname, counter, ext);
+                        counter++;
+                    } while (session.FileExists(remoteFile));
                 }
 
                 TransferOperationResult result = session.PutFiles(origFile, remoteFile, move, DEFAULT_TRANSFER_OPTIONS);
