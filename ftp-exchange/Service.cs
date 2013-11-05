@@ -168,7 +168,9 @@ namespace ftp_exchange
                 }
 
                 int elapsedMs = (int)Math.Ceiling((DateTime.Now - before).TotalMilliseconds);
-                if (stopEvent.WaitOne(refresh * MINUTE_TO_MILLISECONDS - elapsedMs))
+                int waitMs = refresh * MINUTE_TO_MILLISECONDS - elapsedMs;
+                if (waitMs < 0) waitMs = 0;
+                if (stopEvent.WaitOne(waitMs))
                     break;
             }
         }

@@ -32,10 +32,13 @@ namespace ftp_exchange
             {
                 Protocol = info.Protocol,
                 FtpSecure = info.FtpSecure,
-                HostName = info.HostName,
-                UserName = info.FtpCredential.UserName,
-                Password = info.FtpCredential.Password
+                HostName = info.HostName
             };
+            if (info.FtpCredential != null)
+            {
+                sessionOpt.UserName = info.FtpCredential.UserName;
+                sessionOpt.Password = info.FtpCredential.Password;
+            }
             if (sessionOpt.FtpSecure != FtpSecure.None)
                 sessionOpt.SslHostCertificateFingerprint = info.Fingerprint;
 
@@ -43,11 +46,14 @@ namespace ftp_exchange
             NetworkConnection netConn = null;
             try
             {
-                netConn = new NetworkConnection(info.Local, info.NetworkCredential);
+                if (info.NetworkCredential != null)
+                    netConn = new NetworkConnection(info.Local, info.NetworkCredential);
                 session = new Session();
                 if (MainClass.DEBUG)
                     session.SessionLogPath = @"ftp-session.log";
                 session.Open(sessionOpt);
+                log.AppendLine(string.Format("[{0}] Connected to {1}@{2}", GetDateNow(),
+                    sessionOpt.UserName ?? string.Empty, info.HostName));
 
                 switch (info.SyncTarget)
                 {

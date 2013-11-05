@@ -59,20 +59,26 @@ namespace ftp_exchange
             try { result.files = new Regex(cfg.Files); }
             catch { throw new Exception("Invalid regular expression for Files"); }
 
-            IO.CredentialItemReader p0 = cred[cfg.FtpCredential];
-            if (p0 == null)
-                throw new Exception(string.Format("Invalid credential name: {0}", cfg.FtpCredential));
-            result.ftpCredential = new NetworkCredential(p0.UserName, p0.Password);
+            if (cfg.FtpCredential != null)
+            {
+                IO.CredentialItemReader p0 = cred[cfg.FtpCredential];
+                if (p0 == null)
+                    throw new Exception(string.Format("Invalid credential name: {0}", cfg.FtpCredential));
+                result.ftpCredential = new NetworkCredential(p0.UserName, p0.Password);
+            }
 
             FtpSecure p1;
             if (!Enum.TryParse<FtpSecure>(cfg.FtpSecure, true, out p1))
                 p1 = FtpSecure.None;
             result.ftpSecure = p1;
 
-            IO.CredentialItemReader p4 = cred[cfg.NetworkCredential];
-            if (p4 == null)
-                throw new Exception(string.Format("Invalid credential name: {0}", cfg.NetworkCredential));
-            result.netCredential = new NetworkCredential(p4.UserName, p4.Password, p4.Domain);
+            if (cfg.NetworkCredential != null)
+            {
+                IO.CredentialItemReader p4 = cred[cfg.NetworkCredential];
+                if (p4 == null)
+                    throw new Exception(string.Format("Invalid credential name: {0}", cfg.NetworkCredential));
+                result.netCredential = new NetworkCredential(p4.UserName, p4.Password, p4.Domain);
+            }
 
             Protocol p2;
             if (!Enum.TryParse<Protocol>(cfg.Protocol, true, out p2))
