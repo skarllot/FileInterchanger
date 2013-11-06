@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -124,6 +123,13 @@ namespace ftp_exchange
         protected override void OnStart(string[] args)
         {
             base.OnStart(args);
+
+            string[] cmdArgs = Environment.GetCommandLineArgs();
+            if (cmdArgs.Length > 1)
+            {
+                args = new string[cmdArgs.Length - 1];
+                Array.Copy(cmdArgs, 1, args, 0, cmdArgs.Length - 1);
+            }
 
             string dir = null;
             if (args.Length == 1)
@@ -263,9 +269,9 @@ namespace ftp_exchange
             return tmp.ToArray();
         }
 
-        internal void Start()
+        internal void StartDebug(string[] args)
         {
-            this.OnStart(new string[0]);
+            this.OnStart(args);
         }
 
         private bool ValidateConfiguration(string file)
