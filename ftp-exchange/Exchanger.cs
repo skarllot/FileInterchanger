@@ -13,7 +13,7 @@ namespace ftp_exchange
         {
             TransferMode = TransferMode.Binary
         };
-        const int EVENT_LOG_MAX_LENGHT = 32766;
+        const int EVENT_LOG_MAX_LENGHT = 15000;
 
         EventLog eventLog;
 
@@ -33,7 +33,7 @@ namespace ftp_exchange
         {
             if (string.IsNullOrWhiteSpace(info.HostName))
             {
-                eventLog.WriteEntry(string.Format("{0}: FTP hostname was not provided", info.Id), EventLogEntryType.Error);
+                eventLog.WriteEntry(string.Format("{0}: FTP hostname was not provided", info.Id), EventLogEntryType.Error, 4);
                 return false;
             }
 
@@ -98,7 +98,7 @@ namespace ftp_exchange
             {
                 eventLog.WriteEntry(string.Format(
                     "{0}: Failed to authenticate or connect to server",
-                    info.Id), EventLogEntryType.Error);
+                    info.Id), EventLogEntryType.Error, 5);
                 log.Clear();
                 return false;
             }
@@ -108,14 +108,14 @@ namespace ftp_exchange
                 {
                     eventLog.WriteEntry(string.Format(
                         "{0}: A connection to a shared resource using another credential already exists",
-                        info.Id), EventLogEntryType.Error);
+                        info.Id), EventLogEntryType.Error, 1);
                     log.Clear();
                     return false;
                 }
                 else
                 {
                     eventLog.WriteEntry(string.Format(
-                        "{0}: {1}", info.Id, e.Message), EventLogEntryType.Error);
+                        "{0}: {1}", info.Id, e.Message), EventLogEntryType.Error, 2);
                     throw;
                 }
             }
@@ -129,7 +129,7 @@ namespace ftp_exchange
 
                 string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGHT);
                 foreach (string item in logArr)
-                    eventLog.WriteEntry(item, EventLogEntryType.Information);
+                    eventLog.WriteEntry(item, EventLogEntryType.Information, 3);
             }
 
             return true;

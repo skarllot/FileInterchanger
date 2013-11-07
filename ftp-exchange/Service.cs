@@ -39,7 +39,7 @@ namespace ftp_exchange
             if (!evtExists)
             {
                 System.Diagnostics.EventLog.CreateEventSource(EVT_SOURCE, EVT_LOG);
-                eventLog.WriteEntry("Event Log created", EventLogEntryType.Information);
+                eventLog.WriteEntry("Event Log created", EventLogEntryType.Information, 8);
             }
 
             this.eventLog = new System.Diagnostics.EventLog();
@@ -93,7 +93,7 @@ namespace ftp_exchange
             if (!File.Exists(cfgFile))
             {
                 string msg = string.Format("The configuration file \"{0}\" does not exist.", cfgFile);
-                eventLog.WriteEntry(msg, EventLogEntryType.Error);
+                eventLog.WriteEntry(msg, EventLogEntryType.Error, 9);
                 // http://msdn.microsoft.com/en-us/library/ms681384%28v=vs.85%29
                 this.ExitCode = 15010;
                 throw new FileNotFoundException(msg, cfgFile);
@@ -179,7 +179,7 @@ namespace ftp_exchange
             ExchangeInfo[] infoArr = LoadConfiguration(config, credReader);
             if (infoArr == null)
             {
-                eventLog.WriteEntry("None of configuration sections could be parsed", EventLogEntryType.Error);
+                eventLog.WriteEntry("None of configuration sections could be parsed", EventLogEntryType.Error, 1);
                 return;
             }
 
@@ -205,14 +205,14 @@ namespace ftp_exchange
                 {
                     ExchangeInfo[] infoArrNew = LoadConfiguration(config, credReader);
                     if (infoArrNew == null)
-                        eventLog.WriteEntry("Configuration file was changed to invalid state", EventLogEntryType.Error);
+                        eventLog.WriteEntry("Configuration file was changed to invalid state", EventLogEntryType.Error, 2);
                     else
                     {
                         infoArr = infoArrNew;
                         if (config.Refresh != -1)
                             refresh = config.Refresh;
 
-                        eventLog.WriteEntry("Configuration file reloaded", EventLogEntryType.Information);
+                        eventLog.WriteEntry("Configuration file reloaded", EventLogEntryType.Information, 3);
                     }
                     reloadEvent.Reset();
                 }
@@ -225,7 +225,7 @@ namespace ftp_exchange
                     waitMs = 0;
                     eventLog.WriteEntry(string.Format(
                         "File exchange took {0} and refresh time is set to {1}", elapsed, new TimeSpan(0, refresh, 0)),
-                        EventLogEntryType.Warning);
+                        EventLogEntryType.Warning, 4);
                 }
 
                 if (stopEvent.WaitOne(waitMs))
@@ -237,12 +237,12 @@ namespace ftp_exchange
         {
             if (!ValidateConfiguration(config.FileName))
             {
-                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", config.FileName), EventLogEntryType.Error);
+                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", config.FileName), EventLogEntryType.Error, 5);
                 return null;
             }
             if (!ValidateConfiguration(credReader.FileName))
             {
-                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", credReader.FileName), EventLogEntryType.Error);
+                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", credReader.FileName), EventLogEntryType.Error, 6);
                 return null;
             }
             config.LoadFile();
@@ -255,7 +255,7 @@ namespace ftp_exchange
                 try { info = ExchangeInfo.Parse(item, credReader); }
                 catch (Exception e)
                 {
-                    eventLog.WriteEntry(e.Message, EventLogEntryType.Error);
+                    eventLog.WriteEntry(e.Message, EventLogEntryType.Error, 7);
                     info = null;
                 }
 
