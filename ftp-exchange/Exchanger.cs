@@ -113,7 +113,11 @@ namespace ftp_exchange
                     return false;
                 }
                 else
+                {
+                    eventLog.WriteEntry(string.Format(
+                        "{0}: {1}", info.Id, e.Message), EventLogEntryType.Error);
                     throw;
+                }
             }
             finally
             {
