@@ -24,7 +24,16 @@ namespace ftp_exchange.IO
         {
             get
             {
-                int idx = Array.IndexOf<string>(sections, name);
+                name = name.ToLower();
+                int idx = -1;
+                for (int i = 0; i < sections.Length; i++)
+                {
+                    if (sections[i].ToLower() == name)
+                    {
+                        idx = i;
+                        continue;
+                    }
+                }
                 if (idx == -1)
                     return null;
                 return this[idx];

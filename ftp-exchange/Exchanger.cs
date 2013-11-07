@@ -99,6 +99,7 @@ namespace ftp_exchange
                 eventLog.WriteEntry(string.Format(
                     "{0}: Failed to authenticate or connect to server",
                     info.Id), EventLogEntryType.Error);
+                log.Clear();
                 return false;
             }
             catch (System.ComponentModel.Win32Exception e)
@@ -108,6 +109,7 @@ namespace ftp_exchange
                     eventLog.WriteEntry(string.Format(
                         "{0}: A connection to a shared resource using another credential already exists",
                         info.Id), EventLogEntryType.Error);
+                    log.Clear();
                     return false;
                 }
                 else
