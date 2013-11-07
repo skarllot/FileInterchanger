@@ -2350,6 +2350,11 @@
             Stores the default character that indicates beginning of a comment.
             </summary>
         </member>
+        <member name="F:SklLib.IO.ConfigFileBase.DEFAULT_ID_RULE">
+            <summary>
+            Defines the default regex rule to identifiers.
+            </summary>
+        </member>
         <member name="F:SklLib.IO.ConfigFileBase.DEFAULT_KEY_VALUE_SEP">
             <summary>
             Stores the default separator between key and value.
@@ -2368,6 +2373,11 @@
         <member name="F:SklLib.IO.ConfigFileBase.DefaultEncoding">
             <summary>
             Stores the default encoding used by this class.
+            </summary>
+        </member>
+        <member name="F:SklLib.IO.ConfigFileBase.idMatcher">
+            <summary>
+            Regex matcher to identifiers.
             </summary>
         </member>
         <member name="F:SklLib.IO.ConfigFileBase._buffer">
@@ -2435,23 +2445,6 @@
             <param name="encoding">Encoding of configuration file.</param>
             <exception cref="T:System.ArgumentNullException"><c>fileName</c> is a null reference.</exception>
             <exception cref="!:DirectoryNotFoundException">Directory defined to file was not found.</exception>
-        </member>
-        <member name="M:SklLib.IO.ConfigFileBase.IsValidFile(System.String)">
-            <summary>
-            Check whether indicated file is valid configuration file.
-            </summary>
-            <param name="fileName">File to check validty.</param>
-            <returns>True if fileName is a valid cofiguration file; otherwise, false.</returns>
-            <exception cref="T:System.IO.FileNotFoundException">The indicated file was not found.</exception>
-        </member>
-        <member name="M:SklLib.IO.ConfigFileBase.IsValidFile(System.String,System.Text.Encoding)">
-            <summary>
-            Check whether indicated file is valid configuration file.
-            </summary>
-            <param name="fileName">File to check validty.</param>
-            <param name="encoding">Encoding to read file.</param>
-            <returns>True if fileName is a valid cofiguration file; otherwise, false.</returns>
-            <exception cref="T:System.IO.FileNotFoundException">The indicated file was not found.</exception>
         </member>
         <member name="M:SklLib.IO.ConfigFileBase.IsValidFile">
             <summary>
