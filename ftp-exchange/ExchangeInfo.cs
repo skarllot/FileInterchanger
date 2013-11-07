@@ -56,7 +56,7 @@ namespace ftp_exchange
             try { result.cleanup = TimeSpanExpression.Parse(cfg.Cleanup); }
             catch { result.cleanup = null; }
 
-            try { result.files = new Regex(cfg.Files); }
+            try { result.files = new Regex(cfg.Files, RegexOptions.IgnoreCase); }
             catch { throw new Exception("Invalid regular expression for Files"); }
 
             if (cfg.FtpCredential != null)

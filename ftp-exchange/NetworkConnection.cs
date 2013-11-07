@@ -13,11 +13,14 @@ using System.Runtime.InteropServices;
 
 public class NetworkConnection : IDisposable
 {
+    public const int ERROR_SESSION_CREDENTIAL_CONFLICT = 1219;
+    bool _forceConnection;
     string _networkName;
 
     public NetworkConnection(string networkName,
         NetworkCredential credentials)
     {
+        _forceConnection = false;
         _networkName = networkName;
 
         var netResource = new NetResource()
@@ -32,16 +35,23 @@ public class NetworkConnection : IDisposable
             ? credentials.UserName
             : string.Format(@"{0}\{1}", credentials.Domain, credentials.UserName);
 
-        var result = WNetAddConnection2(
-            netResource,
-            credentials.Password,
-            userName,
-            0);
+        var result = WNetAddConnection2(netResource, credentials.Password, userName, 0);
 
+        if (result == ERROR_SESSION_CREDENTIAL_CONFLICT && _forceConnection)
+        {
+            WNetCancelConnection2(_networkName, 0, true);
+            result = WNetAddConnection2(netResource, credentials.Password, userName, 0);
+        }
         if (result != 0)
         {
             throw new Win32Exception(result, "Error connecting to remote share");
         }
+    }
+
+    public bool ForceConnection
+    {
+        get { return _forceConnection; }
+        set { _forceConnection = value; }
     }
 
     ~NetworkConnection()

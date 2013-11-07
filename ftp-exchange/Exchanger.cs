@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
-using System.Net;
 using WinSCP;
 using stringb = System.Text.StringBuilder;
 
@@ -15,11 +15,11 @@ namespace ftp_exchange
         };
         const int EVENT_LOG_MAX_LENGHT = 32766;
 
-        System.Diagnostics.EventLog eventLog;
+        EventLog eventLog;
 
         public Exchanger()
         {
-            eventLog = new System.Diagnostics.EventLog();
+            eventLog = new EventLog();
             eventLog.Source = "Transfer";
             eventLog.Log = EVT_LOG;
         }
@@ -31,6 +31,12 @@ namespace ftp_exchange
 
         public bool Exchange(ExchangeInfo info)
         {
+            if (string.IsNullOrWhiteSpace(info.HostName))
+            {
+                eventLog.WriteEntry(string.Format("{0}: FTP hostname was not provided", info.Id), EventLogEntryType.Error);
+                return false;
+            }
+
             stringb log = new stringb();
             log.AppendLine(string.Format("[{0}] Initializing synchronization to {1}", GetDateNow(), info.Id));
 
@@ -90,17 +96,22 @@ namespace ftp_exchange
             }
             catch (SessionRemoteException)
             {
-                eventLog.WriteEntry("Failed to authenticate or connect to server", System.Diagnostics.EventLogEntryType.Error);
+                eventLog.WriteEntry(string.Format(
+                    "{0}: Failed to authenticate or connect to server",
+                    info.Id), EventLogEntryType.Error);
                 return false;
             }
             catch (System.ComponentModel.Win32Exception e)
             {
-                if (e.ErrorCode == 1219)
+                if (e.NativeErrorCode == NetworkConnection.ERROR_SESSION_CREDENTIAL_CONFLICT)
                 {
-                    eventLog.WriteEntry("A connection to a shared resource using another credential already exists", System.Diagnostics.EventLogEntryType.Error);
+                    eventLog.WriteEntry(string.Format(
+                        "{0}: A connection to a shared resource using another credential already exists",
+                        info.Id), EventLogEntryType.Error);
                     return false;
                 }
-                throw;
+                else
+                    throw;
             }
             finally
             {
@@ -112,7 +123,7 @@ namespace ftp_exchange
 
                 string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGHT);
                 foreach (string item in logArr)
-                    eventLog.WriteEntry(item, System.Diagnostics.EventLogEntryType.Information);
+                    eventLog.WriteEntry(item, EventLogEntryType.Information);
             }
 
             return true;
@@ -192,7 +203,7 @@ namespace ftp_exchange
                 if (result.Transfers.Count > 0)
                 {
                     foreach (TransferEventArgs t in result.Transfers)
-                        log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), t.FileName));
+                        log.AppendLine(string.Format("[{0}] Downloaded: {1} to {2}", GetDateNow(), t.FileName, t.Destination));
                 }
             }
 
@@ -272,7 +283,7 @@ namespace ftp_exchange
                 if (result.Transfers.Count > 0)
                 {
                     foreach (TransferEventArgs t in result.Transfers)
-                        log.AppendLine(string.Format("[{0}] Uploaded: {1}", GetDateNow(), t.FileName));
+                        log.AppendLine(string.Format("[{0}] Uploaded: {1} to {2}", GetDateNow(), t.FileName, t.Destination));
                 }
             }
 
