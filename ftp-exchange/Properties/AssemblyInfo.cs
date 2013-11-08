@@ -6,27 +6,19 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("FtpExchange 0.1.0")]
+[assembly: AssemblyDescription("FTP file exchanger service that uses WinSCP as backend")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyProduct("FtpExchange.exe")]
+[assembly: AssemblyCopyright("Copyright (c) 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-//
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-
-[assembly: AssemblyVersion("0.1.0.*")]
+// Latest release: 
+// Major.Minor.Maintenance.Revision
+[assembly: AssemblyVersion("0.1.0.41")]
+[assembly: AssemblyFileVersion("0.1.0.41")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

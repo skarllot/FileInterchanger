@@ -9,11 +9,18 @@ namespace ftp_exchange
     class Exchanger
     {
         const string EVT_LOG = "FtpExchange";
+        const int EVTID_CRED_CONFLICT = 1;
+        const int EVTID_CRED_ERROR = 2;
+        const int EVTID_EXCHANGE_COMPLETED = 3;
+        const int EVTID_HOSTNAME_INVALID = 4;
+        const int EVTID_SESSION_OPEN_ERROR = 5;
+        const int EVTID_UNEXPECTED_ERROR = 99;
+
         static readonly TransferOptions DEFAULT_TRANSFER_OPTIONS = new TransferOptions
         {
             TransferMode = TransferMode.Binary
         };
-        const int EVENT_LOG_MAX_LENGHT = 15000;
+        const int EVENT_LOG_MAX_LENGTH = 15000;
 
         EventLog eventLog;
 
@@ -33,7 +40,8 @@ namespace ftp_exchange
         {
             if (string.IsNullOrWhiteSpace(info.HostName))
             {
-                eventLog.WriteEntry(string.Format("{0}: FTP hostname was not provided", info.Id), EventLogEntryType.Error, 4);
+                eventLog.WriteEntry(string.Format("Error on {0}\nFTP hostname was not provided",
+                    info.Id), EventLogEntryType.Error, EVTID_HOSTNAME_INVALID);
                 return false;
             }
 
@@ -56,10 +64,30 @@ namespace ftp_exchange
 
             Session session = null;
             NetworkConnection netConn = null;
+
+            if (info.NetworkCredential != null)
+            {
+                try { netConn = new NetworkConnection(info.Local, info.NetworkCredential); }
+                catch (System.ComponentModel.Win32Exception e)
+                {
+                    if (e.NativeErrorCode == NetworkConnection.ERROR_SESSION_CREDENTIAL_CONFLICT)
+                    {
+                        eventLog.WriteEntry(string.Format(
+                            "Error on {0}\nA connection to a shared resource using another credential already exists",
+                            info.Id), EventLogEntryType.Error, EVTID_CRED_CONFLICT);
+                    }
+                    else
+                    {
+                        eventLog.WriteEntry(string.Format(
+                            "Error on {0}\nError connecting to shared resource using provided credentials: {1}",
+                            info.Id, e.Message), EventLogEntryType.Error, EVTID_CRED_ERROR);
+                    }
+                    return false;
+                }
+            }
+
             try
             {
-                if (info.NetworkCredential != null)
-                    netConn = new NetworkConnection(info.Local, info.NetworkCredential);
                 session = new Session();
                 if (MainClass.DEBUG)
                     session.SessionLogPath = @"ftp-session.log";
@@ -97,27 +125,19 @@ namespace ftp_exchange
             catch (SessionRemoteException)
             {
                 eventLog.WriteEntry(string.Format(
-                    "{0}: Failed to authenticate or connect to server",
-                    info.Id), EventLogEntryType.Error, 5);
+                    "Error on {0}\nFailed to authenticate or connect to server",
+                    info.Id), EventLogEntryType.Error, EVTID_SESSION_OPEN_ERROR);
                 log.Clear();
                 return false;
             }
-            catch (System.ComponentModel.Win32Exception e)
+            catch (Exception e)
             {
-                if (e.NativeErrorCode == NetworkConnection.ERROR_SESSION_CREDENTIAL_CONFLICT)
-                {
-                    eventLog.WriteEntry(string.Format(
-                        "{0}: A connection to a shared resource using another credential already exists",
-                        info.Id), EventLogEntryType.Error, 1);
-                    log.Clear();
-                    return false;
-                }
-                else
-                {
-                    eventLog.WriteEntry(string.Format(
-                        "{0}: {1}", info.Id, e.Message), EventLogEntryType.Error, 2);
-                    throw;
-                }
+                string msg = string.Format("Error on {0}\nMessage: {1}\nSource: {2}\nStack Trace: {3}",
+                    info.Id, e.Message, e.Source, e.StackTrace);
+                string[] logArr = SklLib.Strings.Split(msg, EVENT_LOG_MAX_LENGTH);
+                foreach (string item in logArr)
+                    eventLog.WriteEntry(item, EventLogEntryType.Error, EVTID_UNEXPECTED_ERROR);
+                Environment.Exit(EVTID_UNEXPECTED_ERROR);
             }
             finally
             {
@@ -127,9 +147,9 @@ namespace ftp_exchange
                     session.Dispose();
                 log.AppendLine(string.Format("[{0}] Synchronization finalized", GetDateNow()));
 
-                string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGHT);
+                string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGTH);
                 foreach (string item in logArr)
-                    eventLog.WriteEntry(item, EventLogEntryType.Information, 3);
+                    eventLog.WriteEntry(item, EventLogEntryType.Information, EVTID_EXCHANGE_COMPLETED);
             }
 
             return true;

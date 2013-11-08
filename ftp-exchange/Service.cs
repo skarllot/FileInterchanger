@@ -13,6 +13,15 @@ namespace ftp_exchange
         const int DEFAULT_REFRESH = 5;
         const string EVT_SOURCE = "FtpExchange";
         const string EVT_LOG = "FtpExchange";
+        const int EVTID_SERVICE_STATE = 0;
+        const int EVTID_CFGFILE_ALL_SECTIONS_INVALID = 1;
+        const int EVTID_CFGFILE_RELOAD_INVALID = 2;
+        const int EVTID_CFGFILE_RELOADED = 3;
+        const int EVTID_REFRESH_TINY = 4;
+        const int EVTID_CFGFILE_LOAD_ERROR = 5;
+        const int EVTID_CFGFILE_PARSE_ERROR = 7;
+        const int EVTID_EVENTLOG_CREATED = 8;
+        const int EVTID_CFGFILE_NOTFOUND = 9;
         const int MINUTE_TO_MILLISECONDS = 1000 * 60;
 
         private System.Diagnostics.EventLog eventLog;
@@ -39,7 +48,7 @@ namespace ftp_exchange
             if (!evtExists)
             {
                 System.Diagnostics.EventLog.CreateEventSource(EVT_SOURCE, EVT_LOG);
-                eventLog.WriteEntry("Event Log created", EventLogEntryType.Information, 8);
+                eventLog.WriteEntry("Event Log created", EventLogEntryType.Information, EVTID_EVENTLOG_CREATED);
             }
 
             this.eventLog = new System.Diagnostics.EventLog();
@@ -93,7 +102,7 @@ namespace ftp_exchange
             if (!File.Exists(cfgFile))
             {
                 string msg = string.Format("The configuration file \"{0}\" does not exist.", cfgFile);
-                eventLog.WriteEntry(msg, EventLogEntryType.Error, 9);
+                eventLog.WriteEntry(msg, EventLogEntryType.Error, EVTID_CFGFILE_NOTFOUND);
                 // http://msdn.microsoft.com/en-us/library/ms681384%28v=vs.85%29
                 this.ExitCode = 15010;
                 throw new FileNotFoundException(msg, cfgFile);
@@ -140,7 +149,8 @@ namespace ftp_exchange
 
             svcThread = new Thread(new ParameterizedThreadStart(StartThread));
             svcThread.Start(new string[] { cfgFile, credentialFile });
-            eventLog.WriteEntry("FtpSync service started");
+            eventLog.WriteEntry("FtpSync service started",
+                EventLogEntryType.Information, EVTID_SERVICE_STATE);
 
             reloadThread = new Thread(new ParameterizedThreadStart(ConfigWatcher));
             reloadThread.Start(new string[] { cfgFile, credentialFile });
@@ -160,7 +170,8 @@ namespace ftp_exchange
                 reloadThread.Join();
             }
 
-            eventLog.WriteEntry("FtpSync service stopped");
+            eventLog.WriteEntry("FtpSync service stopped",
+                EventLogEntryType.Information, EVTID_SERVICE_STATE);
         }
 
         /*protected override void OnContinue()
@@ -179,7 +190,8 @@ namespace ftp_exchange
             ExchangeInfo[] infoArr = LoadConfiguration(config, credReader);
             if (infoArr == null)
             {
-                eventLog.WriteEntry("None of configuration sections could be parsed", EventLogEntryType.Error, 1);
+                eventLog.WriteEntry("None of configuration sections could be parsed",
+                    EventLogEntryType.Error, EVTID_CFGFILE_ALL_SECTIONS_INVALID);
                 return;
             }
 
@@ -205,14 +217,18 @@ namespace ftp_exchange
                 {
                     ExchangeInfo[] infoArrNew = LoadConfiguration(config, credReader);
                     if (infoArrNew == null)
-                        eventLog.WriteEntry("Configuration file was changed to invalid state", EventLogEntryType.Error, 2);
+                    {
+                        eventLog.WriteEntry("Configuration file was changed to invalid state",
+                            EventLogEntryType.Error, EVTID_CFGFILE_RELOAD_INVALID);
+                    }
                     else
                     {
                         infoArr = infoArrNew;
                         if (config.Refresh != -1)
                             refresh = config.Refresh;
 
-                        eventLog.WriteEntry("Configuration file reloaded", EventLogEntryType.Information, 3);
+                        eventLog.WriteEntry("Configuration file reloaded",
+                            EventLogEntryType.Information, EVTID_CFGFILE_RELOADED);
                     }
                     reloadEvent.Reset();
                 }
@@ -224,8 +240,9 @@ namespace ftp_exchange
                 {
                     waitMs = 0;
                     eventLog.WriteEntry(string.Format(
-                        "File exchange took {0} and refresh time is set to {1}", elapsed, new TimeSpan(0, refresh, 0)),
-                        EventLogEntryType.Warning, 4);
+                        "File exchange took {0} and refresh time is set to {1}",
+                        elapsed, new TimeSpan(0, refresh, 0)),
+                        EventLogEntryType.Warning, EVTID_REFRESH_TINY);
                 }
 
                 if (stopEvent.WaitOne(waitMs))
@@ -237,12 +254,14 @@ namespace ftp_exchange
         {
             if (!ValidateConfiguration(config.FileName))
             {
-                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", config.FileName), EventLogEntryType.Error, 5);
+                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", config.FileName),
+                    EventLogEntryType.Error, EVTID_CFGFILE_LOAD_ERROR);
                 return null;
             }
             if (!ValidateConfiguration(credReader.FileName))
             {
-                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", credReader.FileName), EventLogEntryType.Error, 6);
+                eventLog.WriteEntry(string.Format("Error loading configuration file {0}", credReader.FileName),
+                    EventLogEntryType.Error, EVTID_CFGFILE_LOAD_ERROR);
                 return null;
             }
             config.LoadFile();
@@ -255,7 +274,8 @@ namespace ftp_exchange
                 try { info = ExchangeInfo.Parse(item, credReader); }
                 catch (Exception e)
                 {
-                    eventLog.WriteEntry(e.Message, EventLogEntryType.Error, 7);
+                    eventLog.WriteEntry(string.Format("Error parsing {0}\nMessage: {1}",
+                        item.Section, e.Message), EventLogEntryType.Error, EVTID_CFGFILE_PARSE_ERROR);
                     info = null;
                 }
 
