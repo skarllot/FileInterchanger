@@ -64,7 +64,7 @@ namespace FileInterchanger
             }
 
             stringb log = new stringb();
-            log.AppendLine(string.Format("[{0}] Initializing synchronization to {1}", GetDateNow(), info.Id));
+            log.AppendLine(string.Format("[{0}] Initializing interchange to {1}", GetDateNow(), info.Id));
 
             SessionOptions sessionOpt = new SessionOptions
             {
@@ -110,8 +110,10 @@ namespace FileInterchanger
                 if (MainClass.DEBUG)
                     session.SessionLogPath = @"ftp-session.log";
                 session.Open(sessionOpt);
-                log.AppendLine(string.Format("[{0}] Connected to {1}@{2}", GetDateNow(),
-                    sessionOpt.UserName ?? string.Empty, info.HostName));
+                log.AppendLine(string.Format("[{0}] Connected to {1}@{2}",
+                    GetDateNow(), sessionOpt.UserName ?? string.Empty, info.HostName));
+                log.AppendLine(string.Format("[{0}] Local path set to '{1}'",
+                    GetDateNow(), info.Local));
 
                 switch (info.SyncTarget)
                 {
@@ -163,7 +165,7 @@ namespace FileInterchanger
                     netConn.Dispose();
                 if (session != null)
                     session.Dispose();
-                log.AppendLine(string.Format("[{0}] Synchronization finalized", GetDateNow()));
+                log.AppendLine(string.Format("[{0}] Interchange finalized", GetDateNow()));
 
                 string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGTH);
                 foreach (string item in logArr)
@@ -247,7 +249,7 @@ namespace FileInterchanger
                 if (result.Transfers.Count > 0)
                 {
                     foreach (TransferEventArgs t in result.Transfers)
-                        log.AppendLine(string.Format("[{0}] Downloaded: {1} to {2}", GetDateNow(), t.FileName, t.Destination));
+                        log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), t.FileName));
                 }
             }
 
@@ -327,7 +329,7 @@ namespace FileInterchanger
                 if (result.Transfers.Count > 0)
                 {
                     foreach (TransferEventArgs t in result.Transfers)
-                        log.AppendLine(string.Format("[{0}] Uploaded: {1} to {2}", GetDateNow(), t.FileName, t.Destination));
+                        log.AppendLine(string.Format("[{0}] Uploaded: {1}", GetDateNow(), t.FileName));
                 }
             }
 

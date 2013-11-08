@@ -27,8 +27,8 @@ namespace FileInterchanger
         public const string PROGRAM_NAME = "FileInterchanger";
         // Latest release: 
         // Major.Minor.Maintenance.Revision
-        public const string PROGRAM_VERSION = "0.1.0.44";
-        public const string PROGRAM_TITLE = PROGRAM_NAME + " 0.1.0";
+        public const string PROGRAM_VERSION = "0.1.0.45";
+        public const string PROGRAM_TITLE = PROGRAM_NAME + " 0.1";
 
         public static void Main(string[] args)
         {
