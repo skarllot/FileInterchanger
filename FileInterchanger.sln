@@ -1,6 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F9DA8583-D5ED-4044-A1A4-0E2EA61B83C5}"
+	ProjectSection(SolutionItems) = preProject
+		AUTHORS.txt = AUTHORS.txt
+		COPYING.txt = COPYING.txt
+		README.txt = README.txt
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileInterchanger", "FileInterchanger\FileInterchanger.csproj", "{70E55E6E-6A36-4321-B150-8ECE2F5E3C14}"
 EndProject
 Global
