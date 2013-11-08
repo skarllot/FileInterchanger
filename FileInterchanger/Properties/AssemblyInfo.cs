@@ -1,3 +1,4 @@
+using FileInterchanger;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -6,19 +7,17 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("FileInterchanger 0.1.0")]
+[assembly: AssemblyTitle(MainClass.PROGRAM_TITLE)]
 [assembly: AssemblyDescription("FTP file interchanger service that uses WinSCP as backend")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FileInterchanger.exe")]
+[assembly: AssemblyProduct(MainClass.PROGRAM_NAME + ".exe")]
 [assembly: AssemblyCopyright("Copyright (c) 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Latest release: 
-// Major.Minor.Maintenance.Revision
-[assembly: AssemblyVersion("0.1.0.42")]
-[assembly: AssemblyFileVersion("0.1.0.42")]
+[assembly: AssemblyVersion(MainClass.PROGRAM_VERSION)]
+[assembly: AssemblyFileVersion(MainClass.PROGRAM_VERSION)]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

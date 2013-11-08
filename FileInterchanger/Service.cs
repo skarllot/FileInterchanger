@@ -8,11 +8,11 @@ namespace FileInterchanger
 {
     public class Service : System.ServiceProcess.ServiceBase
     {
-        const string DEFAULT_CFG_FILE_NAME = "ftp-exchange.ini";
+        const string DEFAULT_CFG_FILE_NAME = "config.ini";
         const string DEFAULT_CREDENTIALS_CFG_FILE_NAME = "credentials.ini";
         const int DEFAULT_REFRESH = 5;
-        const string EVT_SOURCE = "FtpExchange";
-        const string EVT_LOG = "FtpExchange";
+        const string EVT_SOURCE = MainClass.PROGRAM_NAME;
+        const string EVT_LOG = MainClass.PROGRAM_NAME;
         const int EVTID_SERVICE_STATE = 0;
         const int EVTID_CFGFILE_ALL_SECTIONS_INVALID = 1;
         const int EVTID_CFGFILE_RELOAD_INVALID = 2;
@@ -55,7 +55,7 @@ namespace FileInterchanger
             eventLog.Source = "Service";
             eventLog.Log = EVT_LOG;
 
-            this.ServiceName = "FtpExchange";
+            this.ServiceName = MainClass.PROGRAM_NAME;
 
             stopEvent = new ManualResetEvent(true);
             reloadEvent = new ManualResetEvent(false);
@@ -149,7 +149,7 @@ namespace FileInterchanger
 
             svcThread = new Thread(new ParameterizedThreadStart(StartThread));
             svcThread.Start(new string[] { cfgFile, credentialFile });
-            eventLog.WriteEntry("FtpSync service started",
+            eventLog.WriteEntry(string.Format("{0} service started", MainClass.PROGRAM_NAME),
                 EventLogEntryType.Information, EVTID_SERVICE_STATE);
 
             reloadThread = new Thread(new ParameterizedThreadStart(ConfigWatcher));
@@ -170,7 +170,7 @@ namespace FileInterchanger
                 reloadThread.Join();
             }
 
-            eventLog.WriteEntry("FtpSync service stopped",
+            eventLog.WriteEntry(string.Format("{0} service stopped", MainClass.PROGRAM_NAME),
                 EventLogEntryType.Information, EVTID_SERVICE_STATE);
         }
 

@@ -8,7 +8,7 @@ namespace FileInterchanger
 {
     class Exchanger
     {
-        const string EVT_LOG = "FtpExchange";
+        const string EVT_LOG = MainClass.PROGRAM_NAME;
         const int EVTID_CRED_CONFLICT = 1;
         const int EVTID_CRED_ERROR = 2;
         const int EVTID_EXCHANGE_COMPLETED = 3;
