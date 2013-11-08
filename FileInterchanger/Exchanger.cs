@@ -26,28 +26,13 @@ namespace FileInterchanger
 {
     class Exchanger
     {
-        const string EVT_SOURCE = "Transfer";
-        const int EVTID_CRED_CONFLICT = 1;
-        const int EVTID_CRED_ERROR = 2;
-        const int EVTID_EXCHANGE_COMPLETED = 3;
-        const int EVTID_HOSTNAME_INVALID = 4;
-        const int EVTID_SESSION_OPEN_ERROR = 5;
-        const int EVTID_UNEXPECTED_ERROR = 99;
-
         static readonly TransferOptions DEFAULT_TRANSFER_OPTIONS = new TransferOptions
         {
             TransferMode = TransferMode.Binary
         };
         const int EVENT_LOG_MAX_LENGTH = 15000;
 
-        EventLog eventLog;
-
-        public Exchanger()
-        {
-            eventLog = MainClass.CreateEventlog(EVT_SOURCE);
-            if (eventLog == null)
-                throw new Exception("Couldn't create EventLog");
-        }
+        Logger eventLog = Logger.Default;
 
         private string GetDateNow()
         {
@@ -59,7 +44,7 @@ namespace FileInterchanger
             if (string.IsNullOrWhiteSpace(info.HostName))
             {
                 eventLog.WriteEntry(string.Format("Error on {0}\nFTP hostname was not provided",
-                    info.Id), EventLogEntryType.Error, EVTID_HOSTNAME_INVALID);
+                    info.Id), EventLogEntryType.Error, EventId.HostnameInvalid);
                 return false;
             }
 
@@ -92,13 +77,13 @@ namespace FileInterchanger
                     {
                         eventLog.WriteEntry(string.Format(
                             "Error on {0}\nA connection to a shared resource using another credential already exists",
-                            info.Id), EventLogEntryType.Error, EVTID_CRED_CONFLICT);
+                            info.Id), EventLogEntryType.Error, EventId.CredentialConflict);
                     }
                     else
                     {
                         eventLog.WriteEntry(string.Format(
                             "Error on {0}\nError connecting to shared resource using provided credentials: {1}",
-                            info.Id, e.Message), EventLogEntryType.Error, EVTID_CRED_ERROR);
+                            info.Id, e.Message), EventLogEntryType.Error, EventId.CredentialError);
                     }
                     return false;
                 }
@@ -112,7 +97,7 @@ namespace FileInterchanger
                 session.Open(sessionOpt);
                 log.AppendLine(string.Format("[{0}] Connected to {1}@{2}",
                     GetDateNow(), sessionOpt.UserName ?? string.Empty, info.HostName));
-                log.AppendLine(string.Format("[{0}] Local path set to '{1}'",
+                log.AppendLine(string.Format("[{0}] Local path set to {1}",
                     GetDateNow(), info.Local));
 
                 switch (info.SyncTarget)
@@ -138,7 +123,8 @@ namespace FileInterchanger
                         }
                         break;
                     default:
-                        log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}", GetDateNow(), info.SyncTarget.ToString()));
+                        log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}",
+                            GetDateNow(), info.SyncTarget.ToString()));
                         return false;
                 }
             }
@@ -146,7 +132,7 @@ namespace FileInterchanger
             {
                 eventLog.WriteEntry(string.Format(
                     "Error on {0}\nFailed to authenticate or connect to server",
-                    info.Id), EventLogEntryType.Error, EVTID_SESSION_OPEN_ERROR);
+                    info.Id), EventLogEntryType.Error, EventId.SessionOpenError);
                 log.Clear();
                 return false;
             }
@@ -156,8 +142,8 @@ namespace FileInterchanger
                     info.Id, e.Message, e.Source, e.StackTrace);
                 string[] logArr = SklLib.Strings.Split(msg, EVENT_LOG_MAX_LENGTH);
                 foreach (string item in logArr)
-                    eventLog.WriteEntry(item, EventLogEntryType.Error, EVTID_UNEXPECTED_ERROR);
-                Environment.Exit(EVTID_UNEXPECTED_ERROR);
+                    eventLog.WriteEntry(item, EventLogEntryType.Error, EventId.UnexpectedError);
+                Environment.Exit((int)EventId.UnexpectedError);
             }
             finally
             {
@@ -169,7 +155,7 @@ namespace FileInterchanger
 
                 string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGTH);
                 foreach (string item in logArr)
-                    eventLog.WriteEntry(item, EventLogEntryType.Information, EVTID_EXCHANGE_COMPLETED);
+                    eventLog.WriteEntry(item, EventLogEntryType.Information, EventId.InterchangeCompleted);
             }
 
             return true;

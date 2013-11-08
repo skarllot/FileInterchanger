@@ -108,10 +108,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventId.cs" />
     <Compile Include="ExchangeInfo.cs" />
     <Compile Include="IO\ConfigReaderBase.cs" />
     <Compile Include="IO\CredentialItemReader.cs" />
     <Compile Include="IO\CredentialsReader.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="NetworkConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

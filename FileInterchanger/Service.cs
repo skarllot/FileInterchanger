@@ -29,19 +29,10 @@ namespace FileInterchanger
         const string DEFAULT_CFG_FILE_NAME = "config.ini";
         const string DEFAULT_CREDENTIALS_CFG_FILE_NAME = "credentials.ini";
         const int DEFAULT_REFRESH = 5;
-        const string EVT_SOURCE = "Service";
-        const int EVTID_SERVICE_STATE = 0;
-        const int EVTID_CFGFILE_ALL_SECTIONS_INVALID = 1;
-        const int EVTID_CFGFILE_RELOAD_INVALID = 2;
-        const int EVTID_CFGFILE_RELOADED = 3;
-        const int EVTID_REFRESH_TINY = 4;
-        const int EVTID_CFGFILE_LOAD_ERROR = 5;
-        const int EVTID_CFGFILE_PARSE_ERROR = 7;
-        const int EVTID_CFGFILE_NOTFOUND = 9;
         const int MINUTE_TO_MILLISECONDS = 1000 * 60;
 
-        private System.Diagnostics.EventLog eventLog;
-        private System.ComponentModel.Container components = null;
+        Logger eventLog = Logger.Default;
+        System.ComponentModel.Container components = null;
         int refresh = DEFAULT_REFRESH;
         Thread svcThread;
         Thread reloadThread;
@@ -50,10 +41,6 @@ namespace FileInterchanger
 
         public Service()
         {
-            eventLog = MainClass.CreateEventlog(EVT_SOURCE);
-            if (eventLog == null)
-                throw new Exception("Couldn't create EventLog");
-
             this.ServiceName = MainClass.PROGRAM_NAME;
 
             stopEvent = new ManualResetEvent(true);
@@ -101,7 +88,7 @@ namespace FileInterchanger
             if (!File.Exists(cfgFile))
             {
                 string msg = string.Format("The configuration file \"{0}\" does not exist.", cfgFile);
-                eventLog.WriteEntry(msg, EventLogEntryType.Error, EVTID_CFGFILE_NOTFOUND);
+                eventLog.WriteEntry(msg, EventLogEntryType.Error, EventId.ConfigFileNotFound);
                 // http://msdn.microsoft.com/en-us/library/ms681384%28v=vs.85%29
                 this.ExitCode = 15010;
                 throw new FileNotFoundException(msg, cfgFile);
@@ -149,7 +136,7 @@ namespace FileInterchanger
             svcThread = new Thread(new ParameterizedThreadStart(StartThread));
             svcThread.Start(new string[] { cfgFile, credentialFile });
             eventLog.WriteEntry(string.Format("{0} service started", MainClass.PROGRAM_NAME),
-                EventLogEntryType.Information, EVTID_SERVICE_STATE);
+                EventLogEntryType.Information, EventId.ServiceStateChanged);
 
             reloadThread = new Thread(new ParameterizedThreadStart(ConfigWatcher));
             reloadThread.Start(new string[] { cfgFile, credentialFile });
@@ -170,7 +157,7 @@ namespace FileInterchanger
             }
 
             eventLog.WriteEntry(string.Format("{0} service stopped", MainClass.PROGRAM_NAME),
-                EventLogEntryType.Information, EVTID_SERVICE_STATE);
+                EventLogEntryType.Information, EventId.ServiceStateChanged);
         }
 
         /*protected override void OnContinue()
@@ -190,7 +177,7 @@ namespace FileInterchanger
             if (infoArr == null)
             {
                 eventLog.WriteEntry("None of configuration sections could be parsed",
-                    EventLogEntryType.Error, EVTID_CFGFILE_ALL_SECTIONS_INVALID);
+                    EventLogEntryType.Error, EventId.ConfigFileAllSectionsInvalid);
                 return;
             }
 
@@ -218,7 +205,7 @@ namespace FileInterchanger
                     if (infoArrNew == null)
                     {
                         eventLog.WriteEntry("Configuration file was changed to invalid state",
-                            EventLogEntryType.Error, EVTID_CFGFILE_RELOAD_INVALID);
+                            EventLogEntryType.Error, EventId.ConfigFileReloadInvalid);
                     }
                     else
                     {
@@ -227,7 +214,7 @@ namespace FileInterchanger
                             refresh = config.Refresh;
 
                         eventLog.WriteEntry("Configuration file reloaded",
-                            EventLogEntryType.Information, EVTID_CFGFILE_RELOADED);
+                            EventLogEntryType.Information, EventId.ConfigFileReloaded);
                     }
                     reloadEvent.Reset();
                 }
@@ -241,7 +228,7 @@ namespace FileInterchanger
                     eventLog.WriteEntry(string.Format(
                         "File exchange took {0} and refresh time is set to {1}",
                         elapsed, new TimeSpan(0, refresh, 0)),
-                        EventLogEntryType.Warning, EVTID_REFRESH_TINY);
+                        EventLogEntryType.Warning, EventId.RefreshTiny);
                 }
 
                 if (stopEvent.WaitOne(waitMs))
@@ -254,13 +241,13 @@ namespace FileInterchanger
             if (!ValidateConfiguration(config.FileName))
             {
                 eventLog.WriteEntry(string.Format("Error loading configuration file {0}", config.FileName),
-                    EventLogEntryType.Error, EVTID_CFGFILE_LOAD_ERROR);
+                    EventLogEntryType.Error, EventId.ConfigFileLoadError);
                 return null;
             }
             if (!ValidateConfiguration(credReader.FileName))
             {
                 eventLog.WriteEntry(string.Format("Error loading configuration file {0}", credReader.FileName),
-                    EventLogEntryType.Error, EVTID_CFGFILE_LOAD_ERROR);
+                    EventLogEntryType.Error, EventId.ConfigFileLoadError);
                 return null;
             }
             config.LoadFile();
@@ -274,7 +261,7 @@ namespace FileInterchanger
                 catch (Exception e)
                 {
                     eventLog.WriteEntry(string.Format("Error parsing {0}\nMessage: {1}",
-                        item.Section, e.Message), EventLogEntryType.Error, EVTID_CFGFILE_PARSE_ERROR);
+                        item.Section, e.Message), EventLogEntryType.Error, EventId.ConfigFileParseError);
                     info = null;
                 }
 

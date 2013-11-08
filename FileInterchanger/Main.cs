@@ -17,7 +17,6 @@
 //
 
 using System;
-using System.Diagnostics;
 using System.ServiceProcess;
 
 namespace FileInterchanger
@@ -27,19 +26,15 @@ namespace FileInterchanger
         public const string PROGRAM_NAME = "FileInterchanger";
         // Latest release: 
         // Major.Minor.Maintenance.Revision
-        public const string PROGRAM_VERSION = "0.1.0.46";
+        public const string PROGRAM_VERSION = "0.1.0.47";
         public const string PROGRAM_TITLE = PROGRAM_NAME + " 0.1";
 
-        const int EVTID_EVENTLOG_CREATED = 8;
-        const string EVT_LOG = MainClass.PROGRAM_NAME;
-        const string EVT_SOURCE = MainClass.PROGRAM_NAME;
         public static readonly bool DEBUG = System.Diagnostics.Debugger.IsAttached;
 
         public static void Main(string[] args)
         {
-            EventLog eventLog = CreateEventlog(EVT_SOURCE);
-            eventLog.Dispose();
-            eventLog = null;
+            if (Logger.Default == null)
+                throw new Exception("Couldn't create EventLog");
 
             Service ftp = new Service();
 
@@ -52,41 +47,6 @@ namespace FileInterchanger
             {
                 ftp.StartDebug(args);
             }
-        }
-
-        public static EventLog CreateEventlog(string source)
-        {
-            EventLog result = null;
-
-            try
-            {
-                // PS> Remove-EventLog <logname>
-                if (EventLog.SourceExists(source))
-                {
-                    result = new EventLog { Source = source };
-                    if (result.Log != EVT_LOG)
-                    {
-                        EventLog.DeleteEventSource(source);
-                        result.Dispose();
-                        result = null;
-                    }
-                }
-
-                if (!EventLog.SourceExists(source))
-                {
-                    EventLog.CreateEventSource(source, EVT_LOG);
-                    result = new EventLog { Source = source, Log = EVT_LOG };
-                    result.WriteEntry("Event Log created",
-                        EventLogEntryType.Information, EVTID_EVENTLOG_CREATED);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(string.Format(
-                    "Error creating EventLog (Source: {0} and Log: {1})", source, EVT_LOG), e);
-            }
-
-            return result;
         }
     }
 }
