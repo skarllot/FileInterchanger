@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ftp_exchange.IO
+namespace FileInterchanger.IO
 {
     class ConfigReader : ConfigReaderBase, IEnumerable<ConfigReaderItem>
     {

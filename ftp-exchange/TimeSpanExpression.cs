@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ftp_exchange
+namespace FileInterchanger
 {
     struct TimeSpanExpression
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ftp_exchange.IO
+namespace FileInterchanger.IO
 {
     class CredentialsReader : ConfigReaderBase, IEnumerable<CredentialItemReader>
     {

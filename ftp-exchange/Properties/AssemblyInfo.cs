@@ -6,19 +6,19 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("FtpExchange 0.1.0")]
-[assembly: AssemblyDescription("FTP file exchanger service that uses WinSCP as backend")]
+[assembly: AssemblyTitle("FileInterchanger 0.1.0")]
+[assembly: AssemblyDescription("FTP file interchanger service that uses WinSCP as backend")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FtpExchange.exe")]
+[assembly: AssemblyProduct("FileInterchanger.exe")]
 [assembly: AssemblyCopyright("Copyright (c) 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Latest release: 
 // Major.Minor.Maintenance.Revision
-[assembly: AssemblyVersion("0.1.0.41")]
-[assembly: AssemblyFileVersion("0.1.0.41")]
+[assembly: AssemblyVersion("0.1.0.42")]
+[assembly: AssemblyFileVersion("0.1.0.42")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 

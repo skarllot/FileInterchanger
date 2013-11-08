@@ -1,6 +1,6 @@
 ﻿using System.ServiceProcess;
 
-namespace ftp_exchange
+namespace FileInterchanger
 {
     class MainClass
     {

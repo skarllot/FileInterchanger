@@ -4,7 +4,7 @@ using System.IO;
 using WinSCP;
 using stringb = System.Text.StringBuilder;
 
-namespace ftp_exchange
+namespace FileInterchanger
 {
     class Exchanger
     {

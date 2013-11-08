@@ -3,7 +3,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using WinSCP;
 
-namespace ftp_exchange
+namespace FileInterchanger
 {
     struct ExchangeInfo
     {

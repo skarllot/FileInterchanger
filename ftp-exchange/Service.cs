@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
-namespace ftp_exchange
+namespace FileInterchanger
 {
     public class Service : System.ServiceProcess.ServiceBase
     {
