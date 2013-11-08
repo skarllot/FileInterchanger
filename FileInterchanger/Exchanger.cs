@@ -26,7 +26,7 @@ namespace FileInterchanger
 {
     class Exchanger
     {
-        const string EVT_LOG = MainClass.PROGRAM_NAME;
+        const string EVT_SOURCE = "Transfer";
         const int EVTID_CRED_CONFLICT = 1;
         const int EVTID_CRED_ERROR = 2;
         const int EVTID_EXCHANGE_COMPLETED = 3;
@@ -44,9 +44,9 @@ namespace FileInterchanger
 
         public Exchanger()
         {
-            eventLog = new EventLog();
-            eventLog.Source = "Transfer";
-            eventLog.Log = EVT_LOG;
+            eventLog = MainClass.CreateEventlog(EVT_SOURCE);
+            if (eventLog == null)
+                throw new Exception("Couldn't create EventLog");
         }
 
         private string GetDateNow()

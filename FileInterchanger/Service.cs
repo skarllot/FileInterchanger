@@ -29,8 +29,7 @@ namespace FileInterchanger
         const string DEFAULT_CFG_FILE_NAME = "config.ini";
         const string DEFAULT_CREDENTIALS_CFG_FILE_NAME = "credentials.ini";
         const int DEFAULT_REFRESH = 5;
-        const string EVT_SOURCE = MainClass.PROGRAM_NAME;
-        const string EVT_LOG = MainClass.PROGRAM_NAME;
+        const string EVT_SOURCE = "Service";
         const int EVTID_SERVICE_STATE = 0;
         const int EVTID_CFGFILE_ALL_SECTIONS_INVALID = 1;
         const int EVTID_CFGFILE_RELOAD_INVALID = 2;
@@ -38,7 +37,6 @@ namespace FileInterchanger
         const int EVTID_REFRESH_TINY = 4;
         const int EVTID_CFGFILE_LOAD_ERROR = 5;
         const int EVTID_CFGFILE_PARSE_ERROR = 7;
-        const int EVTID_EVENTLOG_CREATED = 8;
         const int EVTID_CFGFILE_NOTFOUND = 9;
         const int MINUTE_TO_MILLISECONDS = 1000 * 60;
 
@@ -52,26 +50,9 @@ namespace FileInterchanger
 
         public Service()
         {
-            // PS> Remove-EventLog <logname>
-            if (System.Diagnostics.EventLog.SourceExists(EVT_SOURCE))
-            {
-                eventLog = new EventLog { Source = EVT_SOURCE };
-                if (eventLog.Log != EVT_LOG)
-                    System.Diagnostics.EventLog.DeleteEventSource(EVT_SOURCE);
-            }
-
-            bool evtExists = false;
-            try { evtExists = System.Diagnostics.EventLog.SourceExists(EVT_SOURCE); }
-            catch { }
-            if (!evtExists)
-            {
-                System.Diagnostics.EventLog.CreateEventSource(EVT_SOURCE, EVT_LOG);
-                eventLog.WriteEntry("Event Log created", EventLogEntryType.Information, EVTID_EVENTLOG_CREATED);
-            }
-
-            this.eventLog = new System.Diagnostics.EventLog();
-            eventLog.Source = "Service";
-            eventLog.Log = EVT_LOG;
+            eventLog = MainClass.CreateEventlog(EVT_SOURCE);
+            if (eventLog == null)
+                throw new Exception("Couldn't create EventLog");
 
             this.ServiceName = MainClass.PROGRAM_NAME;
 
