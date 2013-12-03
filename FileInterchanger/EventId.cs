@@ -34,6 +34,14 @@ namespace FileInterchanger
         InterchangeCompleted = 12,
         HostnameInvalid = 13,
         SessionOpenError = 14,
+        TransfLocalFileNotExists = 15,
+        TransfLocalEmptyDownload = 16,
+        TransfLocalMultFiles = 17,
+        TransfLocalFilesNotMatch = 18,
+        TransfRemoteFileNotExists = 25,
+        TransfRemoteEmptyUpload = 26,
+        TransfRemoteMultFiles = 27,
+        TransfRemoteFilesNotMatch = 28,
         UnexpectedError = 99
     }
 }

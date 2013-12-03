@@ -110,6 +110,7 @@
   <ItemGroup>
     <Compile Include="EventId.cs" />
     <Compile Include="ExchangeInfo.cs" />
+    <Compile Include="ExchangerException.cs" />
     <Compile Include="IO\ConfigReaderBase.cs" />
     <Compile Include="IO\CredentialItemReader.cs" />
     <Compile Include="IO\CredentialsReader.cs" />

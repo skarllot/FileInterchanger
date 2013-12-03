@@ -137,6 +137,10 @@ namespace FileInterchanger
                 log.Clear();
                 return false;
             }
+            catch (ExchangerException e)
+            {
+                eventLog.WriteEntry(e.Message, EventLogEntryType.Error, e.ErrorId);
+            }
             catch (Exception e)
             {
                 string msg = string.Format("Error on {0}\nMessage: {1}\nSource: {2}\nStack Trace: {3}",
@@ -152,10 +156,13 @@ namespace FileInterchanger
                     session.Dispose();
                 log.AppendLine(string.Format("[{0}] Interchange finalized", GetDateNow()));
 
-                EventLogEntryType evType = EventLogEntryType.Information;
-                if (!result)
-                    evType = EventLogEntryType.Error;
-                eventLog.WriteEntry(log.ToString(), evType, EventId.InterchangeCompleted);
+                if (log.Length > 0)
+                {
+                    EventLogEntryType evType = EventLogEntryType.Information;
+                    if (!result)
+                        evType = EventLogEntryType.Error;
+                    eventLog.WriteEntry(log.ToString(), evType, EventId.InterchangeCompleted);
+                }
             }
 
             return true;
@@ -226,16 +233,47 @@ namespace FileInterchanger
                         GetDateNow(), item.Name, Path.GetFileName(localFile)));
                 }
 
-                TransferOperationResult result = session.GetFiles(origFile, localFile, move, DEFAULT_TRANSFER_OPTIONS);
+                TransferOperationResult result = session.GetFiles(origFile, localFile, false, DEFAULT_TRANSFER_OPTIONS);
                 if (!result.IsSuccess)
                 {
                     log.AppendLine(string.Format("[{0}] Operation failed: download files", GetDateNow()));
                     return false;
                 }
-                if (result.Transfers.Count > 0)
+
+                if (result.Transfers.Count == 1)
+                {
+                    if (File.Exists(localFile))
+                    {
+                        long localLength = new FileInfo(localFile).Length;
+                        if (item.Length == localLength)
+                        {
+                            if (move) session.RemoveFiles(origFile);
+                            log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), origFile));
+                        }
+                        else
+                        {
+                            File.Delete(localFile);
+                            throw new ExchangerException(EventId.TransfLocalFilesNotMatch,
+                                string.Format("Downloaded file '{0}' size do not match remote file", localFile));
+                        }
+                    }
+                    else
+                    {
+                        throw new ExchangerException(EventId.TransfLocalFileNotExists,
+                            string.Format("Downloaded file '{0}' cannot be found", localFile));
+                    }
+                }
+                else if (result.Transfers.Count == 0)
+                {
+                    throw new ExchangerException(EventId.TransfLocalEmptyDownload,
+                        string.Format("Remote file '{0}' cannot be found", origFile));
+                }
+                else    // Count > 1?
                 {
                     foreach (TransferEventArgs t in result.Transfers)
                         log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), t.FileName));
+                    throw new ExchangerException(EventId.TransfLocalMultFiles,
+                        "Multiple files was downloaded instead of one");
                 }
             }
 
@@ -306,16 +344,47 @@ namespace FileInterchanger
                         GetDateNow(), item.Name, Path.GetFileName(remoteFile)));
                 }
 
-                TransferOperationResult result = session.PutFiles(origFile, remoteFile, move, DEFAULT_TRANSFER_OPTIONS);
+                TransferOperationResult result = session.PutFiles(origFile, remoteFile, false, DEFAULT_TRANSFER_OPTIONS);
                 if (!result.IsSuccess)
                 {
                     log.AppendLine(string.Format("[{0}] Operation failed: upload files", GetDateNow()));
                     return false;
                 }
-                if (result.Transfers.Count > 0)
+
+                if (result.Transfers.Count == 1)
+                {
+                    if (session.FileExists(remoteFile))
+                    {
+                        long remoteLength = session.GetFileInfo(remoteFile).Length;
+                        if (item.Length == remoteLength)
+                        {
+                            if (move) item.Delete();
+                            log.AppendLine(string.Format("[{0}] Uploaded: {1}", GetDateNow(), origFile));
+                        }
+                        else
+                        {
+                            session.RemoveFiles(remoteFile);
+                            throw new ExchangerException(EventId.TransfRemoteFilesNotMatch,
+                                string.Format("Uploaded file '{0}' size do not match local file", remoteFile));
+                        }
+                    }
+                    else
+                    {
+                        throw new ExchangerException(EventId.TransfRemoteFileNotExists,
+                            string.Format("Uploaded file '{0}' cannot be found", remoteFile));
+                    }
+                }
+                else if (result.Transfers.Count == 0)
+                {
+                    throw new ExchangerException(EventId.TransfRemoteEmptyUpload,
+                        string.Format("Local file '{0}' cannot be found", origFile));
+                }
+                else    // Count > 1?
                 {
                     foreach (TransferEventArgs t in result.Transfers)
                         log.AppendLine(string.Format("[{0}] Uploaded: {1}", GetDateNow(), t.FileName));
+                    throw new ExchangerException(EventId.TransfRemoteMultFiles,
+                        "Multiple files was uploaded instead of one");
                 }
             }
 

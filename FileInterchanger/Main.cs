@@ -25,9 +25,9 @@ namespace FileInterchanger
     {
         public const string PROGRAM_NAME = "FileInterchanger";
         // Latest release: 0.1.0.47
-        // Major.Minor.Maintenance.Revision
-        public const string PROGRAM_VERSION = "0.1.1.48";
-        public const string PROGRAM_TITLE = PROGRAM_NAME + " 0.1.1";
+        // Major.Minor.Maintenance.Build
+        public const string PROGRAM_VERSION = "0.2.0.49";
+        public const string PROGRAM_TITLE = PROGRAM_NAME + " 0.2";
 
         public static readonly bool DEBUG = System.Diagnostics.Debugger.IsAttached;
 
