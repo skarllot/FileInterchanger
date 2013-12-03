@@ -30,7 +30,6 @@ namespace FileInterchanger
         {
             TransferMode = TransferMode.Binary
         };
-        const int EVENT_LOG_MAX_LENGTH = 15000;
 
         Logger eventLog = Logger.Default;
 
@@ -89,6 +88,7 @@ namespace FileInterchanger
                 }
             }
 
+            bool result = true;
             try
             {
                 session = new Session();
@@ -103,28 +103,29 @@ namespace FileInterchanger
                 switch (info.SyncTarget)
                 {
                     case SynchronizationMode.Local:
-                        if (!ExchangeToLocal(info, session, log))
-                            return false;
+                        result = ExchangeToLocal(info, session, log);
+                        if (!result) return false;
                         if (info.Cleanup.HasValue)
                         {
-                            CleanupRemote(info, session, log);
+                            result = CleanupRemote(info, session, log);
                             if (info.CleanupTarget)
-                                CleanupLocal(info, session, log);
+                                result = CleanupLocal(info, session, log);
                         }
                         break;
                     case SynchronizationMode.Remote:
-                        if (!ExchangeToRemote(info, session, log))
-                            return false;
+                        result = ExchangeToRemote(info, session, log);
+                        if (!result) return false;
                         if (info.Cleanup.HasValue)
                         {
-                            CleanupLocal(info, session, log);
+                            result = CleanupLocal(info, session, log);
                             if (info.CleanupTarget)
-                                CleanupRemote(info, session, log);
+                                result = CleanupRemote(info, session, log);
                         }
                         break;
                     default:
                         log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}",
                             GetDateNow(), info.SyncTarget.ToString()));
+                        result = false;
                         return false;
                 }
             }
@@ -140,9 +141,7 @@ namespace FileInterchanger
             {
                 string msg = string.Format("Error on {0}\nMessage: {1}\nSource: {2}\nStack Trace: {3}",
                     info.Id, e.Message, e.Source, e.StackTrace);
-                string[] logArr = SklLib.Strings.Split(msg, EVENT_LOG_MAX_LENGTH);
-                foreach (string item in logArr)
-                    eventLog.WriteEntry(item, EventLogEntryType.Error, EventId.UnexpectedError);
+                eventLog.WriteEntry(msg, EventLogEntryType.Error, EventId.UnexpectedError);
                 Environment.Exit((int)EventId.UnexpectedError);
             }
             finally
@@ -153,9 +152,10 @@ namespace FileInterchanger
                     session.Dispose();
                 log.AppendLine(string.Format("[{0}] Interchange finalized", GetDateNow()));
 
-                string[] logArr = SklLib.Strings.Split(log.ToString(), EVENT_LOG_MAX_LENGTH);
-                foreach (string item in logArr)
-                    eventLog.WriteEntry(item, EventLogEntryType.Information, EventId.InterchangeCompleted);
+                EventLogEntryType evType = EventLogEntryType.Information;
+                if (!result)
+                    evType = EventLogEntryType.Error;
+                eventLog.WriteEntry(log.ToString(), evType, EventId.InterchangeCompleted);
             }
 
             return true;

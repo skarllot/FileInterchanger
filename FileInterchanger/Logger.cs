@@ -28,6 +28,7 @@ namespace FileInterchanger
     {
         const string DEFAULT_LOG = MainClass.PROGRAM_NAME;
         const string DEFAULT_SOURCE = MainClass.PROGRAM_NAME;
+        const int EVENT_LOG_MAX_LENGTH = 15000;
 
         static Logger _default;
         EventLog eventLog;
@@ -46,7 +47,16 @@ namespace FileInterchanger
 
         public void WriteEntry(string message, EventLogEntryType type, EventId eventId)
         {
-            eventLog.WriteEntry(message, type, (int)eventId);
+            string[] msgArr;
+            if (message.Length > EVENT_LOG_MAX_LENGTH)
+            {
+                msgArr = SklLib.Strings.Split(message, EVENT_LOG_MAX_LENGTH);
+            }
+            else
+                msgArr = new string[] { message };
+
+            foreach (string item in msgArr)
+                eventLog.WriteEntry(item, type, (int)eventId);
         }
 
         private static EventLog CreateEventlog(string source, string log)

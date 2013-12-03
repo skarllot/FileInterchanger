@@ -24,10 +24,10 @@ namespace FileInterchanger
     class MainClass
     {
         public const string PROGRAM_NAME = "FileInterchanger";
-        // Latest release: 
+        // Latest release: 0.1.0.47
         // Major.Minor.Maintenance.Revision
-        public const string PROGRAM_VERSION = "0.1.0.47";
-        public const string PROGRAM_TITLE = PROGRAM_NAME + " 0.1";
+        public const string PROGRAM_VERSION = "0.1.1.48";
+        public const string PROGRAM_TITLE = PROGRAM_NAME + " 0.1.1";
 
         public static readonly bool DEBUG = System.Diagnostics.Debugger.IsAttached;
 
