@@ -198,7 +198,10 @@ namespace FileInterchanger
                 if (item.IsDirectory || !info.Files.IsMatch(item.Name))
                     continue;
                 if (!info.DisableSkipEmpty && item.Length == 0)
+                {
+                    log.AppendLine(string.Format("[{0}] Skipped empty file: {1}", GetDateNow(), item.Name));
                     continue;
+                }
                 if (info.TimeFilter.HasValue)
                 {
                     if (!TimeSpanExpression.Match(DateTime.Now - item.LastWriteTime, info.TimeFilter.Value))
