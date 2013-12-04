@@ -28,6 +28,7 @@ namespace FileInterchanger
         string backupFolder;
         TimeSpanExpression? cleanup;
         bool cleanupTarget;
+        bool disableSkipEmpty;
         Regex files;
         string fingerprint;
         NetworkCredential ftpCredential;
@@ -45,6 +46,7 @@ namespace FileInterchanger
         public string BackupFolder { get { return backupFolder; } }
         public TimeSpanExpression? Cleanup { get { return cleanup; } }
         public bool CleanupTarget { get { return cleanupTarget; } }
+        public bool DisableSkipEmpty { get { return disableSkipEmpty; } }
         public Regex Files { get { return files; } }
         public string Fingerprint { get { return fingerprint; } }
         public NetworkCredential FtpCredential { get { return ftpCredential; } }
@@ -64,6 +66,7 @@ namespace FileInterchanger
             ExchangeInfo result = new ExchangeInfo();
             result.backupFolder = cfg.BackupFolder;
             result.cleanupTarget = cfg.CleanupTarget;
+            result.disableSkipEmpty = cfg.DisableSkipEmpty;
             result.fingerprint = cfg.Fingerprint;
             result.hostname = cfg.HostName;
             result.id = cfg.Section;

@@ -160,7 +160,7 @@ namespace FileInterchanger
                 {
                     EventLogEntryType evType = EventLogEntryType.Information;
                     if (!result)
-                        evType = EventLogEntryType.Error;
+                        evType = EventLogEntryType.Warning;
                     eventLog.WriteEntry(log.ToString(), evType, EventId.InterchangeCompleted);
                 }
             }
@@ -196,6 +196,8 @@ namespace FileInterchanger
             {
                 string localFile = Path.Combine(info.Local, item.Name);
                 if (item.IsDirectory || !info.Files.IsMatch(item.Name))
+                    continue;
+                if (!info.DisableSkipEmpty && item.Length == 0)
                     continue;
                 if (info.TimeFilter.HasValue)
                 {
@@ -307,6 +309,8 @@ namespace FileInterchanger
             {
                 string remoteFile = string.Format("{0}/{1}", info.Remote, item.Name);
                 if (!info.Files.IsMatch(item.Name))
+                    continue;
+                if (!info.DisableSkipEmpty && item.Length == 0)
                     continue;
                 if (info.TimeFilter.HasValue)
                 {

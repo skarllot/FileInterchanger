@@ -34,6 +34,7 @@ namespace FileInterchanger.IO
         public string BackupFolder { get { return GetString(sections[0], "BackupFolder"); } }
         public string Cleanup { get { return GetString(sections[0], "Cleanup"); } }
         public bool CleanupTarget { get { return GetBoolean(sections[0], "CleanupTarget"); } }
+        public bool DisableSkipEmpty { get { return GetBoolean(sections[0], "DisableSkipEmpty"); } }
         public string Files { get { return GetString(sections[0], "Files"); } }
         public string Fingerprint { get { return GetString(sections[0], "Fingerprint"); } }
         public string FtpCredential { get { return GetString(sections[0], "FtpCredential"); } }
