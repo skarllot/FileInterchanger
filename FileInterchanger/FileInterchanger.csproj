@@ -164,7 +164,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
-    <None Include="Examples\ftp-exchange.ini" />
+    <None Include="Examples\config.ini" />
+    <None Include="Examples\credentials.ini" />
     <None Include="Resources\ftp.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
