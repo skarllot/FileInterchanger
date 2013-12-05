@@ -27,7 +27,7 @@ namespace FileInterchanger
     class Logger
     {
         const string DEFAULT_LOG = MainClass.PROGRAM_NAME;
-        const string DEFAULT_SOURCE = MainClass.PROGRAM_NAME;
+        const string DEFAULT_SOURCE = "FIntChg " + MainClass.PROGRAM_VERSION_SIMPLE;
         const int EVENT_LOG_MAX_LENGTH = 15000;
 
         static Logger _default;

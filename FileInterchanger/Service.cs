@@ -228,7 +228,7 @@ namespace FileInterchanger
                     eventLog.WriteEntry(string.Format(
                         "File exchange took {0} and refresh time is set to {1}",
                         elapsed, new TimeSpan(0, refresh, 0)),
-                        EventLogEntryType.Warning, EventId.RefreshTiny);
+                        EventLogEntryType.Warning, EventId.ServiceInsufficientWaitTime);
                 }
 
                 if (stopEvent.WaitOne(waitMs))

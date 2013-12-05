@@ -154,10 +154,10 @@ namespace FileInterchanger
                     netConn.Dispose();
                 if (session != null)
                     session.Dispose();
-                log.AppendLine(string.Format("[{0}] Interchange finalized", GetDateNow()));
 
                 if (log.Length > 0)
                 {
+                    log.AppendLine(string.Format("[{0}] Interchange finalized", GetDateNow()));
                     EventLogEntryType evType = EventLogEntryType.Information;
                     if (!result)
                         evType = EventLogEntryType.Warning;
