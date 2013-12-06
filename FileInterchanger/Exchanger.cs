@@ -112,38 +112,25 @@ namespace FileInterchanger
                     return false;
                 }
 
+                log.AppendLine(string.Format("[{0}] Connected to {1}@{2}",
+                    GetDateNow(), sessionOpt.UserName ?? string.Empty, info.HostName));
+                log.AppendLine(string.Format("[{0}] Local path set to {1}",
+                    GetDateNow(), info.Local));
+
                 try
                 {
-                    log.AppendLine(string.Format("[{0}] Connected to {1}@{2}",
-                        GetDateNow(), sessionOpt.UserName ?? string.Empty, info.HostName));
-                    log.AppendLine(string.Format("[{0}] Local path set to {1}",
-                        GetDateNow(), info.Local));
-
                     switch (info.SyncTarget)
                     {
                         case SynchronizationMode.Local:
                             result = WinscpToLocal(info, session, log, out transferCount);
-                            if (!result) return false;
-                            if (info.Cleanup.HasValue)
-                            {
-                                result = CleanupRemote(info, session, log);
-                                if (info.CleanupTarget)
-                                    result = CleanupLocal(info, session, log);
-                            }
                             break;
                         case SynchronizationMode.Remote:
                             result = WinscpToRemote(info, session, log, out transferCount);
-                            if (!result) return false;
-                            if (info.Cleanup.HasValue)
-                            {
-                                result = CleanupLocal(info, session, log);
-                                if (info.CleanupTarget)
-                                    result = CleanupRemote(info, session, log);
-                            }
                             break;
                         default:
-                            log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}",
-                                GetDateNow(), info.SyncTarget.ToString()));
+                            string evmsg = string.Format("Invalid exchange mode: {1}", info.SyncTarget.ToString());
+                            log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                            eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.SyncTargetInvalid);
                             result = false;
                             return false;
                     }
@@ -177,6 +164,114 @@ namespace FileInterchanger
                                 evId = EventId.InterchangeCompletedEmptyWithErrors;
                         }
                         eventLog.WriteEntry(log.ToString(), evType, evId);
+                    }
+                }
+
+                if (!result)
+                    return false;
+
+                if (info.Cleanup.HasValue)
+                {
+                    log.Clear();
+                    result = true;
+                    try
+                    {
+                        switch (info.SyncTarget)
+                        {
+                            case SynchronizationMode.Local:
+                                result = CleanupRemote(info, session, log, out transferCount);
+                                break;
+                            case SynchronizationMode.Remote:
+                                result = CleanupLocal(info, session, log, out transferCount);
+                                break;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogUnexpectedException(e, info.Id);
+                        return false;
+                    }
+                    finally
+                    {
+                        if (log.Length > 0)
+                        {
+
+                            log.AppendLine(string.Format("[{0}] Origin cleanup finalized", GetDateNow()));
+                            EventLogEntryType evType = EventLogEntryType.Information;
+                            if (!result)
+                                evType = EventLogEntryType.Warning;
+                            EventId evId;
+                            if (transferCount > 0)
+                            {
+                                if (result)
+                                    evId = EventId.CleanupOriginCompleted;
+                                else
+                                    evId = EventId.CleanupOriginCompletedWithErrors;
+                            }
+                            else
+                            {
+                                if (result)
+                                    evId = EventId.CleanupOriginCompletedEmpty;
+                                else
+                                    evId = EventId.CleanupOriginCompletedEmptyWithErrors;
+                            }
+                            eventLog.WriteEntry(log.ToString(), evType, evId);
+                        }
+                    }
+
+                    if (!result)
+                        return false;
+
+                    if (info.CleanupTarget)
+                    {
+                        log.Clear();
+                        result = true;
+                        try
+                        {
+                            switch (info.SyncTarget)
+                            {
+                                case SynchronizationMode.Local:
+                                    result = CleanupLocal(info, session, log, out transferCount);
+                                    break;
+                                case SynchronizationMode.Remote:
+                                    result = CleanupRemote(info, session, log, out transferCount);
+                                    break;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogUnexpectedException(e, info.Id);
+                            return false;
+                        }
+                        finally
+                        {
+                            if (log.Length > 0)
+                            {
+
+                                log.AppendLine(string.Format("[{0}] Target cleanup finalized", GetDateNow()));
+                                EventLogEntryType evType = EventLogEntryType.Information;
+                                if (!result)
+                                    evType = EventLogEntryType.Warning;
+                                EventId evId;
+                                if (transferCount > 0)
+                                {
+                                    if (result)
+                                        evId = EventId.CleanupTargetCompleted;
+                                    else
+                                        evId = EventId.CleanupTargetCompletedWithErrors;
+                                }
+                                else
+                                {
+                                    if (result)
+                                        evId = EventId.CleanupTargetCompletedEmpty;
+                                    else
+                                        evId = EventId.CleanupTargetCompletedEmptyWithErrors;
+                                }
+                                eventLog.WriteEntry(log.ToString(), evType, evId);
+                            }
+                        }
+
+                        return result;
                     }
                 }
             }
@@ -409,7 +504,8 @@ namespace FileInterchanger
                         if (item.Length == remoteLength)
                         {
                             if (move) item.Delete();
-                            log.AppendLine(string.Format("[{0}] Uploaded: {1}", GetDateNow(), origFile));
+                            log.AppendLine(string.Format("[{0}] Uploaded: {1}",
+                                GetDateNow(), result.Transfers[0].FileName));
                             transferCount++;
                         }
                         else
@@ -454,8 +550,9 @@ namespace FileInterchanger
             return true;
         }
 
-        private bool CleanupRemote(ExchangeInfo info, Session session, stringb log)
+        private bool CleanupRemote(ExchangeInfo info, Session session, stringb log, out int removeCount)
         {
+            removeCount = 0;
             string rDir = info.Remote;
             if (info.SyncTarget == SynchronizationMode.Local
                 && info.Move && !string.IsNullOrWhiteSpace(info.BackupFolder))
@@ -481,21 +578,44 @@ namespace FileInterchanger
                 RemovalOperationResult result = session.RemoveFiles(rFile);
                 if (!result.IsSuccess)
                 {
-                    log.AppendLine(string.Format("[{0}] Operation failed: old files cleanup", GetDateNow()));
+                    string evmsg = "Operation failed: old files cleanup";
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.CleanupRemoteRemoveError);
                     return false;
                 }
-                if (result.Removals.Count > 0)
+
+                if (result.Removals.Count == 1)
                 {
+                    log.AppendLine(string.Format("[{0}] Removed: {1}", GetDateNow(), result.Removals[0].FileName));
+                    removeCount++;
+                }
+                else if (result.Removals.Count == 0)
+                {
+                    string evmsg = "Remote file '{0}' could not be removed";
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.CleanupRemoteRemoveEmpty);
+                    return false;
+                }
+                else    // Count > 1?
+                {
+                    string evmsg = "Multiple files was removed instead of one";
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
                     foreach (RemovalEventArgs r in result.Removals)
+                    {
                         log.AppendLine(string.Format("[{0}] Removed: {1}", GetDateNow(), r.FileName));
+                        removeCount++;
+                    }
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.CleanupRemoteRemoveMultFiles);
+                    return false;
                 }
             }
 
             return true;
         }
 
-        private bool CleanupLocal(ExchangeInfo info, Session session, stringb log)
+        private bool CleanupLocal(ExchangeInfo info, Session session, stringb log, out int removeCount)
         {
+            removeCount = 0;
             string lDir = info.Local;
             if (info.SyncTarget == SynchronizationMode.Remote
                 && info.Move && !string.IsNullOrWhiteSpace(info.BackupFolder))
@@ -516,8 +636,34 @@ namespace FileInterchanger
                 if (!TimeSpanExpression.Match(DateTime.Now - item.LastWriteTime, info.Cleanup.Value))
                     continue;
 
-                File.Delete(item.FullName);
-                log.AppendLine(string.Format("[{0}] Removed: {1}", GetDateNow(), item.Name));
+                try
+                {
+                    File.Delete(item.FullName);
+                    log.AppendLine(string.Format("[{0}] Removed: {1}", GetDateNow(), item.Name));
+                    removeCount++;
+                }
+                catch (IOException)
+                {
+                    string evmsg = string.Format("Could not remove the file '{0}' because it is in use", item.Name);
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.CleanupLocalRemoveIoError);
+                    return false;
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    string evmsg = string.Format("Unauthorized to remove the file '{0}'", item.Name);
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.CleanupLocalRemoveUnauthorized);
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    log.AppendLine(string.Format("[{0}] Unexpected error removing the file '{1}'", GetDateNow(), item.Name));
+                    string msg = string.Format("Error removing file '{0}'\nMessage: {1}\nSource: {2}\nStack Trace: {3}",
+                        item.Name, e.Message, e.Source, e.StackTrace);
+                    eventLog.WriteEntry(msg, EventLogEntryType.Error, EventId.CleanupLocalRemoveUnexpectedError);
+                    return false;
+                }
             }
 
             return true;
