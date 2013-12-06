@@ -173,7 +173,7 @@ namespace FileInterchanger
 
             IO.ConfigReader config = new IO.ConfigReader(cfgpath);
             IO.CredentialsReader credReader = new IO.CredentialsReader(credpath);
-            ExchangeInfo[] infoArr = LoadConfiguration(config, credReader);
+            InterchangerInfo[] infoArr = LoadConfiguration(config, credReader);
             if (infoArr == null)
             {
                 eventLog.WriteEntry("None of configuration sections could be parsed",
@@ -181,7 +181,7 @@ namespace FileInterchanger
                 return;
             }
 
-            Exchanger exchanger = new Exchanger();
+            Interchanger exchanger = new Interchanger();
 
             if (config.Refresh != -1)
                 refresh = config.Refresh;
@@ -191,7 +191,7 @@ namespace FileInterchanger
             while (!stopEvent.WaitOne(0))
             {
                 before = DateTime.Now;
-                foreach (ExchangeInfo item in infoArr)
+                foreach (InterchangerInfo item in infoArr)
                 {
                     exchanger.Exchange(item);
 
@@ -201,7 +201,7 @@ namespace FileInterchanger
 
                 if (reloadEvent.WaitOne(0))
                 {
-                    ExchangeInfo[] infoArrNew = LoadConfiguration(config, credReader);
+                    InterchangerInfo[] infoArrNew = LoadConfiguration(config, credReader);
                     if (infoArrNew == null)
                     {
                         eventLog.WriteEntry("Configuration file was changed to invalid state",
@@ -236,7 +236,7 @@ namespace FileInterchanger
             }
         }
 
-        private ExchangeInfo[] LoadConfiguration(IO.ConfigReader config, IO.CredentialsReader credReader)
+        private InterchangerInfo[] LoadConfiguration(IO.ConfigReader config, IO.CredentialsReader credReader)
         {
             if (!ValidateConfiguration(config.FileName))
             {
@@ -253,11 +253,11 @@ namespace FileInterchanger
             config.LoadFile();
             credReader.LoadFile();
 
-            List<ExchangeInfo> tmp = new List<ExchangeInfo>();
+            List<InterchangerInfo> tmp = new List<InterchangerInfo>();
             foreach (IO.ConfigReaderItem item in config)
             {
-                ExchangeInfo? info;
-                try { info = ExchangeInfo.Parse(item, credReader); }
+                InterchangerInfo? info;
+                try { info = InterchangerInfo.Parse(item, credReader); }
                 catch (Exception e)
                 {
                     eventLog.WriteEntry(string.Format("Error parsing {0}\nMessage: {1}",

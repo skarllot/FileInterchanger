@@ -24,7 +24,7 @@ using stringb = System.Text.StringBuilder;
 
 namespace FileInterchanger
 {
-    class Exchanger
+    class Interchanger
     {
         static readonly TransferOptions DEFAULT_TRANSFER_OPTIONS = new TransferOptions
         {
@@ -38,7 +38,7 @@ namespace FileInterchanger
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        public bool Exchange(ExchangeInfo info)
+        public bool Exchange(InterchangerInfo info)
         {
             if (string.IsNullOrWhiteSpace(info.HostName))
             {
@@ -287,7 +287,7 @@ namespace FileInterchanger
             Environment.Exit((int)EventId.UnexpectedError);
         }
 
-        private bool WinscpToLocal(ExchangeInfo info, Session session, stringb log, out int transferCount)
+        private bool WinscpToLocal(InterchangerInfo info, Session session, stringb log, out int transferCount)
         {
             transferCount = 0;
             RemoteDirectoryInfo dirInfo;
@@ -420,7 +420,7 @@ namespace FileInterchanger
             return true;
         }
 
-        private bool WinscpToRemote(ExchangeInfo info, Session session, stringb log, out int transferCount)
+        private bool WinscpToRemote(InterchangerInfo info, Session session, stringb log, out int transferCount)
         {
             transferCount = 0;
             try { session.ListDirectory(info.Remote); }
@@ -550,7 +550,7 @@ namespace FileInterchanger
             return true;
         }
 
-        private bool CleanupRemote(ExchangeInfo info, Session session, stringb log, out int removeCount)
+        private bool CleanupRemote(InterchangerInfo info, Session session, stringb log, out int removeCount)
         {
             removeCount = 0;
             string rDir = info.Remote;
@@ -613,7 +613,7 @@ namespace FileInterchanger
             return true;
         }
 
-        private bool CleanupLocal(ExchangeInfo info, Session session, stringb log, out int removeCount)
+        private bool CleanupLocal(InterchangerInfo info, Session session, stringb log, out int removeCount)
         {
             removeCount = 0;
             string lDir = info.Local;

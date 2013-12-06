@@ -23,7 +23,7 @@ using WinSCP;
 
 namespace FileInterchanger
 {
-    struct ExchangeInfo
+    struct InterchangerInfo
     {
         string backupFolder;
         TimeSpanExpression? cleanup;
@@ -61,9 +61,9 @@ namespace FileInterchanger
         public SynchronizationMode SyncTarget { get { return syncTarget; } }
         public TimeSpanExpression? TimeFilter { get { return timeFilter; } }
 
-        public static ExchangeInfo Parse(IO.ConfigReaderItem cfg, IO.CredentialsReader cred)
+        public static InterchangerInfo Parse(IO.ConfigReaderItem cfg, IO.CredentialsReader cred)
         {
-            ExchangeInfo result = new ExchangeInfo();
+            InterchangerInfo result = new InterchangerInfo();
             result.backupFolder = cfg.BackupFolder;
             result.cleanupTarget = cfg.CleanupTarget;
             result.disableSkipEmpty = cfg.DisableSkipEmpty;

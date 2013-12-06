@@ -109,8 +109,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventId.cs" />
-    <Compile Include="ExchangeInfo.cs" />
-    <Compile Include="ExchangerException.cs" />
+    <Compile Include="InterchangerInfo.cs" />
+    <Compile Include="InterchangerException.cs" />
     <Compile Include="IO\ConfigReaderBase.cs" />
     <Compile Include="IO\CredentialItemReader.cs" />
     <Compile Include="IO\CredentialsReader.cs" />
@@ -130,7 +130,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Main.cs" />
-    <Compile Include="Exchanger.cs" />
+    <Compile Include="Interchanger.cs" />
     <Compile Include="TimeSpanExpression.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

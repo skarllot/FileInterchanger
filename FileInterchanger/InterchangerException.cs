@@ -24,26 +24,26 @@ using System.Text;
 
 namespace FileInterchanger
 {
-    class ExchangerException : Exception, ISerializable
+    class InterchangerException : Exception, ISerializable
     {
         EventId errorId;
 
-        private ExchangerException()
+        private InterchangerException()
         {
         }
 
-        public ExchangerException(EventId errorId, string message)
+        public InterchangerException(EventId errorId, string message)
             : this(errorId, message, null)
         {
         }
 
-        public ExchangerException(EventId errorId, string message, Exception innerException)
+        public InterchangerException(EventId errorId, string message, Exception innerException)
             : base(message, innerException)
         {
             this.errorId = errorId;
         }
 
-        public ExchangerException(System.Runtime.Serialization.SerializationInfo info,
+        public InterchangerException(System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context)
             : base(info, context)
         {
