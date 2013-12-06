@@ -45,18 +45,23 @@ namespace FileInterchanger
 
         // Interchange related codes (40-49)
         InterchangeCompleted = 40,
+        InterchangeCompletedEmpty = 41,
+        InterchangeCompletedWithErrors = 42,
+        InterchangeCompletedEmptyWithErrors = 43,
 
         // FTP to local interchange related codes (50-59)
         TransfLocalFileNotExists = 50,
         TransfLocalEmptyDownload = 51,
         TransfLocalMultFiles = 52,
         TransfLocalFilesNotMatch = 53,
+        TransfLocalDownloadError = 54,
 
         // Local to FTP interchange related codes (60-69)
         TransfRemoteFileNotExists = 60,
         TransfRemoteEmptyUpload = 61,
         TransfRemoteMultFiles = 62,
         TransfRemoteFilesNotMatch = 63,
+        TransfRemoteUploadError = 64,
 
         // Unhandled error code (65535)
         UnexpectedError = UInt16.MaxValue

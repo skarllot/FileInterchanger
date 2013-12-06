@@ -1,8 +1,10 @@
 ﻿// From Luke Quinane (http://stackoverflow.com/a/1197430/1028452)
 //
 // Usage:
-// using (new NetworkConnection(@"\\server\read", readCredentials))
-// using (new NetworkConnection(@"\\server2\write", writeCredentials)) {
+// using (NetworkConnection ncA = new NetworkConnection(@"\\server\read", readCredentials))
+// using (NetworkConnection ncB = new NetworkConnection(@"\\server2\write", writeCredentials)) {
+//    ncA.Connect();
+//    ncB.Connect();
 //    File.Copy(@"\\server\read\file", @"\\server2\write\file");
 // }
 
@@ -14,8 +16,11 @@ using System.Runtime.InteropServices;
 public class NetworkConnection : IDisposable
 {
     public const int ERROR_SESSION_CREDENTIAL_CONFLICT = 1219;
+
     bool _forceConnection;
     string _networkName;
+    string _password;
+    string _userName;
 
     public NetworkConnection(string networkName,
         NetworkCredential credentials)
@@ -23,35 +28,46 @@ public class NetworkConnection : IDisposable
         _forceConnection = false;
         _networkName = networkName;
 
+        _userName = string.IsNullOrEmpty(credentials.Domain)
+            ? credentials.UserName
+            : string.Format(@"{0}\{1}", credentials.Domain, credentials.UserName);
+        _password = credentials.Password;
+    }
+
+    /// <summary>
+    /// Remove credential conflict when trying to connect to network resource.
+    /// </summary>
+    public bool ForceConnection
+    {
+        get { return _forceConnection; }
+        set { _forceConnection = value; }
+    }
+
+    /// <summary>
+    /// Connects to specified network resource using provided credentials.
+    /// </summary>
+    /// <exception cref="Win32Exception">Error connecting to network resource.</exception>
+    public void Connect()
+    {
         var netResource = new NetResource()
         {
             Scope = ResourceScope.GlobalNetwork,
             ResourceType = ResourceType.Disk,
             DisplayType = ResourceDisplaytype.Share,
-            RemoteName = networkName
+            RemoteName = _networkName
         };
 
-        var userName = string.IsNullOrEmpty(credentials.Domain)
-            ? credentials.UserName
-            : string.Format(@"{0}\{1}", credentials.Domain, credentials.UserName);
-
-        var result = WNetAddConnection2(netResource, credentials.Password, userName, 0);
+        var result = WNetAddConnection2(netResource, _password, _userName, 0);
 
         if (result == ERROR_SESSION_CREDENTIAL_CONFLICT && _forceConnection)
         {
             WNetCancelConnection2(_networkName, 0, true);
-            result = WNetAddConnection2(netResource, credentials.Password, userName, 0);
+            result = WNetAddConnection2(netResource, _password, _userName, 0);
         }
         if (result != 0)
         {
             throw new Win32Exception(result);
         }
-    }
-
-    public bool ForceConnection
-    {
-        get { return _forceConnection; }
-        set { _forceConnection = value; }
     }
 
     ~NetworkConnection()

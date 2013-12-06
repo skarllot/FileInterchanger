@@ -64,112 +64,137 @@ namespace FileInterchanger
             if (sessionOpt.FtpSecure != FtpSecure.None)
                 sessionOpt.SslHostCertificateFingerprint = info.Fingerprint;
 
-            Session session = null;
-            NetworkConnection netConn = null;
-
-            if (info.NetworkCredential != null)
-            {
-                try { netConn = new NetworkConnection(info.Local, info.NetworkCredential); }
-                catch (System.ComponentModel.Win32Exception e)
-                {
-                    if (e.NativeErrorCode == NetworkConnection.ERROR_SESSION_CREDENTIAL_CONFLICT)
-                    {
-                        eventLog.WriteEntry(string.Format(
-                            "Error on {0}\nA connection to a shared resource using another credential already exists",
-                            info.Id), EventLogEntryType.Error, EventId.CredentialConflict);
-                    }
-                    else
-                    {
-                        eventLog.WriteEntry(string.Format(
-                            "Error on {0}\nError connecting to shared resource using provided credentials: {1}",
-                            info.Id, e.Message), EventLogEntryType.Error, EventId.CredentialError);
-                    }
-                    return false;
-                }
-            }
+            System.Net.NetworkCredential netCred =
+                info.NetworkCredential ?? new System.Net.NetworkCredential();
 
             bool result = true;
-            try
+            int transferCount = 0;
+            using (NetworkConnection netConn =
+                new NetworkConnection(info.Local, netCred))
+            using (Session session = new Session())
             {
-                session = new Session();
                 if (MainClass.DEBUG)
                     session.SessionLogPath = @"ftp-session.log";
-                session.Open(sessionOpt);
-                log.AppendLine(string.Format("[{0}] Connected to {1}@{2}",
-                    GetDateNow(), sessionOpt.UserName ?? string.Empty, info.HostName));
-                log.AppendLine(string.Format("[{0}] Local path set to {1}",
-                    GetDateNow(), info.Local));
 
-                switch (info.SyncTarget)
+                if (info.NetworkCredential != null)
                 {
-                    case SynchronizationMode.Local:
-                        result = ExchangeToLocal(info, session, log);
-                        if (!result) return false;
-                        if (info.Cleanup.HasValue)
+                    try { netConn.Connect(); }
+                    catch (System.ComponentModel.Win32Exception e)
+                    {
+                        if (e.NativeErrorCode == NetworkConnection.ERROR_SESSION_CREDENTIAL_CONFLICT)
                         {
-                            result = CleanupRemote(info, session, log);
-                            if (info.CleanupTarget)
-                                result = CleanupLocal(info, session, log);
+                            eventLog.WriteEntry(string.Format(
+                                "Error on {0}\nA connection to a shared resource using another credential already exists",
+                                info.Id), EventLogEntryType.Error, EventId.CredentialConflict);
                         }
-                        break;
-                    case SynchronizationMode.Remote:
-                        result = ExchangeToRemote(info, session, log);
-                        if (!result) return false;
-                        if (info.Cleanup.HasValue)
+                        else
                         {
-                            result = CleanupLocal(info, session, log);
-                            if (info.CleanupTarget)
-                                result = CleanupRemote(info, session, log);
+                            eventLog.WriteEntry(string.Format(
+                                "Error on {0}\nError connecting to shared resource using provided credentials: {1}",
+                                info.Id, e.Message), EventLogEntryType.Error, EventId.CredentialError);
                         }
-                        break;
-                    default:
-                        log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}",
-                            GetDateNow(), info.SyncTarget.ToString()));
-                        result = false;
                         return false;
+                    }
                 }
-            }
-            catch (SessionRemoteException)
-            {
-                eventLog.WriteEntry(string.Format(
-                    "Error on {0}\nFailed to authenticate or connect to server",
-                    info.Id), EventLogEntryType.Error, EventId.SessionOpenError);
-                log.Clear();
-                return false;
-            }
-            catch (ExchangerException e)
-            {
-                eventLog.WriteEntry(e.Message, EventLogEntryType.Error, e.ErrorId);
-            }
-            catch (Exception e)
-            {
-                string msg = string.Format("Error on {0}\nMessage: {1}\nSource: {2}\nStack Trace: {3}",
-                    info.Id, e.Message, e.Source, e.StackTrace);
-                eventLog.WriteEntry(msg, EventLogEntryType.Error, EventId.UnexpectedError);
-                Environment.Exit((int)EventId.UnexpectedError);
-            }
-            finally
-            {
-                if (netConn != null)
-                    netConn.Dispose();
-                if (session != null)
-                    session.Dispose();
 
-                if (log.Length > 0)
+                try { session.Open(sessionOpt); }
+                catch (SessionRemoteException)
                 {
-                    log.AppendLine(string.Format("[{0}] Interchange finalized", GetDateNow()));
-                    EventLogEntryType evType = EventLogEntryType.Information;
-                    if (!result)
-                        evType = EventLogEntryType.Warning;
-                    eventLog.WriteEntry(log.ToString(), evType, EventId.InterchangeCompleted);
+                    eventLog.WriteEntry(string.Format(
+                        "Error on {0}\nFailed to authenticate or connect to server",
+                        info.Id), EventLogEntryType.Error, EventId.SessionOpenError);
+                    log.Clear();
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    LogUnexpectedException(e, info.Id);
+                    return false;
+                }
+
+                try
+                {
+                    log.AppendLine(string.Format("[{0}] Connected to {1}@{2}",
+                        GetDateNow(), sessionOpt.UserName ?? string.Empty, info.HostName));
+                    log.AppendLine(string.Format("[{0}] Local path set to {1}",
+                        GetDateNow(), info.Local));
+
+                    switch (info.SyncTarget)
+                    {
+                        case SynchronizationMode.Local:
+                            result = WinscpToLocal(info, session, log, out transferCount);
+                            if (!result) return false;
+                            if (info.Cleanup.HasValue)
+                            {
+                                result = CleanupRemote(info, session, log);
+                                if (info.CleanupTarget)
+                                    result = CleanupLocal(info, session, log);
+                            }
+                            break;
+                        case SynchronizationMode.Remote:
+                            result = WinscpToRemote(info, session, log, out transferCount);
+                            if (!result) return false;
+                            if (info.Cleanup.HasValue)
+                            {
+                                result = CleanupLocal(info, session, log);
+                                if (info.CleanupTarget)
+                                    result = CleanupRemote(info, session, log);
+                            }
+                            break;
+                        default:
+                            log.AppendLine(string.Format("[{0}] Invalid exchange mode: {1}",
+                                GetDateNow(), info.SyncTarget.ToString()));
+                            result = false;
+                            return false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogUnexpectedException(e, info.Id);
+                    return false;
+                }
+                finally
+                {
+                    if (log.Length > 0)
+                    {
+                        log.AppendLine(string.Format("[{0}] Interchange finalized", GetDateNow()));
+                        EventLogEntryType evType = EventLogEntryType.Information;
+                        if (!result)
+                            evType = EventLogEntryType.Warning;
+                        EventId evId;
+                        if (transferCount > 0)
+                        {
+                            if (result)
+                                evId = EventId.InterchangeCompleted;
+                            else
+                                evId = EventId.InterchangeCompletedWithErrors;
+                        }
+                        else
+                        {
+                            if (result)
+                                evId = EventId.InterchangeCompletedEmpty;
+                            else
+                                evId = EventId.InterchangeCompletedEmptyWithErrors;
+                        }
+                        eventLog.WriteEntry(log.ToString(), evType, evId);
+                    }
                 }
             }
 
             return true;
         }
 
-        private bool ExchangeToLocal(ExchangeInfo info, Session session, stringb log)
+        private void LogUnexpectedException(Exception e, string exchangeId)
         {
+            string msg = string.Format("Error on {0}\nMessage: {1}\nSource: {2}\nStack Trace: {3}",
+                        exchangeId, e.Message, e.Source, e.StackTrace);
+            eventLog.WriteEntry(msg, EventLogEntryType.Error, EventId.UnexpectedError);
+            Environment.Exit((int)EventId.UnexpectedError);
+        }
+
+        private bool WinscpToLocal(ExchangeInfo info, Session session, stringb log, out int transferCount)
+        {
+            transferCount = 0;
             RemoteDirectoryInfo dirInfo;
             try { dirInfo = session.ListDirectory(info.Remote); }
             catch (SessionRemoteException)
@@ -241,7 +266,9 @@ namespace FileInterchanger
                 TransferOperationResult result = session.GetFiles(origFile, localFile, false, DEFAULT_TRANSFER_OPTIONS);
                 if (!result.IsSuccess)
                 {
-                    log.AppendLine(string.Format("[{0}] Operation failed: download files", GetDateNow()));
+                    string evmsg = "Error downloading files";
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfLocalDownloadError);
                     return false;
                 }
 
@@ -254,39 +281,53 @@ namespace FileInterchanger
                         {
                             if (move) session.RemoveFiles(origFile);
                             log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), origFile));
+                            transferCount++;
                         }
                         else
                         {
                             File.Delete(localFile);
-                            throw new ExchangerException(EventId.TransfLocalFilesNotMatch,
-                                string.Format("Downloaded file '{0}' size do not match remote file", localFile));
+                            string evmsg = string.Format("Size from downloaded file '{0}' do not match its remote counterpart", localFile);
+                            log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                            eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfLocalFilesNotMatch);
+                            return false;
                         }
                     }
                     else
                     {
-                        throw new ExchangerException(EventId.TransfLocalFileNotExists,
-                            string.Format("Downloaded file '{0}' cannot be found", localFile));
+                        string evmsg = string.Format("Downloaded file '{0}' cannot be found", localFile);
+                        log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                        eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfLocalFileNotExists);
+                        return false;
                     }
                 }
                 else if (result.Transfers.Count == 0)
                 {
-                    throw new ExchangerException(EventId.TransfLocalEmptyDownload,
-                        string.Format("Remote file '{0}' cannot be found", origFile));
+                    string evmsg = string.Format("Remote file '{0}' cannot be found", origFile);
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfLocalEmptyDownload);
+                    return false;
                 }
                 else    // Count > 1?
                 {
+                    string evmsg = "Multiple files was downloaded instead of one";
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
                     foreach (TransferEventArgs t in result.Transfers)
-                        log.AppendLine(string.Format("[{0}] Downloaded: {1}", GetDateNow(), t.FileName));
-                    throw new ExchangerException(EventId.TransfLocalMultFiles,
-                        "Multiple files was downloaded instead of one");
+                    {
+                        log.Append(string.Format("[{0}] Downloaded: {1}", GetDateNow(), t.FileName));
+                        File.Delete(Path.Combine(info.Local, Path.GetFileName(t.FileName)));
+                        log.AppendLine(" ... deleted");
+                    }
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfLocalMultFiles);
+                    return false;
                 }
             }
 
             return true;
         }
 
-        private bool ExchangeToRemote(ExchangeInfo info, Session session, stringb log)
+        private bool WinscpToRemote(ExchangeInfo info, Session session, stringb log, out int transferCount)
         {
+            transferCount = 0;
             try { session.ListDirectory(info.Remote); }
             catch (SessionRemoteException)
             {
@@ -354,7 +395,9 @@ namespace FileInterchanger
                 TransferOperationResult result = session.PutFiles(origFile, remoteFile, false, DEFAULT_TRANSFER_OPTIONS);
                 if (!result.IsSuccess)
                 {
-                    log.AppendLine(string.Format("[{0}] Operation failed: upload files", GetDateNow()));
+                    string evmsg = "Error uploading files";
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfRemoteUploadError);
                     return false;
                 }
 
@@ -367,31 +410,44 @@ namespace FileInterchanger
                         {
                             if (move) item.Delete();
                             log.AppendLine(string.Format("[{0}] Uploaded: {1}", GetDateNow(), origFile));
+                            transferCount++;
                         }
                         else
                         {
                             session.RemoveFiles(remoteFile);
-                            throw new ExchangerException(EventId.TransfRemoteFilesNotMatch,
-                                string.Format("Uploaded file '{0}' size do not match local file", remoteFile));
+                            string evmsg = string.Format("Uploaded file '{0}' size do not match local file", remoteFile);
+                            log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                            eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfRemoteFilesNotMatch);
+                            return false;
                         }
                     }
                     else
                     {
-                        throw new ExchangerException(EventId.TransfRemoteFileNotExists,
-                            string.Format("Uploaded file '{0}' cannot be found", remoteFile));
+                        string evmsg = string.Format("Uploaded file '{0}' cannot be found", remoteFile);
+                        log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                        eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfRemoteFileNotExists);
+                        return false;
                     }
                 }
                 else if (result.Transfers.Count == 0)
                 {
-                    throw new ExchangerException(EventId.TransfRemoteEmptyUpload,
-                        string.Format("Local file '{0}' cannot be found", origFile));
+                    string evmsg = string.Format("Local file '{0}' cannot be found", origFile);
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfRemoteEmptyUpload);
+                    return false;
                 }
                 else    // Count > 1?
                 {
+                    string evmsg = "Multiple files was uploaded instead of one";
+                    log.AppendLine(string.Format("[{0}] " + evmsg, GetDateNow()));
                     foreach (TransferEventArgs t in result.Transfers)
-                        log.AppendLine(string.Format("[{0}] Uploaded: {1}", GetDateNow(), t.FileName));
-                    throw new ExchangerException(EventId.TransfRemoteMultFiles,
-                        "Multiple files was uploaded instead of one");
+                    {
+                        log.Append(string.Format("[{0}] Uploaded: {1}", GetDateNow(), t.FileName));
+                        session.RemoveFiles(string.Format("{0}/{1}", info.Remote, Path.GetFileName(t.FileName)));
+                        log.AppendLine(" ... deleted");
+                    }
+                    eventLog.WriteEntry(evmsg, EventLogEntryType.Error, EventId.TransfRemoteMultFiles);
+                    return false;
                 }
             }
 
