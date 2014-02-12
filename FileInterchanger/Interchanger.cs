@@ -419,6 +419,7 @@ namespace FileInterchanger
                 }
             }
 
+            log.AppendLine(string.Format("[{0}] {1} files downloaded", GetDateNow(), transferCount));
             return true;
         }
 
@@ -549,6 +550,7 @@ namespace FileInterchanger
                 }
             }
 
+            log.AppendLine(string.Format("[{0}] {1} files uploaded", GetDateNow(), transferCount));
             return true;
         }
 
@@ -612,6 +614,7 @@ namespace FileInterchanger
                 }
             }
 
+            log.AppendLine(string.Format("[{0}] {1} files removed", GetDateNow(), removeCount));
             return true;
         }
 
@@ -668,6 +671,7 @@ namespace FileInterchanger
                 }
             }
 
+            log.AppendLine(string.Format("[{0}] {1} files removed", GetDateNow(), removeCount));
             return true;
         }
     }
