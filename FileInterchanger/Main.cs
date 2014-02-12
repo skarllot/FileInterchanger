@@ -1,6 +1,6 @@
 ﻿// Main.cs
 //
-// Copyright (C) 2013 Fabrício Godoy
+// Copyright (C) 2014 Fabrício Godoy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,10 +24,10 @@ namespace FileInterchanger
     class MainClass
     {
         public const string PROGRAM_NAME = "FileInterchanger";
-        // Latest release: 0.3.0.54
+        // Latest release: 0.3.1.55
         // Major.Minor.Maintenance.Build
-        public const string PROGRAM_VERSION = "0.3.1.55";
-        public const string PROGRAM_VERSION_SIMPLE = "0.3.1";
+        public const string PROGRAM_VERSION = "0.3.2.59";
+        public const string PROGRAM_VERSION_SIMPLE = "0.3.2";
         public const string PROGRAM_TITLE = PROGRAM_NAME + " " + PROGRAM_VERSION_SIMPLE;
 
         public static readonly bool DEBUG = System.Diagnostics.Debugger.IsAttached;

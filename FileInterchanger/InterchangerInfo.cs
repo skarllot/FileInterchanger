@@ -1,6 +1,6 @@
 ﻿// ExchangeInfo.cs
 //
-// Copyright (C) 2013 Fabrício Godoy
+// Copyright (C) 2014 Fabrício Godoy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ namespace FileInterchanger
         Regex files;
         string fingerprint;
         NetworkCredential ftpCredential;
+        int ftpPort;
         FtpSecure ftpSecure;
         string hostname;
         string id;
@@ -50,6 +51,7 @@ namespace FileInterchanger
         public Regex Files { get { return files; } }
         public string Fingerprint { get { return fingerprint; } }
         public NetworkCredential FtpCredential { get { return ftpCredential; } }
+        public int FtpPort { get { return ftpPort; } }
         public FtpSecure FtpSecure { get { return ftpSecure; } }
         public string HostName { get { return hostname; } }
         public string Id { get { return id; } }
@@ -68,6 +70,7 @@ namespace FileInterchanger
             result.cleanupTarget = cfg.CleanupTarget;
             result.disableSkipEmpty = cfg.DisableSkipEmpty;
             result.fingerprint = cfg.Fingerprint;
+            result.ftpPort = cfg.FtpPort;
             result.hostname = cfg.HostName;
             result.id = cfg.Section;
             result.local = cfg.Local;

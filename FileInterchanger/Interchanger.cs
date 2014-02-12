@@ -1,6 +1,6 @@
 ﻿// Exchanger.cs
 //
-// Copyright (C) 2013 Fabrício Godoy
+// Copyright (C) 2014 Fabrício Godoy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -56,6 +56,8 @@ namespace FileInterchanger
                 FtpSecure = info.FtpSecure,
                 HostName = info.HostName
             };
+            if (info.FtpPort > 0)
+                sessionOpt.PortNumber = info.FtpPort;
             if (info.FtpCredential != null)
             {
                 sessionOpt.UserName = info.FtpCredential.UserName;

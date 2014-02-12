@@ -1,6 +1,6 @@
 ﻿// ConfigReaderBase.cs
 //
-// Copyright (C) 2013 Fabrício Godoy
+// Copyright (C) 2014 Fabrício Godoy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -39,6 +39,17 @@ namespace FileInterchanger.IO
                 return false;
             if (!bool.TryParse(val, out result))
                 return false;
+            return result;
+        }
+
+        protected int GetInteger(string section, string key)
+        {
+            int result;
+            string val;
+            if (!cfgreader.TryReadValue(section, key, out val))
+                return -1;
+            if (!int.TryParse(val, out result))
+                return -1;
             return result;
         }
 

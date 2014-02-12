@@ -1,6 +1,6 @@
 ﻿// ConfigReaderItem.cs
 //
-// Copyright (C) 2013 Fabrício Godoy
+// Copyright (C) 2014 Fabrício Godoy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ namespace FileInterchanger.IO
         public string Files { get { return GetString(sections[0], "Files"); } }
         public string Fingerprint { get { return GetString(sections[0], "Fingerprint"); } }
         public string FtpCredential { get { return GetString(sections[0], "FtpCredential"); } }
+        public int FtpPort { get { return GetInteger(sections[0], "FtpPort"); } }
         public string FtpSecure { get { return GetString(sections[0], "FtpSecure"); } }
         public string HostName { get { return GetString(sections[0], "HostName"); } }
         public string Local { get { return GetString(sections[0], "Local"); } }
