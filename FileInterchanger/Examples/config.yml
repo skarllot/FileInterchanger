@@ -1,0 +1,83 @@
+﻿%YAML 1.1
+---
+version: '0.2'
+refreshTime: 5
+
+# =============================================================================
+credentials:
+    - name: simple
+      user: ftpuser
+      password: ftppassword
+
+    - name: mycifs
+      user: domainuser
+      password: userpassword
+      domain: example
+
+# =============================================================================
+# Types => local, cifs, winscp
+# WinSCP Protocols => Ftp, Sftp, Scp
+# WinSCP FtpSecure => None, Implicit, ExplicitSsl, ExplicitTls
+targets:
+    - name: srv1
+      type: winscp
+      host: ftp.example.com
+      protocol: Ftp
+      ftpsecure: ExplicitTls
+      fingerprint: 43:51:43:a1:b5:fc:8b:b7:0a:3a:a9:b1:0f:66:73:a8
+      credential: simple
+      path: '/folder'
+
+    - name: srv2
+      type: winscp
+      host: ftp2.example.com
+      port: 990
+      protocol: Ftp
+      ftpsecure: None
+      credential: simple
+      path: '/folder'
+
+    - name: tmpfolder
+      type: local
+      path: 'C:\temp'
+
+    - name: tmpbackup
+      type: local
+      path: 'C:\temp'
+      backup: 'D:\backup'
+
+    - name: cifsshare
+      type: cifs
+      path: '\\ws-example\share\folder'
+      credential: mycifs
+
+# =============================================================================
+tasks:
+    - name: Simple
+      origin: tmpfolder
+      destination: srv2
+      filter: '.+'
+
+    - name: Remote 1
+      origin: srv1
+      destination: tmpfolder
+      filter: '.+[.]TXT'
+      timeFilter: '>00:05'    # Get files not modified last 5 minutes
+
+    - name: Another
+      origin: tmpbackup
+      destination: srv2
+      filter: '.+[.]TXT'
+      timeFilter: '>00:05'
+      move: true
+      cleanup: '>356.00:00'   # Delete all files older than 1 year
+      cleanupDest: true       # Delete from destination too
+
+    - name: CIFS
+      origin: cifsshare
+      destination: srv2
+      filter: '.+[.]TXT'
+      timeFilter: '>00:05'
+      move: true
+      disableSkipEmpty: true  # Do not ignore empty files
+...

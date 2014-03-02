@@ -87,40 +87,41 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
-    <Reference Include="System.Configuration.Install">
-      <Name>System.Configuration.Install</Name>
-    </Reference>
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Management">
-      <Name>System.Management</Name>
-    </Reference>
     <Reference Include="System.ServiceProcess">
       <Name>System.ServiceProcess</Name>
-    </Reference>
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
     </Reference>
     <Reference Include="WinSCP">
       <HintPath>..\References\WinSCP\WinSCP.dll</HintPath>
     </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>..\packages\YamlDotNet.3.0.0\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\BasicTarget.cs" />
+    <Compile Include="Configuration\CifsTarget.cs" />
+    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Configuration\Credential.cs" />
+    <Compile Include="Configuration\IAuthenticable.cs" />
+    <Compile Include="Configuration\IYamlDeserializable.cs" />
+    <Compile Include="Configuration\LocalTarget.cs" />
+    <Compile Include="Configuration\Task.cs" />
+    <Compile Include="Configuration\WinscpTarget.cs" />
+    <Compile Include="IO\YamlHelper.cs" />
     <Compile Include="EventId.cs" />
     <Compile Include="InterchangerInfo.cs" />
     <Compile Include="InterchangerException.cs" />
-    <Compile Include="IO\ConfigReaderBase.cs" />
-    <Compile Include="IO\CredentialItemReader.cs" />
-    <Compile Include="IO\CredentialsReader.cs" />
+    <Compile Include="IO\Legacy\0.1\ConfigReaderBase.cs" />
+    <Compile Include="IO\Legacy\0.1\CredentialItemReader.cs" />
+    <Compile Include="IO\Legacy\0.1\CredentialsReader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NetworkConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IO\ConfigReader.cs" />
-    <Compile Include="IO\ConfigReaderItem.cs" />
+    <Compile Include="IO\Legacy\0.1\ConfigReader.cs" />
+    <Compile Include="IO\Legacy\0.1\ConfigReaderItem.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -165,9 +166,12 @@
   <ItemGroup>
     <None Include="app.manifest" />
     <None Include="Examples\config.ini" />
+    <None Include="Examples\config.yml" />
     <None Include="Examples\credentials.ini" />
+    <None Include="packages.config" />
     <None Include="Resources\ftp.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />

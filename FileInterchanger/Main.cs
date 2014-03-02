@@ -24,16 +24,18 @@ namespace FileInterchanger
     class MainClass
     {
         public const string PROGRAM_NAME = "FileInterchanger";
-        // Latest release: 0.3.1.55
+        // Latest release: 0.3.2.60
         // Major.Minor.Maintenance.Build
-        public const string PROGRAM_VERSION = "0.3.2.60";
-        public const string PROGRAM_VERSION_SIMPLE = "0.3.2";
+        public const string PROGRAM_VERSION = "0.4.0.61";
+        public const string PROGRAM_VERSION_SIMPLE = "0.4";
         public const string PROGRAM_TITLE = PROGRAM_NAME + " " + PROGRAM_VERSION_SIMPLE;
 
         public static readonly bool DEBUG = System.Diagnostics.Debugger.IsAttached;
 
         public static void Main(string[] args)
         {
+            Configuration.Configuration ctst = Configuration.Configuration.LoadFromFile(@"C:\Users\fgodoy.RODRIMAR\Projetos\FileInterchanger\FileInterchanger\Examples\config.yml");
+
             if (Logger.Default == null)
                 throw new Exception("Couldn't create EventLog");
 
