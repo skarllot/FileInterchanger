@@ -104,6 +104,7 @@
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\Credential.cs" />
     <Compile Include="Configuration\IAuthenticable.cs" />
+    <Compile Include="Configuration\INameable.cs" />
     <Compile Include="Configuration\IYamlDeserializable.cs" />
     <Compile Include="Configuration\LocalTarget.cs" />
     <Compile Include="Configuration\Task.cs" />

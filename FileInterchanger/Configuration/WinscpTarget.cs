@@ -27,10 +27,10 @@ namespace FileInterchanger.Configuration
         const string MY_TYPE = "winscp";
         string credential;
         string fingerprint;
-        WinSCP.FtpSecure ftpsecure;
+        WinSCP.FtpSecure ftpsecure = WinSCP.FtpSecure.None;
         string host;
-        int port;
-        WinSCP.Protocol protocol;
+        int? port = null;
+        WinSCP.Protocol protocol = WinSCP.Protocol.Ftp;
 
         public WinscpTarget() : base(MY_TYPE) { }
 
@@ -38,7 +38,7 @@ namespace FileInterchanger.Configuration
         public string Fingerprint { get { return fingerprint; } }
         public WinSCP.FtpSecure FtpSecure { get { return ftpsecure; } }
         public string Host { get { return host; } }
-        public int Port { get { return port; } }
+        public int? Port { get { return port; } }
         public WinSCP.Protocol Protocol { get { return protocol; } }
 
         public override object Clone()
@@ -68,7 +68,11 @@ namespace FileInterchanger.Configuration
             host = YamlHelper.GetNodeValue(root, "host");
             str = YamlHelper.GetNodeValue(root, "port");
             if (!string.IsNullOrWhiteSpace(str))
-                int.TryParse(str, out port);
+            {
+                int a;
+                if (int.TryParse(str, out a))
+                    port = a;
+            }
             str = YamlHelper.GetNodeValue(root, "protocol");
             if (!string.IsNullOrWhiteSpace(str))
                 Enum.TryParse<WinSCP.Protocol>(str, true, out protocol);

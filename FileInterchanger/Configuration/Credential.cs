@@ -22,7 +22,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace FileInterchanger.Configuration
 {
-    class Credential : IYamlDeserializable
+    class Credential : IYamlDeserializable, INameable
     {
         string name;
         string user;

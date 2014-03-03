@@ -30,24 +30,57 @@ namespace FileInterchanger.Configuration
         int refreshTime;
         Credential[] credentials;
         BasicTarget[] targets;
+        Task[] tasks;
 
         public Version Version { get { return version; } }
         public int RefreshTime { get { return refreshTime; } }
         public int CredentialsCount { get { return credentials.Length; } }
+        public int TargetsCount { get { return targets.Length; } }
+        public int TasksCount { get { return tasks.Length; } }
 
         public Credential GetCredential(int index)
         {
-            if (index < credentials.Length && index > -1)
-                return credentials[index];
-            return null;
+            return GetArrayByIndex<Credential>(credentials, index);
         }
 
         public Credential GetCredential(string name)
         {
-            foreach (Credential c in credentials)
+            return GetArrayByName<Credential>(credentials, name);
+        }
+
+        public BasicTarget GetTarget(int index)
+        {
+            return GetArrayByIndex<BasicTarget>(targets, index);
+        }
+
+        public BasicTarget GetTarget(string name)
+        {
+            return GetArrayByName<BasicTarget>(targets, name);
+        }
+
+        public Task GetTask(int index)
+        {
+            return GetArrayByIndex<Task>(tasks, index);
+        }
+
+        public Task GetTask(string name)
+        {
+            return GetArrayByName<Task>(tasks, name);
+        }
+
+        T GetArrayByIndex<T>(T[] array, int index) where T : class
+        {
+            if (index < array.Length && index > -1)
+                return array[index];
+            return null;
+        }
+
+        T GetArrayByName<T>(T[] array, string name) where T : class, INameable
+        {
+            foreach (T item in array)
             {
-                if (c.Name == name)
-                    return c;
+                if (item.Name == name)
+                    return item;
             }
 
             return null;
@@ -82,6 +115,17 @@ namespace FileInterchanger.Configuration
                 targets = new BasicTarget[ytargets.Length];
                 for (int i = 0; i < ytargets.Length; i++)
                     targets[i] = BasicTarget.GetInstance(ytargets[i]);
+            }
+
+            YamlMappingNode[] ytasks = YamlHelper.GetSubTreesFromValue(root, "tasks");
+            if (ytasks != null && ytasks.Length > 0)
+            {
+                tasks = new Task[ytasks.Length];
+                for (int i = 0; i < ytasks.Length; i++)
+                {
+                    tasks[i] = new Task();
+                    tasks[i].LoadFromYaml(ytasks[i]);
+                }
             }
         }
 

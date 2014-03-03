@@ -26,7 +26,7 @@ namespace FileInterchanger
         public const string PROGRAM_NAME = "FileInterchanger";
         // Latest release: 0.3.2.60
         // Major.Minor.Maintenance.Build
-        public const string PROGRAM_VERSION = "0.4.0.61";
+        public const string PROGRAM_VERSION = "0.4.0.62";
         public const string PROGRAM_VERSION_SIMPLE = "0.4";
         public const string PROGRAM_TITLE = PROGRAM_NAME + " " + PROGRAM_VERSION_SIMPLE;
 
@@ -34,7 +34,12 @@ namespace FileInterchanger
 
         public static void Main(string[] args)
         {
-            Configuration.Configuration ctst = Configuration.Configuration.LoadFromFile(@"C:\Users\fgodoy.RODRIMAR\Projetos\FileInterchanger\FileInterchanger\Examples\config.yml");
+#if DEBUG
+            string cfgpath = System.IO.Path.Combine(
+                System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),
+                @"..\..\Examples\config.yml");
+            Configuration.Configuration ctst = Configuration.Configuration.LoadFromFile(cfgpath);
+#endif
 
             if (Logger.Default == null)
                 throw new Exception("Couldn't create EventLog");

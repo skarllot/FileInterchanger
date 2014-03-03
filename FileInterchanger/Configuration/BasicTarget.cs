@@ -22,7 +22,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace FileInterchanger.Configuration
 {
-    abstract class BasicTarget : IYamlDeserializable, ICloneable
+    abstract class BasicTarget : IYamlDeserializable, ICloneable, INameable
     {
         static readonly BasicTarget[] TARGET_CHILDREN = new BasicTarget[] {
             new LocalTarget(), new CifsTarget(), new WinscpTarget()
@@ -37,6 +37,10 @@ namespace FileInterchanger.Configuration
         {
             this.type = type;
         }
+
+        public string Name { get { return name; } }
+        public string Path { get { return path; } }
+        public string Backup { get { return backup; } }
 
         public abstract object Clone();
 
