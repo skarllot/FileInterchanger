@@ -25,6 +25,7 @@ namespace FileInterchanger.Configuration
     class Configuration : IYamlDeserializable
     {
         const string CURRENT_VERSION = "0.2";
+        public const string DEFAULT_FILENAME = "config.yml";
 
         Version version;
         int refreshTime;

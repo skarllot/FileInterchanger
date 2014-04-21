@@ -26,8 +26,6 @@ namespace FileInterchanger
 {
     public class Service : System.ServiceProcess.ServiceBase
     {
-        const string DEFAULT_CFG_FILE_NAME = "config.ini";
-        const string DEFAULT_CREDENTIALS_CFG_FILE_NAME = "credentials.ini";
         const int DEFAULT_REFRESH = 5;
         const int MINUTE_TO_MILLISECONDS = 1000 * 60;
 

@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FileInterchanger.IO
+namespace FileInterchanger.Legacy.v0_1.Configuration
 {
     class CredentialItemReader : ConfigReaderBase
     {

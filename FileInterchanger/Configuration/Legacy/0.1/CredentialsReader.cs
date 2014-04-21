@@ -1,6 +1,6 @@
 ﻿// CredentialsReader.cs
 //
-// Copyright (C) 2013 Fabrício Godoy
+// Copyright (C) 2014 Fabrício Godoy
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,13 +18,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace FileInterchanger.IO
+namespace FileInterchanger.Legacy.v0_1.Configuration
 {
     class CredentialsReader : ConfigReaderBase, IEnumerable<CredentialItemReader>
     {
+        public const string DEFAULT_FILENAME = "credentials.ini";
+
         public CredentialsReader(string path)
         {
             base.filename = path;

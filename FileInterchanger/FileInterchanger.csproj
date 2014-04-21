@@ -106,6 +106,7 @@
     <Compile Include="Configuration\IAuthenticable.cs" />
     <Compile Include="Configuration\INameable.cs" />
     <Compile Include="Configuration\IYamlDeserializable.cs" />
+    <Compile Include="Configuration\Legacy\Migrate.cs" />
     <Compile Include="Configuration\LocalTarget.cs" />
     <Compile Include="Configuration\Task.cs" />
     <Compile Include="Configuration\WinscpTarget.cs" />
@@ -113,16 +114,16 @@
     <Compile Include="EventId.cs" />
     <Compile Include="InterchangerInfo.cs" />
     <Compile Include="InterchangerException.cs" />
-    <Compile Include="IO\Legacy\0.1\ConfigReaderBase.cs" />
-    <Compile Include="IO\Legacy\0.1\CredentialItemReader.cs" />
-    <Compile Include="IO\Legacy\0.1\CredentialsReader.cs" />
+    <Compile Include="Configuration\Legacy\0.1\ConfigReaderBase.cs" />
+    <Compile Include="Configuration\Legacy\0.1\CredentialItemReader.cs" />
+    <Compile Include="Configuration\Legacy\0.1\CredentialsReader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="NetworkConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IO\Legacy\0.1\ConfigReader.cs" />
-    <Compile Include="IO\Legacy\0.1\ConfigReaderItem.cs" />
+    <Compile Include="Configuration\Legacy\0.1\ConfigReader.cs" />
+    <Compile Include="Configuration\Legacy\0.1\ConfigReaderItem.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
