@@ -335,6 +335,14 @@ namespace FileInterchanger
                 if (info.Move && !string.IsNullOrWhiteSpace(info.BackupFolder))
                 {
                     string bkpFile = string.Format("{0}/{1}", info.BackupFolder, item.Name);
+
+                    if (session.FileExists(bkpFile)) {
+                        string oldFilename = bkpFile;
+                        bkpFile = GetNextValidRemoteFilename(session, bkpFile, info.BackupFolder);
+                        log.AppendLine(string.Format("[{0}] Remote backup file '{1}' already exists. New name: {2}",
+                            GetDateNow(), oldFilename, Path.GetFileName(bkpFile)));
+                    }
+
                     session.MoveFile(origFile, bkpFile);
                     origFile = bkpFile;
                     move = false;
@@ -348,14 +356,7 @@ namespace FileInterchanger
                         log.AppendLine(string.Format("[{0}] Local file '{1}' already exists", GetDateNow(), item.Name));
                         continue;
                     }
-                    int counter = 1;
-                    string ext = Path.GetExtension(item.Name);
-                    string fname = Path.GetFileNameWithoutExtension(item.Name);
-                    do
-                    {
-                        localFile = string.Format(@"{0}\{1}-{2}{3}", info.Local, fname, counter, ext);
-                        counter++;
-                    } while (File.Exists(localFile));
+                    localFile = GetNextValidLocalFilename(item.Name, info.Local);
                     log.AppendLine(string.Format("[{0}] Local file '{1}' already exists. New name: {2}",
                         GetDateNow(), item.Name, Path.GetFileName(localFile)));
                 }
@@ -465,6 +466,14 @@ namespace FileInterchanger
                 if (info.Move && !string.IsNullOrWhiteSpace(info.BackupFolder))
                 {
                     string bkpFile = Path.Combine(info.BackupFolder, item.Name);
+
+                    if (File.Exists(bkpFile)) {
+                        string oldFilename = bkpFile;
+                        bkpFile = GetNextValidLocalFilename(bkpFile, info.BackupFolder);
+                        log.AppendLine(string.Format("[{0}] Local backup file '{1}' already exists. New name: {2}",
+                            GetDateNow(), oldFilename, Path.GetFileName(bkpFile)));
+                    }
+
                     File.Move(origFile, bkpFile);
                     origFile = bkpFile;
                     move = false;
@@ -478,14 +487,7 @@ namespace FileInterchanger
                         log.AppendLine(string.Format("[{0}] Remote file '{1}' already exists", GetDateNow(), item.Name));
                         continue;
                     }
-                    int counter = 1;
-                    string ext = Path.GetExtension(item.Name);
-                    string fname = Path.GetFileNameWithoutExtension(item.Name);
-                    do
-                    {
-                        remoteFile = string.Format(@"{0}/{1}-{2}{3}", info.Remote, fname, counter, ext);
-                        counter++;
-                    } while (session.FileExists(remoteFile));
+                    remoteFile = GetNextValidRemoteFilename(session, item.Name, info.Remote);
                     log.AppendLine(string.Format("[{0}] Remote file '{1}' already exists. New name: {2}",
                         GetDateNow(), item.Name, Path.GetFileName(remoteFile)));
                 }
@@ -673,6 +675,34 @@ namespace FileInterchanger
 
             log.AppendLine(string.Format("[{0}] {1} files removed", GetDateNow(), removeCount));
             return true;
+        }
+
+        private string GetNextValidRemoteFilename(Session session, string file, string remotePath)
+        {
+            int counter = 1;
+            string ext = Path.GetExtension(file);
+            string fname = Path.GetFileNameWithoutExtension(file);
+            string remoteFile = string.Empty;
+            do {
+                remoteFile = string.Format(@"{0}/{1}-{2}{3}", remotePath, fname, counter, ext);
+                counter++;
+            } while (session.FileExists(remoteFile));
+
+            return remoteFile;
+        }
+
+        private string GetNextValidLocalFilename(string file, string localPath)
+        {
+            int counter = 1;
+            string ext = Path.GetExtension(file);
+            string fname = Path.GetFileNameWithoutExtension(file);
+            string localFile = string.Empty;
+            do {
+                localFile = string.Format(@"{0}\{1}-{2}{3}", localPath, fname, counter, ext);
+                counter++;
+            } while (File.Exists(localFile));
+
+            return localFile;
         }
     }
 }
