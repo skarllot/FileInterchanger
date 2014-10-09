@@ -64,7 +64,7 @@ namespace FileInterchanger
                 sessionOpt.Password = info.FtpCredential.Password;
             }
             if (sessionOpt.FtpSecure != FtpSecure.None)
-                sessionOpt.SslHostCertificateFingerprint = info.Fingerprint;
+                sessionOpt.TlsHostCertificateFingerprint = info.Fingerprint;
 
             System.Net.NetworkCredential netCred =
                 info.NetworkCredential ?? new System.Net.NetworkCredential();

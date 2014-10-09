@@ -103,8 +103,9 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
-    <Reference Include="WinSCP">
-      <HintPath>..\References\WinSCP\WinSCP.dll</HintPath>
+    <Reference Include="WinSCPnet, Version=1.1.7.4605, Culture=neutral, PublicKeyToken=2271ec4a3c56d0bf, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\WinSCP\WinSCPnet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
